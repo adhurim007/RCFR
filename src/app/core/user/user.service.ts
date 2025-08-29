@@ -1,63 +1,32 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { ReplaySubject, Observable, of } from 'rxjs';
 import { User } from 'app/core/user/user.types';
-import { map, Observable, ReplaySubject, tap } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
-export class UserService
-{
-    private _httpClient = inject(HttpClient);
+@Injectable({ providedIn: 'root' })
+export class UserService {
     private _user: ReplaySubject<User> = new ReplaySubject<User>(1);
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Setter & getter for user
-     *
-     * @param value
-     */
-    set user(value: User)
-    {
-        // Store the value
+    set user(value: User) {
         this._user.next(value);
     }
 
-    get user$(): Observable<User>
-    {
+    get user$(): Observable<User> {
         return this._user.asObservable();
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * Get the current signed-in user data
-     */
-    get(): Observable<User>
-    {
-        return this._httpClient.get<User>('api/common/user').pipe(
-            tap((user) =>
-            {
-                this._user.next(user);
-            }),
-        );
+    getCurrent(): User | null {
+        let currentUser: User | null = null;
+        this._user.subscribe(u => currentUser = u).unsubscribe();
+        return currentUser;
     }
 
-    /**
-     * Update the user
-     *
-     * @param user
-     */
-    update(user: User): Observable<any>
-    {
-        return this._httpClient.patch<User>('api/common/user', {user}).pipe(
-            map((response) =>
-            {
-                this._user.next(response);
-            }),
-        );
+    clear(): void {
+        this._user.next(null);
+    }
+
+    // Re-add update for compatibility with Fuse components
+    update(user: User): Observable<User> {
+        this._user.next(user);
+        return of(user);
     }
 }

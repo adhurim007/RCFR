@@ -32,6 +32,13 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
         });
     }
 
+    if (authService.accessToken && !AuthUtils.isTokenExpired(authService.accessToken)) {
+    newReq = req.clone({
+        headers: req.headers.set('Authorization', 'Bearer ' + authService.accessToken),
+    });
+}
+
+
     // Response
     return next(newReq).pipe(
         catchError((error) =>

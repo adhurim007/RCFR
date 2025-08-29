@@ -29,110 +29,103 @@
 
             <!-- Sign Up form -->
             <form
-                class="mt-8"
-                [formGroup]="signUpForm"
-                #signUpNgForm="ngForm">
+                    class="mt-8"
+                    [formGroup]="signUpForm"
+                    #signUpNgForm="ngForm">
 
-                <!-- Name field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Full name</mat-label>
-                    <input
-                        id="name"
-                        matInput
-                        [formControlName]="'name'">
-                    <mat-error *ngIf="signUpForm.get('name').hasError('required')">
-                        Full name is required
-                    </mat-error>
-                </mat-form-field>
+                    <!-- Full Name -->
+                    <mat-form-field class="w-full">
+                        <mat-label>Full name</mat-label>
+                        <input id="fullName" matInput [formControlName]="'fullName'">
+                        <mat-error *ngIf="signUpForm.get('fullName').hasError('required')">
+                            Full name is required
+                        </mat-error>
+                    </mat-form-field>
 
-                <!-- Email field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Email address</mat-label>
-                    <input
-                        id="email"
-                        matInput
-                        [formControlName]="'email'">
-                    <mat-error *ngIf="signUpForm.get('email').hasError('required')">
-                        Email address is required
-                    </mat-error>
-                    <mat-error *ngIf="signUpForm.get('email').hasError('email')">
-                        Please enter a valid email address
-                    </mat-error>
-                </mat-form-field>
+                    <!-- Email -->
+                    <mat-form-field class="w-full">
+                        <mat-label>Email address</mat-label>
+                        <input id="email" matInput [formControlName]="'email'">
+                        <mat-error *ngIf="signUpForm.get('email').hasError('required')">
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf="signUpForm.get('email').hasError('email')">
+                            Please enter a valid email
+                        </mat-error>
+                    </mat-form-field>
 
-                <!-- Password field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Password</mat-label>
-                    <input
-                        id="password"
-                        matInput
-                        type="password"
-                        [formControlName]="'password'"
-                        #passwordField>
+                    <!-- Password -->
+                    <mat-form-field class="w-full">
+                        <mat-label>Password</mat-label>
+                        <input id="password" matInput type="password" [formControlName]="'password'">
+                        <mat-error *ngIf="signUpForm.get('password').hasError('required')">
+                            Password is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Company Name -->
+                    <mat-form-field class="w-full">
+                        <mat-label>Company Name</mat-label>
+                        <input id="companyName" matInput [formControlName]="'companyName'">
+                        <mat-error *ngIf="signUpForm.get('companyName').hasError('required')">
+                            Company name is required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <!-- Contact Phone -->
+                    <mat-form-field class="w-full">
+                        <mat-label>Contact Phone</mat-label>
+                        <input id="contactPhone" matInput [formControlName]="'contactPhone'">
+                    </mat-form-field>
+
+                    <!-- State dropdown -->
+                   
+                    <mat-form-field class="w-full">
+                    <mat-label>State</mat-label>
+                    <mat-select formControlName="stateId" (selectionChange)="onStateChange($event.value)">
+                        <mat-option *ngFor="let state of states" [value]="state.id">
+                        {{ state.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="signUpForm.get('stateId').hasError('required')">
+                        State is required
+                    </mat-error>
+                    </mat-form-field>
+
+                    <!-- City -->
+                    <mat-form-field class="w-full">
+                    <mat-label>City</mat-label>
+                    <mat-select formControlName="cityId">
+                        <mat-option *ngFor="let city of cities" [value]="city.id">
+                        {{ city.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="signUpForm.get('cityId').hasError('required')">
+                        City is required
+                    </mat-error>
+                    </mat-form-field>
+
+
+                    <!-- Agreements -->
+                    <div class="inline-flex items-end w-full mt-1.5">
+                        <mat-checkbox [formControlName]="'agreements'" color="primary">
+                            I agree with <a class="ml-1 text-primary-500 hover:underline">Terms</a> and
+                            <a class="ml-1 text-primary-500 hover:underline">Privacy Policy</a>
+                        </mat-checkbox>
+                    </div>
+
+                    <!-- Submit -->
                     <button
-                        mat-icon-button
-                        type="button"
-                        (click)="passwordField.type === 'password' ? passwordField.type = 'text' : passwordField.type = 'password'"
-                        matSuffix>
-                        <mat-icon
-                            class="icon-size-5"
-                            *ngIf="passwordField.type === 'password'"
-                            [svgIcon]="'heroicons_solid:eye'"></mat-icon>
-                        <mat-icon
-                            class="icon-size-5"
-                            *ngIf="passwordField.type === 'text'"
-                            [svgIcon]="'heroicons_solid:eye-slash'"></mat-icon>
-                    </button>
-                    <mat-error>
-                        Password is required
-                    </mat-error>
-                </mat-form-field>
-
-                <!-- Company field -->
-                <mat-form-field class="w-full">
-                    <mat-label>Company</mat-label>
-                    <input
-                        id="company-confirm"
-                        matInput
-                        [formControlName]="'company'">
-                </mat-form-field>
-
-                <!-- ToS and PP -->
-                <div class="inline-flex items-end w-full mt-1.5">
-                    <mat-checkbox
-                        class="-ml-2"
+                        class="fuse-mat-button-large w-full mt-6"
+                        mat-flat-button
                         [color]="'primary'"
-                        [formControlName]="'agreements'">
-                        <span>I agree with</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Terms
-                        </a>
-                        <span>and</span>
-                        <a
-                            class="ml-1 text-primary-500 hover:underline"
-                            [routerLink]="['./']">Privacy Policy
-                        </a>
-                    </mat-checkbox>
-                </div>
+                        [disabled]="signUpForm.disabled"
+                        (click)="signUp()">
+                        <span *ngIf="!signUpForm.disabled">Register Business</span>
+                        <mat-progress-spinner *ngIf="signUpForm.disabled" [diameter]="24" [mode]="'indeterminate'"></mat-progress-spinner>
+                    </button>
+                </form>
 
-                <!-- Submit button -->
-                <button
-                    class="fuse-mat-button-large w-full mt-6"
-                    mat-flat-button
-                    [color]="'primary'"
-                    [disabled]="signUpForm.disabled"
-                    (click)="signUp()">
-                    <span *ngIf="!signUpForm.disabled">
-                        Create your free account
-                    </span>
-                    <mat-progress-spinner
-                        *ngIf="signUpForm.disabled"
-                        [diameter]="24"
-                        [mode]="'indeterminate'"></mat-progress-spinner>
-                </button>
-
-            </form>
         </div>
     </div>
     <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
@@ -159,30 +152,13 @@
         <!-- Content -->
         <div class="z-10 relative w-full max-w-2xl">
             <div class="text-7xl font-bold leading-none text-gray-100">
-                <div>Welcome to</div>
-                <div>our community</div>
+                <div>Rent a Car System Managment</div>
+                 
             </div>
-            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
-                Fuse helps developers to build organized and well coded dashboards full of beautiful and rich modules.
-                Join us and start building your application today.
-            </div>
-            <div class="flex items-center mt-8">
-                <div class="flex flex-0 items-center -space-x-1.5">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-18.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/female-11.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-09.jpg">
-                    <img
-                        class="flex-0 w-10 h-10 rounded-full ring-4 ring-offset-1 ring-gray-800 ring-offset-gray-800 object-cover"
-                        src="assets/images/avatars/male-16.jpg">
-                </div>
-                <div class="ml-4 font-medium tracking-tight text-gray-400">More than 17k people joined us, it's your turn</div>
-            </div>
+          <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
+            Create your account to manage cars, reservations, and customers with ease. 
+            Join our Rent-a-Car system today and streamline your business in just a few clicks.
+          </div>  
         </div>
     </div>
 </div>
