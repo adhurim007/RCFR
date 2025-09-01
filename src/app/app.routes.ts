@@ -3,7 +3,7 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
-
+import { RoleGuard } from './core/auth/guards/role.guard';
 // @formatter:off
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -18,7 +18,7 @@ export const appRoutes: Route[] = [
     // path. Below is another redirection for that path to redirect the user to the desired
     // location. This is a small convenience to keep all main routes together here on this file.
     {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'example'},
-
+ 
     // Auth routes for guests
     {
         path: '',
@@ -76,5 +76,13 @@ export const appRoutes: Route[] = [
         children: [
             {path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes')},
         ]
-    }
+    },
+
+    {
+        path: 'admin/menus',
+        loadChildren: () =>
+            import('app/modules/admin/menus/menus.module').then(m => m.MenusModule),
+        canActivate: [RoleGuard],
+        data: { roles: ['SuperAdmin'] }
+    },
 ];

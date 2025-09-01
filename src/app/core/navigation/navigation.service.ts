@@ -1,40 +1,43 @@
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { environment } from 'environments/environment';
+import { MenuDto } from '../../modules/admin/menus/menu.model';
 import { Navigation } from 'app/core/navigation/navigation.types';
-import { Observable, ReplaySubject, tap } from 'rxjs';
+import { FuseNavigationItem } from '@fuse/components/navigation';
 
-@Injectable({providedIn: 'root'})
-export class NavigationService
-{
-    private _httpClient = inject(HttpClient);
-    private _navigation: ReplaySubject<Navigation> = new ReplaySubject<Navigation>(1);
+@Injectable({ providedIn: 'root' })
+export class NavigationService {
+  private _navigation: BehaviorSubject<Navigation> = new BehaviorSubject<Navigation>({
+    compact: [],
+    default: [],
+    futuristic: [],
+    horizontal: []
+  });
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Accessors
-    // -----------------------------------------------------------------------------------------------------
+  constructor(private http: HttpClient) {}
 
-    /**
-     * Getter for navigation
-     */
-    get navigation$(): Observable<Navigation>
-    {
-        return this._navigation.asObservable();
-    }
+  get navigation$(): Observable<Navigation> {
+    return this._navigation.asObservable();
+  }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Public methods
-    // -----------------------------------------------------------------------------------------------------
+  loadNavigation(): void {
+    this.http.get<MenuDto[]>(`${environment.apiUrl}/api/menus`)
+      .subscribe((menus) => {
+        const navItems: FuseNavigationItem[] = menus.map(menu => ({
+        id: menu.id.toString(),
+        title: menu.title,
+        type: (menu.type as FuseNavigationItem['type']) || 'basic',
+        icon: menu.icon || 'heroicons_outline:square-3-stack-3d',
+        link: menu.link || '/'
+      }));
 
-    /**
-     * Get all navigation data
-     */
-    get(): Observable<Navigation>
-    {
-        return this._httpClient.get<Navigation>('api/common/navigation').pipe(
-            tap((navigation) =>
-            {
-                this._navigation.next(navigation);
-            }),
-        );
-    }
+        this._navigation.next({
+          compact: [],
+          default: navItems,
+          futuristic: [],
+          horizontal: []
+        });
+      });
+  }
 }

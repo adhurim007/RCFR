@@ -65,6 +65,7 @@ export class AuthSignUpComponent implements OnInit {
             stateId: ['', Validators.required],
             cityId: ['', Validators.required],
             agreements: ['', Validators.requiredTrue],
+            Address: [''],
         });
 
         // ✅ Load states on init

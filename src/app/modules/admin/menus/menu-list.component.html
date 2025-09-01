@@ -1,0 +1,19 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-4">Menus</h2>
+  <table class="min-w-full divide-y divide-gray-200 mt-4">
+    <thead>
+      <tr>
+        <th class="px-6 py-3">Title</th>
+        <th class="px-6 py-3">Route</th>
+        <th class="px-6 py-3">Icon</th>
+      </tr>
+    </thead>  
+    <tbody>
+      <tr *ngFor="let menu of menus">
+        <td class="px-6 py-4">{{ menu.title }}</td>
+        <td class="px-6 py-4">{{ menu.type }}</td>
+        <td class="px-6 py-4">{{ menu.icon }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

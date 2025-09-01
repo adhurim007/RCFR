@@ -17,7 +17,7 @@ import { SearchComponent } from 'app/layout/common/search/search.component';
 import { ShortcutsComponent } from 'app/layout/common/shortcuts/shortcuts.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
-
+ 
 @Component({
     selector     : 'classic-layout',
     templateUrl  : './classic.component.html',
@@ -63,25 +63,25 @@ export class ClassicLayoutComponent implements OnInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
-        // Subscribe to navigation data
+    ngOnInit(): void {
+        // Load menus from backend
+        this._navigationService.loadNavigation();
+
+        // Subscribe to navigation
         this._navigationService.navigation$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe((navigation: Navigation) =>
-            {
+            .subscribe((navigation) => {
                 this.navigation = navigation;
             });
 
         // Subscribe to media changes
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))
-            .subscribe(({matchingAliases}) =>
-            {
-                // Check if the screen is small
+            .subscribe(({matchingAliases}) => {
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
     }
+
 
     /**
      * On destroy
