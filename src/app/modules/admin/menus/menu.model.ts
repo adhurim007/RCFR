@@ -3,14 +3,15 @@ export interface MenuDto {
   parentId?: number | null;
   title: string;
   subtitle?: string | null;
-  type?: string | null;        // "basic", "group", "collapsable"
-  link?: string | null;        // e.g. "/cars/list"
+  type?: 'basic' | 'group' | 'collapsable' | null;
+  link?: string | null;     
   icon?: string | null;
   hasSubMenu?: boolean;
-  claim?: string | null;
   active: boolean;
   sortNumber: number;
-
+ 
+  permission?: string | null;   
+ 
   createdBy?: string | null;
   createdOn?: string;
   lastModifiedBy?: string | null;

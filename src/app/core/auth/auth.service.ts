@@ -4,15 +4,26 @@ import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
 import { BehaviorSubject, catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { environment } from 'environments/environment';
+import { jwtDecode } from 'jwt-decode';
+
+export interface DecodedToken {
+    sub: string;
+    email: string;
+    role?: string | string[];
+    Permission?: string | string[];
+    exp: number;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-    private _authenticated: boolean = false;
+    private _authenticated = false;
     private _httpClient = inject(HttpClient);
     private _userService = inject(UserService);
 
-    // 🔹 Local user state
+    // 🔹 Local state
     private _user$ = new BehaviorSubject<any | null>(null);
+    private _permissions: string[] = [];
+    private _roles: string[] = [];
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -20,10 +31,29 @@ export class AuthService {
 
     set accessToken(token: string) {
         localStorage.setItem('accessToken', token);
+
+        // Decode claims from JWT
+        const decoded = this.decodeToken(token);
+        if (decoded) {
+            this._roles = Array.isArray(decoded.role) ? decoded.role : [decoded.role || ''];
+            this._permissions = Array.isArray(decoded.Permission)
+                ? decoded.Permission
+                : decoded.Permission
+                ? [decoded.Permission]
+                : [];
+        }
     }
 
     get accessToken(): string {
         return localStorage.getItem('accessToken') ?? '';
+    }
+
+    get permissions(): string[] {
+        return this._permissions;
+    }
+
+    get roles(): string[] {
+        return this._roles;
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -54,12 +84,15 @@ export class AuthService {
                 this._authenticated = true;
 
                 // Store user info in UserService and local state
+                const decoded = this.decodeToken(response.token);
+
                 const user = {
                     id: response.id,
                     email: response.email,
                     fullName: response.fullName,
                     name: response.fullName,
-                    roles: response.roles
+                    roles: this._roles,
+                    permissions: this._permissions
                 };
 
                 this._userService.user = user;
@@ -101,6 +134,8 @@ export class AuthService {
         this._authenticated = false;
         this._userService.clear();
         this._user$.next(null);
+        this._permissions = [];
+        this._roles = [];
         return of(true);
     }
 
@@ -154,5 +189,25 @@ export class AuthService {
 
     get user$(): Observable<any | null> {
         return this._user$.asObservable();
+    }
+
+    // -----------------------------------------------------------------------------------------------------
+    // @ Claims helpers
+    // -----------------------------------------------------------------------------------------------------
+
+    decodeToken(token: string): DecodedToken | null {
+        try {
+            return jwtDecode<DecodedToken>(token);
+        } catch {
+            return null;
+        }
+    }
+
+    hasPermission(permission: string): boolean {
+        return this._permissions.includes(permission);
+    }
+
+    hasRole(role: string): boolean {
+        return this._roles.includes(role);
     }
 }

@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { MenuDto } from '../../modules/admin/menus/menu.model';
 import { Navigation } from 'app/core/navigation/navigation.types';
 import { FuseNavigationItem } from '@fuse/components/navigation';
+import { AuthService } from 'app/core/auth/auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationService {
@@ -15,16 +16,19 @@ export class NavigationService {
     horizontal: []
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService   // ✅ inject AuthService
+  ) {}
 
   get navigation$(): Observable<Navigation> {
     return this._navigation.asObservable();
   }
 
-  loadNavigation(): void {
-    this.http.get<MenuDto[]>(`${environment.apiUrl}/api/menus`)
-      .subscribe((menus) => {
-        const navItems: FuseNavigationItem[] = menus.map(menu => ({
+loadNavigation(): void {
+  this.http.get<MenuDto[]>(`${environment.apiUrl}/api/menus/my-menus`)
+    .subscribe(menus => {
+      const navItems: FuseNavigationItem[] = menus.map(menu => ({
         id: menu.id.toString(),
         title: menu.title,
         type: (menu.type as FuseNavigationItem['type']) || 'basic',
@@ -32,12 +36,13 @@ export class NavigationService {
         link: menu.link || '/'
       }));
 
-        this._navigation.next({
-          compact: [],
-          default: navItems,
-          futuristic: [],
-          horizontal: []
-        });
+      this._navigation.next({
+        compact: [],
+        default: navItems,
+        futuristic: [],
+        horizontal: []
       });
-  }
+    });
+  } 
 }
+ 
