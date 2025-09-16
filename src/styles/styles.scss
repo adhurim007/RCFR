@@ -1,4 +1,21 @@
-/* ----------------------------------------------------------------------------------------------------- */
-/*  @ Import/write your custom styles here.
-/*  @ Styles from this file will override 'vendors.scss' and Fuse's base styles.
-/* ----------------------------------------------------------------------------------------------------- */
+.mat-elevation-z2.mat-table {
+  width: 100% !important;
+  min-width: 1000px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mat-header-cell, 
+.mat-cell {
+  padding: 16px 20px;
+  font-size: 14px;
+}
+
+.mat-header-cell {
+  font-weight: 600;
+  background: #f9fafb;
+}
+
+.mat-row:nth-child(even) {
+  background: #f5f7fa;
+}

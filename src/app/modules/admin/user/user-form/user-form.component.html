@@ -1,0 +1,51 @@
+<div class="max-w-2xl mx-auto mt-10 p-6 bg-white rounded shadow">
+  <h2 class="text-xl font-semibold mb-4">
+    {{ isEdit ? 'Edit User' : 'Create User' }}
+  </h2>
+
+  <form [formGroup]="userForm" (ngSubmit)="submit()">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Full Name</mat-label>
+      <input matInput formControlName="fullName" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Role</mat-label>
+      <mat-select formControlName="role">
+        <mat-option *ngFor="let role of roles" [value]="role">{{ role }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Business fields -->
+    <div *ngIf="userForm.value.role === 'Business'">
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Company Name</mat-label>
+        <input matInput formControlName="companyName" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Tax ID</mat-label>
+        <input matInput formControlName="taxId" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Contact Phone</mat-label>
+        <input matInput formControlName="contactPhone" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" />
+      </mat-form-field>
+    </div>
+
+    <button mat-flat-button color="primary" class="mt-4" type="submit">
+      {{ isEdit ? 'Update User' : 'Create User' }}
+    </button>
+  </form>
+</div>

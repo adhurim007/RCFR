@@ -1,0 +1,21 @@
+::ng-deep .mat-elevation-z2.mat-table {
+  width: 100% !important;
+  min-width: 1000px; // expand full width
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+::ng-deep .mat-header-cell, 
+::ng-deep .mat-cell {
+  padding: 16px 20px;
+  font-size: 14px;
+}
+
+::ng-deep .mat-header-cell {
+  font-weight: 600;
+  background: #f9fafb;
+}
+
+::ng-deep .mat-row:nth-child(even) {
+  background: #f5f7fa;
+}
