@@ -12,12 +12,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-
+import { MatCardModule } from '@angular/material/card';
 const routes: Routes = [
   { path: '', component: UserListComponent },
   { path: 'create', component: UserFormComponent },
   { path: 'edit/:id', component: UserFormComponent },
 ];
+
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ const routes: Routes = [
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule   // 👈 ADD THIS
   ]
 })
 export class UsersModule {}
+

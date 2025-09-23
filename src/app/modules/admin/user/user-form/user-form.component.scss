@@ -1,13 +1,39 @@
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.user-form-container {
+  padding: 1.5rem;
+}
+
+.user-form-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;          // take full width of red box
+  min-height: 100%;     // stretch vertically
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-title {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
 }
 
 mat-form-field {
   width: 100%;
 }
 
-button {
-  align-self: flex-end;
+.col-span-3 {
+  grid-column: span 3;
+}
+
+.form-actions {
+  grid-column: span 3;
+  text-align: right;
+}
+.fab-button {
+  right: 1rem !important;  // push it closer to edge
 }

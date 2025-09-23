@@ -11,7 +11,14 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 })
 export class UserListComponent implements OnInit {
   users: any[] = [];
-  displayedColumns: string[] = ['fullName', 'email', 'role', 'actions'];
+  displayedColumns: string[] = [
+    'fullName',
+    'email',
+    'phoneNumber', 
+    'BusinessName',
+    'roles',
+    'actions'
+  ];
 
   constructor(
     private userService: UserService,
