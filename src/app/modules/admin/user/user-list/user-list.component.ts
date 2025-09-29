@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'app/core/user/user.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ResetPasswordDialogComponent } from '../reset-password-dialog/reset-password-dialog.component'; // ✅ FIXED import
 
 @Component({
   selector: 'app-user-list',
@@ -14,9 +15,9 @@ export class UserListComponent implements OnInit {
   displayedColumns: string[] = [
     'fullName',
     'email',
-    'phoneNumber', 
-    'BusinessName',
-    'roles',
+    'phoneNumber',
+    'businessName',
+    'role',
     'actions'
   ];
 
@@ -55,6 +56,21 @@ export class UserListComponent implements OnInit {
         this.userService.deleteUser(id).subscribe({
           next: () => this.loadUsers(),
           error: (err) => console.error('Error deleting user', err)
+        });
+      }
+    });
+  }
+
+  openResetPassword(userId: string): void {
+    const dialogRef = this.dialog.open(ResetPasswordDialogComponent, {
+      width: '400px',
+      data: { userId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userService.resetPassword(userId, result.newPassword).subscribe(() => {
+          alert('Password reset successfully');
         });
       }
     });

@@ -17,7 +17,7 @@ export class UserService {
     get user$(): Observable<User> {
         return this._user.asObservable();
     }
-
+ 
     getCurrent(): User | null {
         let currentUser: User | null = null;
         this._user.subscribe(u => currentUser = u).unsubscribe();
@@ -38,23 +38,30 @@ export class UserService {
     return this.http.get<any[]>(`${environment.apiUrl}/api/users`);
   }
 
-  getUserById(id: string): Observable<any> {
-    return this.http.get<any>(`${environment.apiUrl}/api/users/${id}`);
-  }
+getUserById(id: string): Observable<any> {
+      return this.http.get<any>(`${environment.apiUrl}/api/users/${id}`);
+}
 
-  createUser(user: any): Observable<any> {
+resetPassword(userId: string, newPassword: string) {
+  return this.http.post(`${environment.apiUrl}/api/users/${userId}/reset-password`, {
+    userId,
+    newPassword
+  });
+}
+
+createUser(user: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/api/users/create`, user);
-  }
+}
 
-  updateUser(id: string, user: any): Observable<any> {
+updateUser(id: string, user: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/api/users/${id}`, user);
-  }
+}
 
-  deleteUser(id: string): Observable<any> {
+deleteUser(id: string): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/api/users/${id}`);
-  }
+}
 
-  getRoles(): Observable<string[]> {
+getRoles(): Observable<string[]> {
     return this.http.get<string[]>(`${environment.apiUrl}/api/users/roles`);
-  }
+}
 }

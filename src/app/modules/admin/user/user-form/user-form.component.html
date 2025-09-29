@@ -4,8 +4,7 @@
       {{ isEdit ? 'Update User' : 'Create User' }}
     </h2>
 
-     <form [formGroup]="userForm" (ngSubmit)="submit()" class="grid gap-4">
-      
+    <form [formGroup]="userForm" (ngSubmit)="submit()" class="grid gap-4 md:grid-cols-3">
       <!-- First Name -->
       <mat-form-field appearance="outline">
         <mat-label>First Name*</mat-label>
@@ -52,14 +51,12 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- Business Fields -->
+      <!-- Business Fields (only for BusinessAdmin) -->
       <ng-container *ngIf="userForm.get('role')?.value === 'BusinessAdmin'">
         <mat-form-field appearance="outline" class="col-span-3">
           <mat-label>Company Name</mat-label>
           <input matInput formControlName="companyName" />
         </mat-form-field>
-
-   
 
         <mat-form-field appearance="outline" class="col-span-3">
           <mat-label>Contact Phone</mat-label>
@@ -70,27 +67,27 @@
           <mat-label>Address</mat-label>
           <input matInput formControlName="address" />
         </mat-form-field>
-      </ng-container>
 
         <!-- State -->
-      <mat-form-field appearance="outline" class="col-span-3">
-        <mat-label>State</mat-label>
-        <mat-select formControlName="stateId">
-          <mat-option *ngFor="let state of states" [value]="state.id">
-            {{ state.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="col-span-3">
+          <mat-label>State</mat-label>
+          <mat-select formControlName="stateId">
+            <mat-option *ngFor="let state of states" [value]="state.id">
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-      <!-- City -->
-      <mat-form-field appearance="outline" class="col-span-3">
-        <mat-label>City</mat-label>
-        <mat-select formControlName="cityId">
-          <mat-option *ngFor="let city of cities" [value]="city.id">
-            {{ city.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <!-- City -->
+        <mat-form-field appearance="outline" class="col-span-3">
+          <mat-label>City</mat-label>
+          <mat-select formControlName="cityId">
+            <mat-option *ngFor="let city of cities" [value]="city.id">
+              {{ city.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
 
       <!-- Submit -->
       <div class="col-span-3 flex justify-end">
@@ -101,3 +98,4 @@
     </form>
   </div>
 </div>
+
