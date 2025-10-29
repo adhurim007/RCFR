@@ -6,12 +6,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-
+import { MatDialogModule } from '@angular/material/dialog';  // ✅ add this
+import { MatIconModule } from '@angular/material/icon';
 import { MenuFormComponent } from './menu-form/menu-form.component';
+import { MenuListComponent } from './menu-list.component';   // ✅ add this
 import { MenusRoutingModule } from './menus-routing.module';
 
 @NgModule({
-  declarations: [MenuFormComponent],
+  declarations: [
+    MenuFormComponent,
+    MenuListComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -20,7 +25,9 @@ import { MenusRoutingModule } from './menus-routing.module';
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,
-    MenusRoutingModule
+    MatDialogModule,      // ✅ add dialog module
+    MenusRoutingModule,
+    MatIconModule,  
   ]
 })
 export class MenusModule {}

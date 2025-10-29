@@ -56,31 +56,28 @@ export const appRoutes: Route[] = [
     component: LayoutComponent,                // ⬅️ not 'empty' here
     resolve: { initialData: initialDataResolver },
     children: [
-      {
-        path: 'admin',
-        children: [
-          { path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
-          {
-            path: 'roles',
-            loadChildren: () => import('app/modules/admin/roles/roles.module').then(m => m.RolesModule),
-            // canActivate: [RoleGuard],
-            // data: { roles: ['SuperAdmin'] }
-          },
-          {
-            path: 'menus',
-            loadChildren: () => import('app/modules/admin/menus/menus.module').then(m => m.MenusModule),
-            canActivate: [RoleGuard],
-            data: { roles: ['SuperAdmin'] }
-          },
-          {
-            path: 'users',
-            loadChildren: () => import('app/modules/admin/user/users.module').then(m => m.UsersModule),
-            // canActivate: [RoleGuard],
-            // data: { roles: ['SuperAdmin'] }
-          },
-          { path: '', pathMatch: 'full', redirectTo: 'example' }
-        ] 
-      }, 
+     {
+      path: 'admin',
+      children: [
+        { path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
+        {
+          path: 'roles',
+          loadChildren: () => import('app/modules/admin/roles/roles.module').then(m => m.RolesModule),
+        },
+        {
+          path: 'menu', // ✅ singular (matches DB link)
+          loadChildren: () => import('app/modules/admin/menus/menus.module').then(m => m.MenusModule),
+         // canActivate: [RoleGuard],
+          //data: { roles: ['SuperAdmin'] }
+        },
+        {
+          path: 'users',
+          loadChildren: () => import('app/modules/admin/user/users.module').then(m => m.UsersModule),
+        },
+        { path: '', pathMatch: 'full', redirectTo: 'example' }
+      ]
+    },
+
     ]
   },
 

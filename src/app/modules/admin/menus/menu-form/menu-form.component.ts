@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MenuService } from 'app/services/menu.service';
 
 @Component({
   selector: 'app-menu-form',
@@ -9,40 +10,62 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class MenuFormComponent implements OnInit {
   form: FormGroup;
   isEdit = false;
+  claims: string[] = [];
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router
+    private menuService: MenuService,
+    @Optional() private dialogRef: MatDialogRef<MenuFormComponent>, // ✅ Optional
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any            // ✅ Optional
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       title: ['', Validators.required],
-      route: ['', Validators.required],
+      subtitle: [''],
+      type: ['', Validators.required],
       icon: [''],
+      link: [''],
+      hasSubMenu: [false],
+      active: [true],
+      claim: ['', Validators.required],
+      sortNumber: [0, Validators.required],
     });
 
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
+    if (this.data) {
       this.isEdit = true;
-      // later: load menu by id from API
-      this.form.patchValue({
-        title: 'Cars',
-        route: '/cars',
-        icon: 'heroicons_outline:truck',
-      });
+      this.form.patchValue(this.data);
     }
+
+    this.menuService.getAllClaims().subscribe({
+      next: (claims) => (this.claims = claims),
+      error: (err) => console.error('Error loading claims', err),
+    });
   }
 
   save(): void {
     if (this.form.invalid) return;
+    const payload = this.form.value;
 
     if (this.isEdit) {
-      console.log('Update menu:', this.form.value);
+      this.menuService.updateMenu(this.data?.id, payload).subscribe(() => {
+        this.closeDialog(true);
+      });
     } else {
-      console.log('Create menu:', this.form.value);
+      this.menuService.createMenu(payload).subscribe(() => {
+        this.closeDialog(true);
+      });
     }
-    this.router.navigate(['/admin/menus']);
+  }
+
+  cancel(): void {
+    this.closeDialog(false);
+  }
+
+  private closeDialog(success: boolean): void {
+    // ✅ Safe close for both dialog and routed usage
+    if (this.dialogRef) {
+      this.dialogRef.close(success);
+    }
   }
 }
