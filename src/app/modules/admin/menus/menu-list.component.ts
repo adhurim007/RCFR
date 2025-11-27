@@ -42,9 +42,22 @@ createMenu(): void {
     }
   });
 }
+  
+  // EDIT
   editMenu(id: number): void {
-    this.router.navigate(['/admin/menu/edit', id]);
+    const dialogRef = this.dialog.open(MenuFormComponent, {
+      width: '850px',
+      disableClose: true,
+      data: { id }  // kalojmë ID-në për EDIT
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'saved') {
+        this.loadMenus();
+      }
+    });
   }
+
 
   deleteMenu(id: number): void {
     Swal.fire({

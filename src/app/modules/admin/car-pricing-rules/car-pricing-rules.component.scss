@@ -1,0 +1,72 @@
+.pricing-rules-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+/* Header layout */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+/* Table wrapper full width */
+.table-wrapper {
+  width: 100%;
+}
+
+/* Make table full width like FUSE tables */
+.full-width-table {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Header row */
+.mat-header-row {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+/* Action buttons alignment */
+.actions-cell {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.actions-header {
+  width: 80px;
+}
+
+/* No data message */
+.no-data {
+  text-align: center;
+  padding: 24px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}

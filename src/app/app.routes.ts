@@ -56,27 +56,71 @@ export const appRoutes: Route[] = [
     component: LayoutComponent,                // ⬅️ not 'empty' here
     resolve: { initialData: initialDataResolver },
     children: [
-     {
+    {
       path: 'admin',
       children: [
-        { path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
+        { 
+          path: 'example', 
+          loadChildren: () => import('app/modules/admin/example/example.routes') 
+        },
+
         {
           path: 'roles',
-          loadChildren: () => import('app/modules/admin/roles/roles.module').then(m => m.RolesModule),
+          loadChildren: () =>
+            import('app/modules/admin/roles/roles.module').then(m => m.RolesModule),
         },
+
         {
-          path: 'menu', // ✅ singular (matches DB link)
-          loadChildren: () => import('app/modules/admin/menus/menus.module').then(m => m.MenusModule),
-         // canActivate: [RoleGuard],
-          //data: { roles: ['SuperAdmin'] }
+          path: 'menu',
+          loadChildren: () =>
+            import('app/modules/admin/menus/menus.module').then(m => m.MenusModule),
         },
+
         {
           path: 'users',
-          loadChildren: () => import('app/modules/admin/user/users.module').then(m => m.UsersModule),
+          loadChildren: () =>
+            import('app/modules/admin/user/users.module').then(m => m.UsersModule),
         },
+
+        {
+          path: 'cars',
+          loadChildren: () =>
+            import('app/modules/admin/cars/car.module').then(m => m.CarModule),
+        },
+        {
+          path: 'car-pricing-rules',
+          loadChildren: () =>
+            import('app/modules/admin/car-pricing-rules/car-pricing-rules.module')
+              .then(m => m.CarPricingRulesModule)
+        },
+        {
+            path: 'carbrands',
+            loadChildren: () =>
+                import('app/modules/admin/car-brands/car-brands.module')
+                    .then(m => m.CarBrandsModule),
+        },
+        {
+          path: 'carmodels',
+          loadChildren: () =>
+            import('app/modules/admin/car-models/car-models.module')
+              .then(m => m.CarModelsModule)
+        },
+        {
+            path: 'extra-services',
+            loadChildren: () =>
+                import('app/modules/admin/extra-services/extra-services.module')
+                    .then(m => m.ExtraServicesModule)
+        },
+        {
+          path: 'business-locations',
+          loadChildren: () =>
+            import('app/modules/admin/business-locations/business-locations.module')
+              .then(m => m.BusinessLocationsModule)
+        },
+
         { path: '', pathMatch: 'full', redirectTo: 'example' }
       ]
-    },
+    }
 
     ]
   },

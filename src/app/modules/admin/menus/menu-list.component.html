@@ -1,72 +1,98 @@
-<div class="p-6">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-    <h2 class="text-2xl font-semibold text-gray-800">Listë e menyrave</h2>
+<div class="flex flex-col flex-auto w-full p-6">
 
-    <button
-      mat-flat-button
-      color="primary"
-      class="mt-4 sm:mt-0"
-      (click)="createMenu()">
-      <mat-icon class="mr-2">add</mat-icon>
-      Krijo Menu
-    </button>
-  </div>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Listë e menyrave</h2>
 
-  <!-- Responsive table container -->
-  <div class="overflow-x-auto bg-white rounded-2xl shadow-md border border-gray-200">
-    <table class="min-w-full text-sm text-left text-gray-700">
-      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
-        <tr>
-          <th class="px-6 py-3">Titulli</th>
-          <th class="px-6 py-3">Nëntitulli</th>
-          <th class="px-6 py-3">Lloji</th>
-          <th class="px-6 py-3">Ikona</th>
-          <th class="px-6 py-3">Url</th>
-          <th class="px-6 py-3 text-center">Aktiv</th>
-          <th class="px-6 py-3 text-right">Veprime</th>
-        </tr>
-      </thead>
+        <button
+            mat-flat-button
+            color="primary"
+            class="mt-4 sm:mt-0"
+            (click)="createMenu()">
+            <mat-icon class="mr-2">add</mat-icon>
+            Krijo Menu
+        </button>
+    </div>
 
-      <tbody>
-        <tr
-          *ngFor="let menu of menus"
-          class="border-b hover:bg-gray-50 transition-colors duration-150">
-          <td class="px-6 py-4 font-medium text-gray-900">{{ menu.title }}</td>
-          <td class="px-6 py-4">{{ menu.subtitle || '-' }}</td>
-          <td class="px-6 py-4 capitalize">{{ menu.type || '-' }}</td>
-          <td class="px-6 py-4">
-            <mat-icon>{{ menu.icon || 'menu' }}</mat-icon>
-          </td>
-          <td class="px-6 py-4 text-blue-600">{{ menu.link || '-' }}</td>
-          <td class="px-6 py-4 text-center">
-            <span
-              class="inline-flex items-center justify-center px-2 py-1 text-xs font-semibold rounded-full"
-              [ngClass]="menu.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'">
-              {{ menu.active ? 'Po' : 'Jo' }}
-            </span>
-          </td>
-          <td class="px-6 py-4 text-right space-x-2">
-            <button
-              mat-stroked-button
-              color="primary"
-              (click)="editMenu(menu.id)">
-              Ndrysho
-            </button>
-            <button
-              mat-stroked-button
-              color="warn"
-              (click)="deleteMenu(menu.id)">
-              Fshi
-            </button>
-          </td>
-        </tr>
+    <!-- Table Wrapper -->
+    <div class="w-full overflow-x-auto rounded-2xl shadow border border-gray-200 bg-white">
 
-        <tr *ngIf="menus.length === 0">
-          <td colspan="7" class="text-center py-6 text-gray-400">
-            Nuk ka menyrë të regjistruar.
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <table class="min-w-full text-sm text-left text-gray-700">
+            <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+                <tr>
+                    <th class="px-6 py-3">Titulli</th>
+                    <th class="px-6 py-3">Nëntitulli</th>
+                    <th class="px-6 py-3">Lloji</th>
+                    <th class="px-6 py-3">Ikona</th>
+                    <th class="px-6 py-3">Url</th>
+                    <th class="px-6 py-3 text-center">Aktiv</th>
+                    <th class="px-6 py-3 text-right">Veprime</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <!-- Row -->
+                <tr
+                    *ngFor="let menu of menus"
+                    class="border-b hover:bg-gray-50 transition-colors duration-150">
+
+                    <td class="px-6 py-4 font-medium text-gray-900">
+                        {{ menu.title }}
+                    </td>
+
+                    <td class="px-6 py-4">
+                        {{ menu.subtitle || '-' }}
+                    </td>
+
+                    <td class="px-6 py-4 capitalize">
+                        {{ menu.type || '-' }}
+                    </td>
+
+                    <td class="px-6 py-4">
+                        <mat-icon>{{ menu.icon || 'menu' }}</mat-icon>
+                    </td>
+
+                    <td class="px-6 py-4 text-blue-600">
+                        {{ menu.link || '-' }}
+                    </td>
+
+                    <td class="px-6 py-4 text-center">
+                        <span
+                            class="inline-flex items-center justify-center px-2 py-1 text-xs font-semibold rounded-full"
+                            [ngClass]="menu.active
+                                ? 'bg-green-100 text-green-700'
+                                : 'bg-red-100 text-red-700'">
+                            {{ menu.active ? 'Po' : 'Jo' }}
+                        </span>
+                    </td>
+
+                    <td class="px-6 py-4 text-right space-x-2">
+                        <button
+                            mat-stroked-button
+                            color="primary"
+                            (click)="editMenu(menu.id)">
+                            Ndrysho
+                        </button>
+
+                        <button
+                            mat-stroked-button
+                            color="warn"
+                            (click)="deleteMenu(menu.id)">
+                            Fshi
+                        </button>
+                    </td>
+                </tr>
+
+                <!-- Empty State -->
+                <tr *ngIf="menus.length === 0">
+                    <td colspan="7" class="text-center py-6 text-gray-400">
+                        Nuk ka menyrë të regjistruar.
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
 </div>

@@ -1,0 +1,52 @@
+<div class="p-6 w-full">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-semibold">Extra services</h1>
+
+        <button mat-raised-button color="primary" (click)="openCreate()">
+            + Add service
+        </button>
+    </div>
+
+    <!-- Table Container -->
+    <div class="bg-white rounded-lg shadow-sm border w-full">
+
+        <table class="w-full">
+            <thead>
+                <tr class="text-left bg-gray-50 border-b">
+                    <th class="p-4 font-medium">Name</th>
+                    <th class="p-4 font-medium">Price per day (€)</th>
+                    <th class="p-4 text-right font-medium">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody *ngIf="services.length > 0; else emptyState">
+                <tr *ngFor="let s of services" class="border-b hover:bg-gray-50">
+                    <td class="p-4">{{ s.name }}</td>
+                    <td class="p-4">{{ s.pricePerDay | currency }}</td>
+
+                    <td class="p-4 text-right space-x-2">
+
+                        <button mat-icon-button color="primary" (click)="openEdit(s)">
+                            <mat-icon>edit</mat-icon>
+                        </button>
+
+                        <button mat-icon-button color="warn" (click)="delete(s.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Empty State -->
+        <ng-template #emptyState>
+            <div class="p-6 text-center text-gray-500">
+                No extra services found.
+            </div>
+        </ng-template>
+
+    </div>
+</div>

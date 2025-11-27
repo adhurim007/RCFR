@@ -1,61 +1,97 @@
-<div class="p-6">
-  <h2 class="text-xl font-semibold mb-4">Users</h2>
+<div class="flex flex-col flex-auto w-full p-6">
 
-  <button mat-flat-button color="primary" routerLink="/admin/users/create">
-    + Create User
-  </button>
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+        <h2 class="text-2xl font-semibold text-gray-800">Users</h2>
 
-  <table mat-table [dataSource]="users" class="w-full mt-4 mat-elevation-z2">
-
-    <!-- Full Name -->
-    <ng-container matColumnDef="fullName">
-      <th mat-header-cell *matHeaderCellDef> Name </th>
-      <td mat-cell *matCellDef="let user"> {{ user.fullName }} </td>
-    </ng-container>
-
-    <!-- Email -->
-    <ng-container matColumnDef="email">
-      <th mat-header-cell *matHeaderCellDef> Email </th>
-      <td mat-cell *matCellDef="let user"> {{ user.email }} </td>
-    </ng-container>
-
-    <!-- Phone -->
-    <ng-container matColumnDef="phoneNumber">
-      <th mat-header-cell *matHeaderCellDef> Phone </th>
-      <td mat-cell *matCellDef="let user"> {{ user.phoneNumber }} </td>
-    </ng-container>
-
-    <!-- Address -->
-   <ng-container matColumnDef="businessName">
-    <th mat-header-cell *matHeaderCellDef> Business </th>
-    <td mat-cell *matCellDef="let user"> {{ user.businessName || '-' }} </td>
-  </ng-container>
-
-    <!-- Roles -->
-  <ng-container matColumnDef="role">
-    <th mat-header-cell *matHeaderCellDef> Roles </th>
-    <td mat-cell *matCellDef="let user">
-      {{ user.roles?.length ? user.roles.join(', ') : '-' }}
-    </td>
-  </ng-container>
-
-    <!-- Actions -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef class="text-right"> Actions </th>
-      <td mat-cell *matCellDef="let user" class="text-right">
-        <button mat-stroked-button color="primary" (click)="editUser(user.id)">
-          Edit
+        <button 
+            mat-flat-button 
+            color="primary" 
+            class="mt-4 sm:mt-0"
+            routerLink="/admin/users/create">
+            + Create User
         </button>
-        <button mat-stroked-button color="warn" (click)="deleteUser(user.id)">
-          Delete
-        </button>
-        <button mat-stroked-button color="accent" (click)="openResetPassword(user.id)">
-          Reset Password
-        </button>
-      </td>
-    </ng-container>
+    </div>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+    <!-- Responsive Table Wrapper -->
+    <div class="w-full overflow-x-auto rounded-2xl shadow border border-gray-200 bg-white">
+
+        <table mat-table [dataSource]="users" class="w-full mat-elevation-z0">
+
+            <!-- Full Name -->
+            <ng-container matColumnDef="fullName">
+                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Name</th>
+                <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                    {{ user.fullName }}
+                </td>
+            </ng-container>
+
+            <!-- Email -->
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Email</th>
+                <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                    {{ user.email }}
+                </td>
+            </ng-container>
+
+            <!-- Phone Number -->
+            <ng-container matColumnDef="phoneNumber">
+                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Phone</th>
+                <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                    {{ user.phoneNumber }}
+                </td>
+            </ng-container>
+
+            <!-- Business -->
+            <ng-container matColumnDef="businessName">
+                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Business</th>
+                <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                    {{ user.businessName || '-' }}
+                </td>
+            </ng-container>
+
+            <!-- Roles -->
+            <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Roles</th>
+                <td mat-cell *matCellDef="let user" class="px-6 py-4">
+                    {{ user.roles?.length ? user.roles.join(', ') : '-' }}
+                </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-right font-medium">Actions</th>
+                <td mat-cell *matCellDef="let user" class="px-6 py-4 text-right space-x-2">
+
+                    <button mat-stroked-button color="primary"
+                        (click)="editUser(user.id)">
+                        Edit
+                    </button>
+
+                    <button mat-stroked-button color="warn"
+                        (click)="deleteUser(user.id)">
+                        Delete
+                    </button>
+
+                    <button mat-stroked-button color="accent"
+                        (click)="openResetPassword(user.id)">
+                        Reset Password
+                    </button>
+
+                </td>
+            </ng-container>
+
+            <!-- Header + Rows -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+        </table>
+
+        <!-- Empty State -->
+        <div *ngIf="users.length === 0" class="text-center py-6 text-gray-400">
+            Nuk ka përdorues.
+        </div>
+
+    </div>
+
 </div>

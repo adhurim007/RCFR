@@ -1,0 +1,72 @@
+<div class="p-6 w-full">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <h2 class="text-2xl font-semibold text-gray-800">
+      Lista e veturave
+    </h2>
+
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="createCar()"
+      class="mt-4 sm:mt-0"
+    >
+      <mat-icon class="mr-2">add</mat-icon>
+      Shto veturë
+    </button>
+  </div>
+
+  <!-- FULL WIDTH TABLE WRAPPER -->
+  <div class="w-full bg-white rounded-2xl shadow-md border border-gray-200 overflow-x-auto">
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th class="px-6 py-3">Brand</th>
+          <th class="px-6 py-3">Model</th>
+          <th class="px-6 py-3">License Plate</th>
+          <th class="px-6 py-3">Daily Price</th>
+          <th class="px-6 py-3">Status</th>
+          <th class="px-6 py-3 text-right">Veprime</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let car of cars"
+          class="border-b hover:bg-gray-50 transition-colors duration-150"
+        >
+          <td class="px-6 py-4">{{ car.carBrandName }}</td>
+          <td class="px-6 py-4">{{ car.carModelName }}</td>
+          <td class="px-6 py-4">{{ car.licensePlate }}</td>
+          <td class="px-6 py-4">{{ car.dailyPrice }} €</td>
+
+          <td class="px-6 py-4">
+            <span
+              class="inline-flex px-2 py-1 rounded-full text-xs font-semibold"
+              [ngClass]="car.isAvailable
+                ? 'bg-green-100 text-green-700'
+                : 'bg-red-100 text-red-700'"
+            >
+              {{ car.isAvailable ? 'Aktiv' : 'Jo aktiv' }}
+            </span>
+          </td>
+
+          <td class="px-6 py-4 text-right space-x-2">
+            <button mat-icon-button color="primary" [routerLink]="['/admin/cars/edit', car.id]">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="delete(car.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="cars.length === 0">
+          <td colspan="6" class="text-center py-6 text-gray-400">
+            Nuk ka asnjë veturë të regjistruar.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

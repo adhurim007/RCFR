@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>
+  {{ data.isEdit ? 'Edit Location' : 'Add Location' }}
+</h2>
+
+<div mat-dialog-content [formGroup]="form">
+
+    <mat-form-field class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address">
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>State</mat-label>
+        <mat-select formControlName="stateId" (selectionChange)="onStateChange($event)">
+            <mat-option *ngFor="let s of states" [value]="s.id">
+                {{ s.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-full">
+        <mat-label>City</mat-label>
+        <mat-select formControlName="cityId">
+            <mat-option *ngFor="let c of cities" [value]="c.id">
+                {{ c.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="save()">Save</button>
+</div>

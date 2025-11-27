@@ -38,4 +38,5 @@ export class MenuService {
    getAllClaims(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/claims`);
   }
+ 
 }

@@ -1,0 +1,43 @@
+.page-wrapper {
+  width: 100%;
+  padding: 32px;
+  background: #ffffff;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 32px;
+}
+
+.car-form-grid {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.description-field {
+  grid-column: 1 / span 3;
+}
+
+.available-box {
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  grid-column: 1 / span 3;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 16px;
+}

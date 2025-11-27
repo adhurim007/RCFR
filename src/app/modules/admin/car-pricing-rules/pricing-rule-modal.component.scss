@@ -1,0 +1,19 @@
+.space-y-4 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dates-row {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+
+  .w-full {
+    flex: 1;
+  }
+}
+
+.w-full {
+  width: 100%;
+}

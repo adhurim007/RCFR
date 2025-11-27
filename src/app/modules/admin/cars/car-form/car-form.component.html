@@ -1,0 +1,108 @@
+<div class="w-full bg-white p-10 rounded-xl shadow">
+
+    <h1 class="text-3xl font-semibold mb-8">Create Car</h1>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="space-y-6">
+
+        <!-- GRID FIELDS -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            <!-- Brand -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Brand *</mat-label>
+                <mat-select formControlName="carBrandId" (selectionChange)="loadModels($event.value)">
+                    <mat-option *ngFor="let b of brands" [value]="b.id">
+                        {{ b.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Model -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Model *</mat-label>
+                <mat-select formControlName="carModelId">
+                    <mat-option *ngFor="let m of models" [value]="m.id">
+                        {{ m.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Car Type -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Car Type *</mat-label>
+                <mat-select formControlName="carTypeId">
+                    <mat-option *ngFor="let t of types" [value]="t.id">
+                        {{ t.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Fuel Type -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Fuel Type *</mat-label>
+                <mat-select formControlName="fuelTypeId">
+                    <mat-option *ngFor="let f of fuels" [value]="f.id">
+                        {{ f.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Transmission -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Transmission *</mat-label>
+                <mat-select formControlName="transmissionId">
+                    <mat-option *ngFor="let t of transmissions" [value]="t.id">
+                        {{ t.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- License Plate -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>License Plate *</mat-label>
+                <input matInput formControlName="licensePlate">
+            </mat-form-field>
+
+            <!-- Color -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Color</mat-label>
+                <input matInput formControlName="color">
+            </mat-form-field>
+
+            <!-- Daily Price -->
+            <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Daily Price (€) *</mat-label>
+                <input matInput type="number" formControlName="dailyPrice">
+            </mat-form-field>
+
+            <!-- File Upload -->
+            <div class="flex flex-col w-full">
+                <label class="mb-2 text-sm font-medium text-gray-700">Car Images</label>
+                <input type="file" multiple (change)="onFilesSelected($event)" class="border p-2 rounded">
+                <small class="text-xs text-gray-500">You can upload multiple images.</small>
+            </div>
+
+            <!-- Available -->
+            <mat-checkbox formControlName="isAvailable" class="mt-4">
+                Available
+            </mat-checkbox>
+
+        </div>
+
+        <!-- Description -->
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Description</mat-label>
+            <textarea matInput rows="4" formControlName="description"></textarea>
+        </mat-form-field>
+
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-4 pt-4">
+            <button mat-button type="button" (click)="cancel()">Cancel</button>
+            <button mat-flat-button color="primary" type="submit">
+                {{ isEdit ? 'Update Car' : 'Create Car' }}
+            </button>
+        </div>
+
+    </form>
+
+</div>

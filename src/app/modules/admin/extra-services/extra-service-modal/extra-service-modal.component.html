@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>
+    {{ data.isEdit ? 'Edit Extra Service' : 'Add Extra Service' }}
+</h2>
+
+<div mat-dialog-content>
+
+    <form [formGroup]="form" class="flex flex-col gap-4">
+
+        <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Price Per Day</mat-label>
+            <input type="number" matInput formControlName="pricePerDay" />
+        </mat-form-field>
+
+    </form>
+
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cancel</button>
+    <button mat-flat-button color="primary" (click)="save()">Save</button>
+</div>
