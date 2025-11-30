@@ -117,6 +117,12 @@ export const appRoutes: Route[] = [
             import('app/modules/admin/business-locations/business-locations.module')
               .then(m => m.BusinessLocationsModule)
         },
+          {
+            path: 'vehicle-inspections',
+            loadChildren: () =>
+                import('app/modules/admin/vehicle-inspections/vehicle-inspections.module')
+                    .then(m => m.VehicleInspectionsModule)
+        },
 
         { path: '', pathMatch: 'full', redirectTo: 'example' }
       ]

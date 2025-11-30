@@ -1,0 +1,46 @@
+<div class="flex flex-col w-full max-w-3xl mx-auto p-6">
+
+    <h1 class="text-2xl font-semibold mb-6">
+        {{ isEdit ? 'Edit Inspection' : 'New Vehicle Inspection' }}
+    </h1>
+
+    <form [formGroup]="form" class="space-y-6">
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let t of types" [value]="t.value">
+                    {{ t.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Mileage</mat-label>
+            <input matInput type="number" formControlName="mileage">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Fuel Level (%)</mat-label>
+            <input matInput type="number" formControlName="fuelLevel">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tire Condition</mat-label>
+            <input matInput formControlName="tireCondition">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Overall Condition</mat-label>
+            <textarea matInput formControlName="overallCondition"></textarea>
+        </mat-form-field>
+
+        <div class="flex justify-end space-x-3 mt-6">
+            <button mat-button color="primary" (click)="cancel()">Cancel</button>
+            <button mat-flat-button color="accent" (click)="save()" [disabled]="form.invalid">
+                {{ isEdit ? 'Update' : 'Save' }}
+            </button>
+        </div>
+
+    </form>
+</div>
