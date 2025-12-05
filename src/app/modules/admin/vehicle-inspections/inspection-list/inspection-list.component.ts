@@ -24,10 +24,10 @@ export class InspectionListComponent implements OnInit {
     this.service.getAll().subscribe(res => this.inspections = res);
   }
 
-  create(reservationId: number): void {
-    this.router.navigate(['/admin/vehicle-inspections/create', reservationId]);
+  create(): void {
+      this.router.navigate(['/admin/vehicle-inspections/create']);
   }
-
+ 
   edit(id: number): void {
     this.router.navigate(['/admin/vehicle-inspections/edit', id]);
   }

@@ -1,0 +1,47 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+
+export interface Customer {
+    id: number;
+    userId: string;
+    fullName: string;
+    email?: string;
+    phoneNumber: string;
+    documentType: string;
+    documentNumber: string;
+    dateOfBirth: string;
+    address?: string;
+}
+
+@Injectable({
+    providedIn: 'root'
+})
+export class CustomerService {
+
+    private apiUrl = environment.apiUrl + '/api/customers';
+
+  
+    constructor(private http: HttpClient) {}
+
+    getAll(): Observable<Customer[]> {
+        return this.http.get<Customer[]>(this.apiUrl);
+    }
+
+    getById(id: number): Observable<Customer> {
+        return this.http.get<Customer>(`${this.apiUrl}/${id}`);
+    }
+
+    create(customer: Customer): Observable<number> {
+        return this.http.post<number>(this.apiUrl, customer);
+    }
+
+    update(customer: Customer): Observable<void> {
+        return this.http.put<void>(`${this.apiUrl}/${customer.id}`, customer);
+    }
+
+    delete(id: number): Observable<void> {
+        return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
+}

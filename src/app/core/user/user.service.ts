@@ -20,8 +20,20 @@ export class UserService {
  
     getCurrent(): User | null {
         let currentUser: User | null = null;
+
         this._user.subscribe(u => currentUser = u).unsubscribe();
-        return currentUser;
+
+        if (currentUser) return currentUser;
+
+        
+        const stored = localStorage.getItem('user');
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            this._user.next(parsed);     // reinject into ReplaySubject
+            return parsed;
+        }
+
+        return null;
     }
 
     clear(): void {
@@ -40,6 +52,10 @@ export class UserService {
 
 getUserById(id: string): Observable<any> {
       return this.http.get<any>(`${environment.apiUrl}/api/users/${id}`);
+}
+
+getBusinessId(userId: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/users/${userId}/business-id`);
 }
 
 resetPassword(userId: string, newPassword: string) {

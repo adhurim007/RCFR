@@ -20,6 +20,10 @@ export class BusinessLocationService {
     return this.http.get<any[]>(`${this.apiUrl}/api/businesslocations/all`);
   }
 
+  getBusinesses(): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/api/businesslocations/businesses`);
+    }
+
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/${id}`);
   }

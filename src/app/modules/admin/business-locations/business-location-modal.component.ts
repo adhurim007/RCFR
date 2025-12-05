@@ -14,7 +14,7 @@ export class BusinessLocationModalComponent implements OnInit {
   form!: FormGroup;
   states: any[] = [];
   cities: any[] = [];
-
+  businesses: any[] = [];
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<BusinessLocationModalComponent>,
@@ -27,19 +27,23 @@ export class BusinessLocationModalComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [this.data?.location?.id ?? 0],
-      businessId: [this.data?.location?.businessId ?? this.data.businessId, Validators.required],
+      businessId: [this.data?.location?.businessId ?? null, Validators.required],
       name: [this.data?.location?.name ?? '', Validators.required],
-      address: [this.data?.location?.address ?? ''],
+      address: [''],
       stateId: [this.data?.location?.stateId ?? null, Validators.required],
       cityId: [this.data?.location?.cityId ?? null, Validators.required]
     });
 
+    this.loadBusinesses();
     this.loadStates();
 
-    // Nëse është EDIT → mbush cities
     if (this.data?.isEdit && this.data.location.stateId) {
       this.loadCities(this.data.location.stateId);
     }
+  }
+
+  loadBusinesses(): void {
+    this.service.getBusinesses().subscribe(res => this.businesses = res);
   }
 
   loadStates(): void {
@@ -59,7 +63,7 @@ export class BusinessLocationModalComponent implements OnInit {
   save(): void {
     if (this.form.invalid) return;
 
-    const dto = this.form.value;   // mjafton — gjithçka është në form
+    const dto = this.form.value;   
 
     let request$: Observable<any> = this.data.isEdit
       ? this.service.update(dto)

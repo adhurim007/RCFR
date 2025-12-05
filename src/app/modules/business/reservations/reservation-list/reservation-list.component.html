@@ -1,0 +1,63 @@
+<div class="p-6 w-full">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <h2 class="text-2xl font-semibold text-gray-800">
+      Lista e rezervimeve
+    </h2>
+
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="createReservation()"
+      class="mt-4 sm:mt-0"
+    >
+      <mat-icon class="mr-2">add</mat-icon>
+      Shto rezervim
+    </button>
+  </div>
+
+  <div class="w-full bg-white rounded-2xl shadow-md border border-gray-200 overflow-x-auto">
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th class="px-6 py-3">Nr. Rezervimit</th>
+          <th class="px-6 py-3">Klienti</th>
+          <th class="px-6 py-3">Veturë</th>
+          <th class="px-6 py-3">Data Pickup</th>
+          <th class="px-6 py-3">Data Dropoff</th>
+          <th class="px-6 py-3">Totali</th>
+          <th class="px-6 py-3 text-right">Veprime</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let r of reservations"
+          class="border-b hover:bg-gray-50 transition-colors duration-150"
+        >
+          <td class="px-6 py-4">{{ r.reservationNumber }}</td>
+          <td class="px-6 py-4">{{ r.customerName }}</td>
+          <td class="px-6 py-4">{{ r.carName }}</td>
+          <td class="px-6 py-4">{{ r.pickupDate | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4">{{ r.dropoffDate | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4">{{ r.totalPrice }} €</td>
+
+          <td class="px-6 py-4 text-right space-x-2">
+            <button mat-icon-button color="primary" (click)="editReservation(r.id)">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="deleteReservation(r.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="reservations.length === 0 && !loading">
+          <td colspan="7" class="text-center py-6 text-gray-400">
+            Nuk ka asnjë rezervim të regjistruar.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

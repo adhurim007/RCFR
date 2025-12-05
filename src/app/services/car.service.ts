@@ -7,7 +7,7 @@ import { environment } from 'environments/environment';
 export class CarService {
 
   private baseUrl = environment.apiUrl + '/api/cars';
-  private lookupsUrl = environment.apiUrl + '/api/cars';
+   
 
   constructor(private http: HttpClient) {}
  
@@ -17,6 +17,10 @@ export class CarService {
 
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
+  getByBusiness(businessId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${environment.apiUrl}/api/cars/by-business/${businessId}`);
   }
 
   create(payload: any): Observable<number> {
@@ -35,23 +39,23 @@ export class CarService {
   }
  
   getBrands(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.lookupsUrl}/brands`);
+    return this.http.get<any[]>(`${this.baseUrl}/brands`);
   }
 
   getModelsByBrand(brandId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.lookupsUrl}/models/${brandId}`);
+    return this.http.get<any[]>(`${this.baseUrl}/models/${brandId}`);
   }
 
   getTypes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.lookupsUrl}/cartypes`);
+    return this.http.get<any[]>(`${this.baseUrl}/cartypes`);
   }
 
   getFuelTypes(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.lookupsUrl}/fueltypes`);
+    return this.http.get<any[]>(`${this.baseUrl}/fueltypes`);
   }
 
   getTransmissions(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.lookupsUrl}/transmissions`);
+    return this.http.get<any[]>(`${this.baseUrl}/transmissions`);
   }
  
   uploadImages(carId: number, files: File[]): Observable<any> {

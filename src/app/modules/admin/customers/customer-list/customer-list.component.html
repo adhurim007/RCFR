@@ -1,0 +1,87 @@
+<div class="p-6 w-full">
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+    <h2 class="text-2xl font-semibold text-gray-800">
+      Lista e klientëve
+    </h2>
+
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="create()"
+      class="mt-4 sm:mt-0"
+    >
+      <mat-icon class="mr-2">add</mat-icon>
+      Shto klient
+    </button>
+  </div>
+
+  <!-- TABLE WRAPPER -->
+  <div
+    class="w-full bg-white rounded-2xl shadow-md border border-gray-200 overflow-x-auto"
+  >
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th class="px-6 py-3">Emri</th>
+          <th class="px-6 py-3">Email</th>
+          <th class="px-6 py-3">Telefoni</th>
+          <th class="px-6 py-3">Dokumenti</th>
+          <th class="px-6 py-3">Datëlindja</th>
+          <th class="px-6 py-3 text-right">Veprime</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr
+          *ngFor="let c of customers"
+          class="border-b hover:bg-gray-50 transition-colors duration-150"
+        >
+          <td class="px-6 py-4">
+            <div class="font-medium text-gray-800">{{ c.fullName }}</div>
+          </td>
+
+          <td class="px-6 py-4">
+            {{ c.email || '-' }}
+          </td>
+
+          <td class="px-6 py-4">
+            {{ c.phoneNumber }}
+          </td>
+
+          <td class="px-6 py-4">
+            <span class="font-medium">{{ c.documentType }}</span>
+            <span class="text-gray-500 ml-1">({{ c.documentNumber }})</span>
+          </td>
+
+          <td class="px-6 py-4">
+            {{ c.dateOfBirth | date: 'dd/MM/yyyy' }}
+          </td>
+
+          <td class="px-6 py-4 text-right space-x-2">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="edit(c.id)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="delete(c.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="customers.length === 0">
+          <td colspan="6" class="text-center py-6 text-gray-400">
+            Nuk ka asnjë klient të regjistruar.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

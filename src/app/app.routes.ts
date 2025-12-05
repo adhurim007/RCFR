@@ -53,7 +53,7 @@ export const appRoutes: Route[] = [
     path: '',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    component: LayoutComponent,                // ⬅️ not 'empty' here
+    component: LayoutComponent,                
     resolve: { initialData: initialDataResolver },
     children: [
     {
@@ -117,20 +117,39 @@ export const appRoutes: Route[] = [
             import('app/modules/admin/business-locations/business-locations.module')
               .then(m => m.BusinessLocationsModule)
         },
-          {
+        {
             path: 'vehicle-inspections',
             loadChildren: () =>
                 import('app/modules/admin/vehicle-inspections/vehicle-inspections.module')
                     .then(m => m.VehicleInspectionsModule)
         },
-
+        {
+            path: 'customers',
+            loadChildren: () =>
+                import('app/modules/admin/customers/customer.module').then(m => m.CustomerModule)
+        },
         { path: '', pathMatch: 'full', redirectTo: 'example' }
-      ]
-    }
-
+      ],
+    } 
     ]
   },
-
-  // Fallback
+  { 
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    component: LayoutComponent,                
+    resolve: { initialData: initialDataResolver },
+    path: 'business',
+    children: [
+      {
+        path: 'reservations',
+        loadChildren: () =>
+          import('app/modules/business/reservations/reservation.module')
+            .then(m => m.ReservationModule)
+      },
+      // Te tjera module të biznesit mund të shkojnë këtu...
+      { path: '', pathMatch: 'full', redirectTo: 'reservations' }
+    ]
+  },
+ 
   { path: '**', redirectTo: 'admin/example' }
 ];
