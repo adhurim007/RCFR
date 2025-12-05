@@ -50,6 +50,9 @@ export class ReservationService {
       return this.http.get<any[]>(`${this.locationsUrl}?businessId=${businessId}`);
   }
 
+  searchCustomer(personalNumber: string): Observable<any> {
+    return this.http.get<any>(`${this.customersUrl}/search?personalNumber=${personalNumber}`);
+  }
   // Pricing rules për veturë
   // getCarPricingRules(carId: number): Observable<any[]> {
   //   return this.http.get<any[]>(`${this.carPricingRulesUrl}/by-car/${carId}`);

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+
 import { ReservationService } from 'app/services/reservations.service';
 import { CarService } from 'app/services/car.service';
 import { UserService } from 'app/core/user/user.service';
-import { forkJoin } from 'rxjs';
-
 
 @Component({
   selector: 'app-reservation-form',
@@ -19,14 +19,10 @@ export class ReservationFormComponent implements OnInit {
   reservationId!: number;
 
   cars: any[] = [];
-  customers: any[] = [];
   locations: any[] = [];
-  extraServicesSource: any[] = []; // master list
+  extraServicesSource: any[] = [];
 
-  carPricingRules: any[] = [];
   selectedCarDailyPrice = 0;
-
-
 
   get extraServices(): FormArray {
     return this.form.get('extraServices') as FormArray;
@@ -36,38 +32,49 @@ export class ReservationFormComponent implements OnInit {
     private fb: FormBuilder,
     private reservationService: ReservationService,
     private carService: CarService,
+    private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router,
-    private userService : UserService
+    private router: Router
   ) {}
 
-   ngOnInit(): void {
+  // --------------------------------------------------------------------
+  // INIT
+  // --------------------------------------------------------------------
+  ngOnInit(): void {
+    this.buildForm();
 
-      const currentUser = this.userService.getCurrent(); 
-      if (!currentUser) {
-          console.error("User not found in UserService AND localStorage!");
-          return;
-      }
+    this.reservationId = Number(this.route.snapshot.paramMap.get('id'));
+    this.isEdit = this.reservationId > 0;
 
-      const userId = currentUser.id;
-      if (!userId) {
-          console.error("UserId not found!");
-          return;
-      }
+    const currentUser = this.userService.getCurrent();
+    if (!currentUser) return;
 
-      this.buildForm();
-      this.loadLookups();
- 
-      if (!this.isEdit) {
+    this.userService.getBusinessId(currentUser.id).subscribe({
+      next: (res: any) => {
+        const businessId = res.businessId;
+
+        if (this.isEdit) {
+          this.loadLookupsAndReservation(businessId, this.reservationId);
+        } else {
+          this.loadLookupsForCreate(businessId);
           this.registerRecalc();
+        }
       }
+    });
   }
- 
+
+  // --------------------------------------------------------------------
+  // BUILD FORM
+  // --------------------------------------------------------------------
   buildForm(): void {
     this.form = this.fb.group({
       id: [0],
       carId: ['', Validators.required],
-      customerId: ['', Validators.required],
+      personalNumber: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      phoneNumber: ['', Validators.required],
+      address: ['', Validators.required],
       pickupLocationId: ['', Validators.required],
       dropoffLocationId: ['', Validators.required],
       pickupDate: ['', Validators.required],
@@ -75,7 +82,6 @@ export class ReservationFormComponent implements OnInit {
       notes: [''],
       discount: [0],
 
-      // read-only calculated fields
       totalDays: [{ value: 0, disabled: true }],
       carTotal: [{ value: 0, disabled: true }],
       extrasTotal: [{ value: 0, disabled: true }],
@@ -86,278 +92,217 @@ export class ReservationFormComponent implements OnInit {
     });
   }
 
-  loadLookups(): void {
+  // --------------------------------------------------------------------
+  // LOOKUPS FOR CREATE
+  // --------------------------------------------------------------------
+  loadLookupsForCreate(businessId: number): void {
+    forkJoin({
+      cars: this.carService.getByBusiness(businessId),
+      locations: this.reservationService.getLocations(businessId),
+      extras: this.reservationService.getExtraServices()
+    }).subscribe(result => {
+      this.cars = result.cars;
+      this.locations = result.locations;
+      this.extraServicesSource = result.extras;
 
-    const currentUser = this.userService.getCurrent();
-
-    if (!currentUser) {
-        console.error("User not found!");
-        return;
-    }
-
-    this.userService.getBusinessId(currentUser.id).subscribe({
-        next: (res) => {
-            const businessId = res.businessId;
-
-            if (!businessId) {
-                console.error("User has no business assigned!");
-                return;
-            }
- 
-            this.carService.getByBusiness(businessId).subscribe({
-                next: cars => {
-                    this.cars = cars;
-
-                    // Nëse ka vetëm 1 veturë → cakto automatikisht
-                    if (cars.length === 1) {
-                        this.form.get('carId')?.setValue(cars[0].id);
-                    }
-                },
-                error: err => console.error("Error loading cars:", err)
-            });
- 
-            this.reservationService.getLocations(businessId).subscribe({
-                next: locations => {
-                    this.locations = locations;
-                },
-                error: err => console.error("Error loading locations:", err)
-            });
- 
-            this.reservationService.getCustomers().subscribe({
-                next: customers => {
-                    this.customers = customers;
-                },
-                error: err => console.error("Error loading customers:", err)
-            });
- 
-            this.reservationService.getExtraServices().subscribe({
-                next: extras => {
-                    this.extraServicesSource = extras;
-                    this.buildExtraServicesArray();
-                },
-                error: err => console.error("Error loading extra services:", err)
-            });
-        },
-        error: (err) => {
-            console.error("Error fetching BusinessId:", err);
-        }
+      this.buildExtraServicesArray();
     });
-}
-  
+  }
 
+  // --------------------------------------------------------------------
+  // LOOKUPS + RESERVATION for EDIT
+  // --------------------------------------------------------------------
+  loadLookupsAndReservation(businessId: number, reservationId: number): void {
+    forkJoin({
+      cars: this.carService.getByBusiness(businessId),
+      locations: this.reservationService.getLocations(businessId),
+      extras: this.reservationService.getExtraServices(),
+      reservation: this.reservationService.getById(reservationId)
+    }).subscribe(({ cars, locations, extras, reservation }) => {
+
+      this.cars = cars;
+      this.locations = locations;
+      this.extraServicesSource = extras;
+
+      this.buildExtraServicesArray();
+
+      if (!reservation) return;
+
+      this.form.patchValue({
+        id: reservation.id,
+        carId: reservation.carId,
+        personalNumber: reservation.personalNumber,
+        firstName: reservation.firstName,
+        lastName: reservation.lastName,
+        phoneNumber: reservation.phoneNumber,
+        address: reservation.address,
+        pickupLocationId: reservation.pickupLocationId,
+        dropoffLocationId: reservation.dropoffLocationId,
+        pickupDate: reservation.pickupDate,
+        dropoffDate: reservation.dropoffDate,
+        discount: reservation.discount,
+        notes: reservation.notes
+      });
+
+      this.selectedCarDailyPrice = reservation.carDailyPrice ?? 0;
+
+      this.applyExistingExtraServices(reservation.extraServices ?? []);
+
+      this.recalculateTotals();
+
+      this.registerRecalc();
+    });
+  }
+
+  // --------------------------------------------------------------------
+  // EXTRA SERVICES
+  // --------------------------------------------------------------------
   buildExtraServicesArray(): void {
     this.extraServices.clear();
+
     this.extraServicesSource.forEach(es => {
       this.extraServices.push(this.fb.group({
         extraServiceId: [es.id],
         name: [es.name],
         pricePerDay: [es.pricePerDay],
         selected: [false],
-        quantity: [1, [Validators.min(1)]]
+        quantity: [1, Validators.min(1)]
       }));
     });
   }
 
-  loadReservation(id: number): void {
-    this.reservationService.getById(id).subscribe(reservation => {
-
-      // mbush bazën
-      this.form.patchValue({
-        id: reservation.id,
-        carId: reservation.carId,
-        customerId: reservation.customerId,
-        pickupLocationId: reservation.pickupLocationId,
-        dropoffLocationId: reservation.dropoffLocationId,
-        pickupDate: reservation.pickupDate,
-        dropoffDate: reservation.dropoffDate,
-        notes: reservation.notes,
-        discount: reservation.discount || 0
-      });
-
-      // load car to get daily price + rules
-      this.onCarChanged(reservation.carId);
-
-      // extra services
-      if (this.extraServicesSource.length === 0) {
-        // nëse nuk janë loaded ende, i presim deri sa të vinë dhe pastaj i shënojmë
-        this.reservationService.getExtraServices().subscribe(x => {
-          this.extraServicesSource = x;
-          this.buildExtraServicesArray();
-          this.applyExistingExtraServices(reservation.extraServices || []);
-        });
-      } else {
-        this.applyExistingExtraServices(reservation.extraServices || []);
-      }
-    });
-  }
-
   applyExistingExtraServices(existing: any[]): void {
-    const map = new Map<number, any>();
-    existing.forEach(e => map.set(e.extraServiceId, e));
+    const existingMap = new Map(existing.map(x => [x.extraServiceId, x]));
 
     this.extraServices.controls.forEach(ctrl => {
-      const esId = ctrl.get('extraServiceId')!.value;
-      if (map.has(esId)) {
-        const item = map.get(esId);
+      const id = ctrl.get('extraServiceId')!.value;
+
+      if (existingMap.has(id)) {
         ctrl.patchValue({
           selected: true,
-          quantity: item.quantity
-        }, { emitEvent: false });
+          quantity: existingMap.get(id).quantity
+        });
       }
     });
-
-    this.recalculateTotals();
   }
 
-  // event kur ndryshon vetura
-  onCarChanged(carId: number): void {
-    if (!carId) {
-      this.selectedCarDailyPrice = 0;
-      this.carPricingRules = [];
-      this.recalculateTotals();
-      return;
-    }
+  // --------------------------------------------------------------------
+  // CUSTOMER SEARCH
+  // --------------------------------------------------------------------
+  searchCustomer(): void {
+    const p = this.form.get('personalNumber')?.value;
 
-    this.carService.getById(carId).subscribe(car => {
-      this.selectedCarDailyPrice = car.dailyPrice || 0;
-      // mund të ruash edhe info tjera nëse të duhen
-      this.recalculateTotals();
-    });
+    if (!p) return;
 
-    // load pricing rules for car
-    // this.reservationService.getCarPricingRules(carId)
-    //   .subscribe(rules => {
-    //     this.carPricingRules = rules || [];
-    //     this.recalculateTotals();
-    //   });
-  }
+    this.reservationService.searchCustomer(p).subscribe(c => {
+      if (!c) return;
 
-  registerRecalc(): void {
-    // re-calc when relevant fields change
-    this.form.get('carId')!.valueChanges.subscribe(carId => {
-      this.onCarChanged(carId);
-    });
+      const parts = (c.fullName || '').split(' ');
 
-    this.form.get('pickupDate')!.valueChanges.subscribe(() => this.recalculateTotals());
-    this.form.get('dropoffDate')!.valueChanges.subscribe(() => this.recalculateTotals());
-    this.form.get('discount')!.valueChanges.subscribe(() => this.recalculateTotals());
-
-    this.extraServices.valueChanges.subscribe(() => this.recalculateTotals());
-  }
-
-  recalculateTotals(): void {
-    const pickup = this.form.get('pickupDate')!.value ? new Date(this.form.get('pickupDate')!.value) : null;
-    const dropoff = this.form.get('dropoffDate')!.value ? new Date(this.form.get('dropoffDate')!.value) : null;
-
-    if (!pickup || !dropoff || !this.selectedCarDailyPrice || pickup >= dropoff) {
       this.form.patchValue({
-        totalDays: 0,
-        carTotal: 0,
-        extrasTotal: 0,
-        totalWithoutDiscount: 0,
-        totalPrice: 0
-      }, { emitEvent: false });
-      return;
-    }
-
-    const totalDays = Math.floor((dropoff.getTime() - pickup.getTime()) / (1000 * 60 * 60 * 24));
-    if (totalDays <= 0) {
-      this.form.patchValue({
-        totalDays: 0,
-        carTotal: 0,
-        extrasTotal: 0,
-        totalWithoutDiscount: 0,
-        totalPrice: 0
-      }, { emitEvent: false });
-      return;
-    }
-
-    // 1) car total based on pricing rules
-    let carTotal = 0;
-
-    for (let i = 0; i < totalDays; i++) {
-      const currentDate = new Date(pickup);
-      currentDate.setDate(currentDate.getDate() + i);
-
-      let dayPrice = this.selectedCarDailyPrice;
-
-      const rule = this.carPricingRules.find(r => {
-        const from = new Date(r.fromDate);
-        const to = new Date(r.toDate);
-        return currentDate >= from && currentDate <= to;
+        firstName: parts[0],
+        lastName: parts[1],
+        phoneNumber: c.phoneNumber,
+        address: c.address
       });
-
-      if (rule) {
-        if (rule.ruleType === 'Discount') {
-          dayPrice -= rule.pricePerDay;
-        } else if (rule.ruleType === 'Increase') {
-          dayPrice += rule.pricePerDay;
-        }
-      }
-
-      carTotal += dayPrice;
-    }
-
-    // 2) extra services total
-    let extrasTotal = 0;
-    this.extraServices.controls.forEach(ctrl => {
-      const selected = ctrl.get('selected')!.value;
-      const qty = Number(ctrl.get('quantity')!.value || 0);
-      const pricePerDay = Number(ctrl.get('pricePerDay')!.value || 0);
-
-      if (selected && qty > 0 && pricePerDay > 0) {
-        extrasTotal += pricePerDay * qty * totalDays;
-      }
     });
-
-    const totalWithoutDiscount = carTotal + extrasTotal;
-    const discount = Number(this.form.get('discount')!.value || 0);
-    let totalPrice = totalWithoutDiscount - discount;
-    if (totalPrice < 0) totalPrice = 0;
-
-    this.form.patchValue({
-      totalDays,
-      carTotal,
-      extrasTotal,
-      totalWithoutDiscount,
-      totalPrice
-    }, { emitEvent: false });
   }
 
-  save(): void {
-    if (this.form.invalid) return;
+  // --------------------------------------------------------------------
+  // RECALC TOTALS
+  // --------------------------------------------------------------------
+  registerRecalc(): void {
+    this.form.valueChanges.subscribe(() => this.recalculateTotals());
+  }
 
-    const raw = this.form.getRawValue();
+ recalculateTotals(): void {
+    const pickup = this.form.get('pickupDate')?.value;
+    const dropoff = this.form.get('dropoffDate')?.value;
+    const discount = Number(this.form.get('discount')?.value) || 0;
+    const carId = this.form.get('carId')?.value;
 
-    const payload: any = {
-      carId: raw.carId,
-      customerId: raw.customerId,
-      pickupLocationId: raw.pickupLocationId,
-      dropoffLocationId: raw.dropoffLocationId,
-      pickupDate: raw.pickupDate,
-      dropoffDate: raw.dropoffDate,
-      notes: raw.notes,
-      discount: raw.discount,
-      extraServices: this.extraServices.controls
-        .filter(c => c.get('selected')!.value)
-        .map(c => ({
-          extraServiceId: c.get('extraServiceId')!.value,
-          quantity: c.get('quantity')!.value
-        }))
-    };
+    // =========================
+    // 1) Calculate total days
+    // =========================
+    let totalDays = 0;
+
+    if (pickup && dropoff) {
+        const start = new Date(pickup);
+        const end = new Date(dropoff);
+        const diff = end.getTime() - start.getTime();
+
+        totalDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        if (totalDays < 1) totalDays = 1;
+
+        this.form.get('totalDays')?.setValue(totalDays, { emitEvent: false });
+    }
+
+    // ===========================================
+    // 2) Calculate car daily price from car list
+    // ===========================================
+    let carDailyPrice = 0;
+
+    if (carId && this.cars.length > 0) {
+        const car = this.cars.find(x => x.id === carId);
+        carDailyPrice = car?.dailyPrice ?? 0;
+        this.selectedCarDailyPrice = carDailyPrice;
+    }
+
+    const carTotal = totalDays * carDailyPrice;
+    this.form.get('carTotal')?.setValue(carTotal, { emitEvent: false });
+
+    // ==============================
+    // 3) Calculate extra services
+    // ==============================
+    let extrasTotal = 0;
+
+    this.extraServices.controls.forEach(ctrl => {
+        const selected = ctrl.get('selected')?.value;
+        if (!selected) return;
+
+        const qty = Number(ctrl.get('quantity')?.value) || 1;
+        const price = Number(ctrl.get('pricePerDay')?.value) || 0;
+
+        extrasTotal += qty * price * totalDays;
+    });
+
+    this.form.get('extrasTotal')?.setValue(extrasTotal, { emitEvent: false });
+
+    // =======================================
+    // 4) Total without discount
+    // =======================================
+    const totalWithoutDiscount = carTotal + extrasTotal;
+    this.form.get('totalWithoutDiscount')?.setValue(totalWithoutDiscount, { emitEvent: false });
+
+    // =======================================
+    // 5) Final total = without discount - discount
+    // =======================================
+    const totalPrice = totalWithoutDiscount - discount;
+    this.form.get('totalPrice')?.setValue(totalPrice, { emitEvent: false });
+}
+
+
+  // --------------------------------------------------------------------
+  // SAVE
+  // --------------------------------------------------------------------
+   save(): void {
+    const payload = this.form.getRawValue();
+
+    // Mos dërgo ReservationStatusId fare gjatë update
+    delete payload.reservationStatusId;
 
     if (this.isEdit) {
-      this.reservationService.update(this.reservationId, payload).subscribe(() => {
-        this.router.navigate(['/admin/reservations']);
-      });
+      this.reservationService.update(this.reservationId, payload).subscribe(() =>
+        this.router.navigate(['/business/reservations'])
+      );
     } else {
-      this.reservationService.create(payload).subscribe(() => {
-        this.router.navigate(['/admin/reservations']);
-      });
+      this.reservationService.create(payload).subscribe(() =>
+        this.router.navigate(['/business/reservations'])
+      );
     }
-  }
+}
 
   cancel(): void {
-    this.router.navigate(['/admin/reservations']);
+    this.router.navigate(['/business/reservations']);
   }
 }
