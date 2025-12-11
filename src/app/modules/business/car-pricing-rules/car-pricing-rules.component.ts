@@ -46,7 +46,7 @@ loadRules() {
 }
 
   backToCars(): void {
-    this.router.navigate(['/admin/cars']);
+    this.router.navigate(['/business/cars']);
   }
 
   openCreateModal(): void {

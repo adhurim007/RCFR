@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class BusinessLocationService {
 
   private apiUrl = environment.apiUrl;
@@ -13,30 +11,28 @@ export class BusinessLocationService {
   constructor(private http: HttpClient) {}
 
   getByBusinessId(businessId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/api/businesslocations/business/${businessId}`);
-  }
-
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/api/businesslocations/all`);
-  }
-
-  getBusinesses(): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}/api/businesslocations/businesses`);
-    }
-
-  getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get<any[]>(
+      `${this.apiUrl}/api/businesslocations/by-business/${businessId}`
+    );
   }
 
   create(model: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/businesslocations`, model);
+    return this.http.post(
+      `${this.apiUrl}/api/businesslocations`,
+      model
+    );
   }
 
   update(model: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/api/businesslocations/${model.id}`, model);
+    return this.http.put(
+      `${this.apiUrl}/api/businesslocations/${model.id}`,
+      model
+    );
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/api/businesslocations/${id}`);
+    return this.http.delete(
+      `${this.apiUrl}/api/businesslocations/${id}`
+    );
   }
 }

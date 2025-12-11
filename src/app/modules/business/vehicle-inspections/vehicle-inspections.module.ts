@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 
-import { VehicleInspectionsRoutingModule } from '../vehicle-inspections/vehicle-inspections.routes';
+import { VehicleInspectionsRoutingModule } from './vehicle-inspections.routes';
 import { InspectionListComponent } from './inspection-list/inspection-list.component';
 import { InspectionFormComponent } from './inspection-form/inspection-form.component';
 

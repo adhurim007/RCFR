@@ -25,11 +25,11 @@ export class InspectionListComponent implements OnInit {
   }
 
   create(): void {
-      this.router.navigate(['/admin/vehicle-inspections/create']);
+      this.router.navigate(['/business/vehicle-inspections/create']);
   }
  
   edit(id: number): void {
-    this.router.navigate(['/admin/vehicle-inspections/edit', id]);
+    this.router.navigate(['/business/vehicle-inspections/edit', id]);
   }
 
   delete(id: number): void {

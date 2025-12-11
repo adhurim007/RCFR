@@ -3,15 +3,7 @@
 </h2>
 
 <div mat-dialog-content [formGroup]="form"> 
-    <mat-form-field class="w-full">
-        <mat-label>Business</mat-label>
-        <mat-select formControlName="businessId">
-            <mat-option *ngFor="let b of businesses" [value]="b.id">
-            {{ b.companyName  }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-
+    
     <mat-form-field class="w-full">
         <mat-label>Name</mat-label>
         <input matInput formControlName="name">

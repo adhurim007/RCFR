@@ -49,16 +49,40 @@
               {{ car.isAvailable ? 'Aktiv' : 'Jo aktiv' }}
             </span>
           </td>
+            <td class="px-6 py-4 text-right">
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="carActionsMenu"
+                aria-label="Veprimet"
+              >
+                <mat-icon>more_vert</mat-icon>
+              </button>
 
-          <td class="px-6 py-4 text-right space-x-2">
-            <button mat-icon-button color="primary" [routerLink]="['/admin/cars/edit', car.id]">
-              <mat-icon>edit</mat-icon>
-            </button>
+              <mat-menu #carActionsMenu="matMenu">
+                  <button mat-menu-item (click)="edit(car.id)">
+                    <mat-icon>edit</mat-icon>
+                    Përditëso
+                  </button>
 
-            <button mat-icon-button color="warn" (click)="delete(car.id)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </td>
+                <button
+                  mat-menu-item
+                  (click)="addDetails(car.id)"
+                >
+                  <mat-icon>playlist_add</mat-icon>
+                  <span>Shto detaje</span>
+                </button>
+
+                <button
+                  mat-menu-item
+                  (click)="delete(car.id)"
+                >
+                  <mat-icon color="warn">delete</mat-icon>
+                  <span>Fshij</span>
+                </button>
+              </mat-menu>
+            </td>
+
+ 
         </tr>
 
         <tr *ngIf="cars.length === 0">

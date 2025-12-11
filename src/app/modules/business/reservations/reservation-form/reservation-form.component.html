@@ -55,7 +55,7 @@
         <mat-label>Veturë *</mat-label>
         <mat-select formControlName="carId">
           <mat-option *ngFor="let car of cars" [value]="car.id">
-            {{ car.carBrand }} - {{ car.carModel }} ({{ car.licensePlate }})
+            {{ car.carBrandName }} - {{ car.carModel }} ({{ car.licensePlate }})
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -113,33 +113,42 @@
     <!-- =====================  SEKSIONI 3: EKSTRAT + TOTALI ===================== -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-      <!-- Extra services -->
-      <div class="lg:col-span-2 bg-gray-50 rounded-lg border p-4">
-        <h2 class="text-lg font-semibold mb-3">Shërbime ekstra</h2>
+ <div class="bg-gray-50 p-4 border rounded-lg">
+  <h3 class="font-semibold mb-2">Shërbime ekstra</h3>
 
-        <div formArrayName="extraServices" class="space-y-3">
-          <div
-            *ngFor="let es of extraServices.controls; let i = index"
-            [formGroupName]="i"
-            class="flex justify-between items-center bg-white border rounded-lg px-3 py-2"
-          >
-            <div class="flex items-center gap-3">
-              <mat-checkbox formControlName="selected"></mat-checkbox>
-              <div>
-                <div class="font-medium">{{ es.get('name')?.value }}</div>
-                <div class="text-xs text-gray-500">
-                  {{ es.get('pricePerDay')?.value }} € / ditë
-                </div>
-              </div>
-            </div>
+  <div formArrayName="extraServices">
+    <div
+      *ngFor="let es of extraServices.controls; let i = index"
+      [formGroupName]="i"
+      class="flex justify-between items-center bg-white p-3 rounded border mb-2"
+    >
+      <div class="flex items-center gap-3">
+        <mat-checkbox
+          formControlName="selected"
+          (change)="es.get('quantity').enabled = es.get('selected').value"
+        ></mat-checkbox>
 
-            <mat-form-field appearance="outline" class="w-24">
-              <input matInput type="number" min="1" formControlName="quantity"
-                     [disabled]="!es.get('selected')?.value">
-            </mat-form-field>
+        <div>
+          <div class="font-medium">{{ es.value.name }}</div>
+          <div class="text-xs text-gray-500">
+            {{ es.value.pricePerDay }} € / ditë
           </div>
         </div>
       </div>
+
+      <mat-form-field appearance="outline" class="w-24">
+        <input
+          matInput
+          type="number"
+          min="1"
+          formControlName="quantity"
+        />
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
 
       <!-- Total Summary -->
       <div class="bg-gray-50 rounded-lg border p-4">

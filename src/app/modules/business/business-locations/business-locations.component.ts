@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BusinessLocationService } from 'app/services/business-location.service';
 import { BusinessLocationModalComponent } from './business-location-modal.component';
+import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'app-business-locations',
@@ -9,51 +10,56 @@ import { BusinessLocationModalComponent } from './business-location-modal.compon
 })
 export class BusinessLocationsComponent implements OnInit {
 
-  businessId!: number;
   locations: any[] = [];
-  isAdmin = true;
+  businessId!: number;
 
   displayedColumns: string[] = ['name', 'address', 'state', 'city', 'actions'];
 
   constructor(
     private service: BusinessLocationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.businessId = Number(localStorage.getItem('businessId'));
-    //this.isAdmin = localStorage.getItem('role') === 'SuperAdmin';
-    this.load();
+    const user = this.userService.getCurrent();
+    if (!user) return;
+
+    this.userService.getBusinessId(user.id).subscribe(res => {
+      this.businessId = res.businessId;
+      this.load();
+    });
   }
 
   load(): void {
-    if (this.isAdmin) {
-      this.service.getAll().subscribe(res => this.locations = res);
-    } else {
-      this.service.getByBusinessId(this.businessId).subscribe(res => this.locations = res);
-    }
+    this.service.getByBusinessId(this.businessId)
+      .subscribe(res => this.locations = res);
   }
 
   openCreate(): void {
     const ref = this.dialog.open(BusinessLocationModalComponent, {
       width: '550px',
-      data: { isEdit: false, businessId: this.businessId }
+      data: {
+        isEdit: false,
+        businessId: this.businessId     // ✅ KRYESORE
+      }
     });
+
     ref.afterClosed().subscribe(r => r && this.load());
   }
 
-openEdit(item: any): void {
-  const ref = this.dialog.open(BusinessLocationModalComponent, {
-    width: '550px',
-    data: { 
-      isEdit: true,
-      location: item,
-      businessId: this.businessId    //  ✅ SHTOJE KËTË
-    }
-  });
+  openEdit(item: any): void {
+    const ref = this.dialog.open(BusinessLocationModalComponent, {
+      width: '550px',
+      data: {
+        isEdit: true,
+        location: item,
+        businessId: this.businessId    // ✅ KRYESORE
+      }
+    });
 
-  ref.afterClosed().subscribe(r => r && this.load());
-}
+    ref.afterClosed().subscribe(r => r && this.load());
+  }
 
   delete(id: number): void {
     if (!confirm('Delete this location?')) return;

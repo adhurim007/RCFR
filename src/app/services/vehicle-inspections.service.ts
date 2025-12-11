@@ -23,17 +23,14 @@ export class VehicleInspectionsService {
     return this.http.get<any[]>(`${this.apiUrl}/reservation/${reservationId}`);
   }
 
+  create(data: FormData) {
+    return this.http.post(this.apiUrl, data);
+  }
+
+  update(id: number, data: FormData) {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
+  } 
   
-  create(data: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, data);
-  }
-
- 
-  update(data: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${data.id}`, data);
-  }
-
- 
   delete(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${id}`);
   }

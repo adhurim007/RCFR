@@ -1,0 +1,133 @@
+<div class="flex flex-col w-full p-8 bg-white">
+
+    <!-- TITLE -->
+    <h1 class="text-3xl font-semibold mb-10">
+        {{ isEdit ? 'Edit Vehicle Inspection' : 'New Vehicle Inspection' }}
+    </h1>
+
+    <!-- FORM -->
+    <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Reservation -->
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Reservation</mat-label>
+            <mat-select formControlName="reservationId">
+                <mat-option *ngFor="let r of reservations" [value]="r.id">
+                    #{{ r.id }} – {{ r.customerName }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Type -->
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option *ngFor="let t of types" [value]="t.value">
+                    {{ t.label }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- Mileage -->
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Mileage</mat-label>
+            <input matInput type="number" formControlName="mileage">
+        </mat-form-field>
+
+        <!-- Fuel -->
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Fuel Level (%)</mat-label>
+            <input matInput type="number" formControlName="fuelLevel">
+        </mat-form-field>
+
+        <!-- Tire Condition -->
+        <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Tire Condition</mat-label>
+            <input matInput formControlName="tireCondition">
+        </mat-form-field>
+
+        <!-- Overall Condition -->
+        <mat-form-field appearance="outline" class="w-full md:col-span-2 lg:col-span-3">
+            <mat-label>Overall Condition</mat-label>
+            <textarea matInput formControlName="overallCondition" rows="4"></textarea>
+        </mat-form-field>
+
+        <!-- ================= IMAGES ================= -->
+
+        <div class="md:col-span-2 lg:col-span-3">
+
+            <!-- Upload new -->
+            <label class="block text-sm font-medium mb-2">
+                Inspection Images
+            </label>
+
+            <input
+                type="file"
+                multiple
+                accept="image/*"
+                (change)="onFilesSelected($event)"
+                class="block w-full text-sm border rounded p-2"
+            />
+
+            <!-- Selected NEW images -->
+            <div *ngIf="selectedImages.length > 0" class="mt-4">
+                <h3 class="text-sm font-semibold mb-2">
+                    Selected Images ({{ selectedImages.length }})
+                </h3>
+
+                <ul class="space-y-2">
+                    <li
+                        *ngFor="let file of selectedImages; let i = index"
+                        class="flex items-center justify-between p-2 border rounded bg-gray-50"
+                    >
+                        <span class="text-sm truncate">{{ file.name }}</span>
+
+                        <button
+                            mat-icon-button
+                            color="warn"
+                            type="button"
+                            (click)="removeImage(i)"
+                        >
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- EXISTING IMAGES (EDIT MODE) -->
+            <div *ngIf="isEdit && existingImages.length > 0" class="mt-8">
+                <h3 class="text-sm font-semibold mb-3">
+                    Existing Inspection Images
+                </h3>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div
+                        *ngFor="let img of existingImages"
+                        class="border rounded overflow-hidden"
+                    >
+                        <img
+                            [src]="img"
+                            alt="Inspection image"
+                            class="w-full h-32 object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <!-- ACTIONS -->
+    <div class="flex justify-end space-x-4 mt-10">
+        <button mat-button color="warn" (click)="cancel()">Cancel</button>
+        <button
+            mat-flat-button
+            color="primary"
+            (click)="save()"
+            [disabled]="form.invalid"
+        >
+            {{ isEdit ? 'Update' : 'Save' }}
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,115 @@
+<div class="flex flex-col flex-auto w-full p-6">
+
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6 w-full">
+        <h1 class="text-2xl font-semibold">Vehicle Damages</h1>
+
+        <button
+            mat-flat-button
+            color="primary"
+            class="px-6"
+            (click)="create()"
+        >
+            <mat-icon class="mr-2">add</mat-icon>
+            New Damage
+        </button>
+    </div>
+
+    <!-- Table Container -->
+    <div class="bg-white rounded-lg shadow border border-gray-200 w-full overflow-auto">
+     <table mat-table [dataSource]="damages" class="w-full"> 
+                    <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef class="px-4 py-3 font-medium">
+                ID
+            </th>
+            <td mat-cell *matCellDef="let d" class="px-4 py-3">
+                {{ d.id }}
+            </td>
+        </ng-container>
+
+            <!-- Reservation -->
+            <ng-container matColumnDef="reservationId">
+                <th mat-header-cell *matHeaderCellDef class="px-4 py-3 font-medium">
+                    Reservation
+                </th>
+                <td mat-cell *matCellDef="let d" class="px-4 py-3">
+                    #{{ d.reservationId }}
+                </td>
+            </ng-container>
+
+            <!-- Damage Type -->
+            <ng-container matColumnDef="damageType">
+                <th mat-header-cell *matHeaderCellDef class="px-4 py-3 font-medium">
+                    Damage Type
+                </th>
+                <td mat-cell *matCellDef="let d" class="px-4 py-3">
+                    {{ d.damageType || '-' }}
+                </td>
+            </ng-container>
+
+            <!-- Estimated Cost -->
+            <ng-container matColumnDef="estimatedCost">
+                <th mat-header-cell *matHeaderCellDef class="px-4 py-3 font-medium">
+                    Estimated Cost
+                </th>
+                <td mat-cell *matCellDef="let d" class="px-4 py-3">
+                    {{ d.estimatedCost | number:'1.2-2' }} €
+                </td>
+            </ng-container>
+
+            <!-- Status -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef class="px-4 py-3 font-medium">
+                    Status
+                </th>
+                <td mat-cell *matCellDef="let d" class="px-4 py-3">
+                    {{ d.status }}
+                </td>
+            </ng-container>
+
+            <!-- Created At -->
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef class="px-4 py-3 font-medium">
+                    Date
+                </th>
+                <td mat-cell *matCellDef="let d" class="px-4 py-3">
+                    {{ d.createdAt | date:'short' }}
+                </td>
+            </ng-container>
+
+            <!-- Actions -->
+            <ng-container matColumnDef="actions">
+                <th
+                    mat-header-cell
+                    *matHeaderCellDef
+                    class="px-4 py-3 font-medium w-32 text-center"
+                >
+                    Actions
+                </th>
+                <td
+                    mat-cell
+                    *matCellDef="let d"
+                    class="px-4 py-3 text-center space-x-2"
+                >
+                    <button mat-icon-button color="primary" (click)="edit(d.id)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+
+                    <button mat-icon-button color="warn" (click)="remove(d.id)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- Render Rows -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <!-- No Data -->
+        <div *ngIf="damages.length === 0" class="p-6 text-center text-gray-500">
+            No vehicle damages found.
+        </div>
+
+    </div>
+</div>

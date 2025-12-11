@@ -4,13 +4,13 @@ import { InspectionListComponent } from './inspection-list/inspection-list.compo
 import { InspectionFormComponent } from './inspection-form/inspection-form.component';
 
 const routes: Routes = [
-    { path: '', component: InspectionListComponent },
-    { path: 'create', component: InspectionFormComponent },
-    { path: 'edit/:id', component: InspectionFormComponent }
+  { path: '', component: InspectionListComponent },
+  { path: 'create', component: InspectionFormComponent },
+  { path: 'edit/:id', component: InspectionFormComponent }
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class VehicleInspectionsRoutingModule {}

@@ -25,11 +25,11 @@ export class CustomerListComponent implements OnInit {
     }
 
     create() {
-        this.router.navigate(['/admin/customers/create']);
+        this.router.navigate(['/business/customers/create']);
     }
 
     edit(id: number) {
-        this.router.navigate(['/admin/customers/edit', id]);
+        this.router.navigate(['/business/customers/edit', id]);
     }
 
     delete(id: number) {

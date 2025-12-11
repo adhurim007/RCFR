@@ -3,153 +3,89 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import { LayoutComponent } from 'app/layout/layout.component';
-import { RoleGuard } from './core/auth/guards/role.guard';
 
 export const appRoutes: Route[] = [
-  // Redirects
-  { path: '', pathMatch: 'full', redirectTo: 'admin/example' },
-  { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'admin/example' },
 
-   
-  // Guest auth (empty layout)
+  // Redirects
+  { path: '', pathMatch: 'full', redirectTo: 'business/reservations' },
+  { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'business/reservations' },
+
+  // ================= GUEST =================
   {
     path: '',
-    canActivate: [NoAuthGuard],
-    canActivateChild: [NoAuthGuard],
     component: LayoutComponent,
     data: { layout: 'empty' },
+    canActivate: [NoAuthGuard],
+    canActivateChild: [NoAuthGuard],
     children: [
-      { path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.routes') },
-      { path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes') },
-      { path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes') },
       { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.routes') },
-      { path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes') }
+      { path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes') },
+      { path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes') },
+      { path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes') }
     ]
   },
 
-  // Auth-only (empty layout)
+  // ================= AUTH EMPTY =================
   {
     path: '',
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
     component: LayoutComponent,
     data: { layout: 'empty' },
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       { path: 'sign-out', loadChildren: () => import('app/modules/auth/sign-out/sign-out.routes') },
       { path: 'unlock-session', loadChildren: () => import('app/modules/auth/unlock-session/unlock-session.routes') }
     ]
   },
 
-  // Optional landing (empty layout)
+  // ================= MAIN APP SHELL =================
   {
     path: '',
     component: LayoutComponent,
-    data: { layout: 'empty' },
-    children: [{ path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes') }]
-  },
-
-  // === MAIN APP SHELL (keeps sidebar/topbar) ===
-  {
-    path: '',
     canActivate: [AuthGuard],
     canActivateChild: [AuthGuard],
-    component: LayoutComponent,                
     resolve: { initialData: initialDataResolver },
     children: [
-    {
-      path: 'admin',
-      children: [
-        { 
-          path: 'example', 
-          loadChildren: () => import('app/modules/admin/example/example.routes') 
-        },
 
-        {
-          path: 'roles',
-          loadChildren: () =>
-            import('app/modules/admin/roles/roles.module').then(m => m.RolesModule),
-        },
-
-        {
-          path: 'menu',
-          loadChildren: () =>
-            import('app/modules/admin/menus/menus.module').then(m => m.MenusModule),
-        },
-
-        {
-          path: 'users',
-          loadChildren: () =>
-            import('app/modules/admin/user/users.module').then(m => m.UsersModule),
-        },
-
-        {
-          path: 'cars',
-          loadChildren: () =>
-            import('app/modules/admin/cars/car.module').then(m => m.CarModule),
-        },
-        {
-          path: 'car-pricing-rules',
-          loadChildren: () =>
-            import('app/modules/admin/car-pricing-rules/car-pricing-rules.module')
-              .then(m => m.CarPricingRulesModule)
-        },
-        {
-            path: 'carbrands',
-            loadChildren: () =>
-                import('app/modules/admin/car-brands/car-brands.module')
-                    .then(m => m.CarBrandsModule),
-        },
-        {
-          path: 'carmodels',
-          loadChildren: () =>
-            import('app/modules/admin/car-models/car-models.module')
-              .then(m => m.CarModelsModule)
-        },
-        {
-            path: 'extra-services',
-            loadChildren: () =>
-                import('app/modules/admin/extra-services/extra-services.module')
-                    .then(m => m.ExtraServicesModule)
-        },
-        {
-          path: 'business-locations',
-          loadChildren: () =>
-            import('app/modules/admin/business-locations/business-locations.module')
-              .then(m => m.BusinessLocationsModule)
-        },
-        {
-            path: 'vehicle-inspections',
-            loadChildren: () =>
-                import('app/modules/admin/vehicle-inspections/vehicle-inspections.module')
-                    .then(m => m.VehicleInspectionsModule)
-        },
-        {
-            path: 'customers',
-            loadChildren: () =>
-                import('app/modules/admin/customers/customer.module').then(m => m.CustomerModule)
-        },
-        { path: '', pathMatch: 'full', redirectTo: 'example' }
-      ],
-    } 
-    ]
-  },
-  { 
-    canActivate: [AuthGuard],
-    canActivateChild: [AuthGuard],
-    component: LayoutComponent,                
-    resolve: { initialData: initialDataResolver },
-    path: 'business',
-    children: [
+      // ---------- ADMIN ----------
       {
-        path: 'reservations',
-        loadChildren: () =>
-          import('app/modules/business/reservations/reservation.module')
-            .then(m => m.ReservationModule)
+        path: 'admin',
+        children: [
+          { path: 'example', loadChildren: () => import('app/modules/admin/example/example.routes') },
+          { path: 'roles', loadChildren: () => import('app/modules/admin/roles/roles.module').then(m => m.RolesModule) },
+          { path: 'menu', loadChildren: () => import('app/modules/admin/menus/menus.module').then(m => m.MenusModule) },
+          { path: 'users', loadChildren: () => import('app/modules/admin/user/users.module').then(m => m.UsersModule) },
+          
+        
+          { path: 'carbrands', loadChildren: () => import('app/modules/admin/car-brands/car-brands.module').then(m => m.CarBrandsModule) },
+          { path: 'carmodels', loadChildren: () => import('app/modules/admin/car-models/car-models.module').then(m => m.CarModelsModule) },
+         
+          { path: '', pathMatch: 'full', redirectTo: 'example' }
+        ]
       },
-      // Te tjera module të biznesit mund të shkojnë këtu...
-      { path: '', pathMatch: 'full', redirectTo: 'reservations' }
+
+      // ---------- BUSINESS ----------
+      {
+        path: 'business',
+        children: [
+          { path: 'reservations', loadChildren: () => import('app/modules/business/reservations/reservation.module').then(m => m.ReservationModule) },
+          { path: 'customers', loadChildren: () => import('app/modules/business/customers/customer.module').then(m => m.CustomerModule) },
+          { path: 'cars', loadChildren: () => import('app/modules/business/cars/car.module').then(m => m.CarModule) },
+          { path: 'extra-services', loadChildren: () => import('app/modules/business/extra-services/extra-services.module').then(m => m.ExtraServicesModule) },
+          { path: 'business-locations', loadChildren: () => import('app/modules/business/business-locations/business-locations.module').then(m => m.BusinessLocationsModule) },
+          { path: 'vehicle-inspections', loadChildren: () => import('app/modules/business/vehicle-inspections/vehicle-inspections.module').then(m => m.VehicleInspectionsModule) },
+          {
+            path: 'vehicle-damages',
+            loadChildren: () =>
+              import('app/modules/business/vehicle-damages/vehicle-damages.module')
+                .then(m => m.VehicleDamagesModule)
+          },
+          { path: 'car-pricing-rules', loadChildren: () => import('app/modules/business/car-pricing-rules/car-pricing-rules.module').then(m => m.CarPricingRulesModule) },
+          { path: '', pathMatch: 'full', redirectTo: 'reservations' }
+        ]
+      }
     ]
   },
- 
-  { path: '**', redirectTo: 'admin/example' }
+
+  
 ];

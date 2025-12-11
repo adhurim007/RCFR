@@ -10,7 +10,7 @@ import { ReservationService } from 'app/services/reservations.service';
 export class ReservationListComponent implements OnInit {
 
   reservations: any[] = [];
-  loading = true;
+  loading = false;
 
   constructor(
     private reservationService: ReservationService,
@@ -23,12 +23,14 @@ export class ReservationListComponent implements OnInit {
 
   loadReservations(): void {
     this.loading = true;
-    this.reservationService.getAll().subscribe({
-      next: res => {
-        this.reservations = res;
+
+    this.reservationService.getByBusiness().subscribe({
+      next: (data) => {
+        this.reservations = data;
         this.loading = false;
       },
       error: () => {
+        this.reservations = [];
         this.loading = false;
       }
     });
