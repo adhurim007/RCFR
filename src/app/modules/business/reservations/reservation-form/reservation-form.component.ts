@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReservationService } from 'app/services/reservations.service';
-
+import { MatDialog } from '@angular/material/dialog';
+import {DateTimeDialogComponent} from '../date-time-dialog.component'
 @Component({
   selector: 'app-reservation-form',
   templateUrl: './reservation-form.component.html'
@@ -25,7 +26,8 @@ export class ReservationFormComponent implements OnInit {
     private fb: FormBuilder,
     private service: ReservationService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog,
   ) {}
 
   // ================= INIT =================
@@ -47,39 +49,85 @@ export class ReservationFormComponent implements OnInit {
     }
 
     this.listenChanges();
+
+     this.form.get('carId')?.valueChanges.subscribe(() => {
+    this.checkCarAvailability();
+  });
   }
+
+    openDateTime(controlName: 'pickupDateTime' | 'dropoffDateTime'): void {
+      const currentValue = this.form.get(controlName)?.value ?? null;
+
+      this.dialog
+        .open(DateTimeDialogComponent, {
+          width: '400px',
+          data: currentValue
+        })
+        .afterClosed()
+        .subscribe(result => {
+          if (result instanceof Date) {
+            this.form.get(controlName)?.setValue(result);
+
+            // ✅ kontrollo availability pas zgjedhjes
+            this.checkCarAvailability();
+          }
+        });
+    }
+
+    checkCarAvailability(): void {
+      const carId = this.form.get('carId')?.value;
+      const from = this.form.get('pickupDateTime')?.value;
+      const to = this.form.get('dropoffDateTime')?.value;
+
+      if (!carId || !from || !to) return;
+
+      this.service
+        .checkAvailability(carId, from, to, this.reservationId)
+        .subscribe(res => {
+          if (!res.available) {
+            this.form.setErrors({ carUnavailable: true });
+          } else {
+            if (this.form.hasError('carUnavailable')) {
+              this.form.setErrors(null);
+            }
+          }
+        });
+    }
+
 
   // ================= FORM =================
   buildForm(): void {
     this.form = this.fb.group({
-      // klienti
-      personalNumber: ['', Validators.required],
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-      address: ['', Validators.required],
-      email: [''],
+        // klienti
+        personalNumber: ['', Validators.required],
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        phoneNumber: ['', Validators.required],
+        address: ['', Validators.required],
+        email: [''],
 
-      // rezervimi
-      carId: [null, Validators.required],
-      pickupLocationId: [null, Validators.required],
-      dropoffLocationId: [null, Validators.required],
-      pickupDate: ['', Validators.required],
-      dropoffDate: ['', Validators.required],
-      discount: [0],
+        // rezervimi
+        carId: [null, Validators.required],
+        pickupLocationId: [null, Validators.required],
+        dropoffLocationId: [null, Validators.required],
 
-      // totals (readonly)
-      totalDays: [{ value: 0, disabled: true }],
-      carTotal: [{ value: 0, disabled: true }],
-      extrasTotal: [{ value: 0, disabled: true }],
-      totalWithoutDiscount: [{ value: 0, disabled: true }],
-      totalPrice: [{ value: 0, disabled: true }],
+        // ✅ DATE TIME – KËTO DY JANË KRITIKE
+        pickupDateTime: [null, Validators.required],
+        dropoffDateTime: [null, Validators.required],
 
-      notes: [''],
+        discount: [0],
 
-      // extras
-      extraServices: this.fb.array([])
-    });
+        // totals
+        totalDays: [{ value: 0, disabled: true }],
+        carTotal: [{ value: 0, disabled: true }],
+        extrasTotal: [{ value: 0, disabled: true }],
+        totalWithoutDiscount: [{ value: 0, disabled: true }],
+        totalPrice: [{ value: 0, disabled: true }],
+
+        notes: [''],
+        extraServices: this.fb.array([])
+      });
+
   }
 
   // ================= GETTERS =================
@@ -91,6 +139,11 @@ export class ReservationFormComponent implements OnInit {
   loadCars(): void {
     this.service.getCars().subscribe(res => {
       this.cars = res;
+
+      // 🔑 NËSE JEMI NË EDIT, tani mund të kalkulojmë
+      if (this.isEdit) {
+        this.updateTotals();
+      }
     });
   }
 
@@ -119,40 +172,46 @@ export class ReservationFormComponent implements OnInit {
   }
 
   loadReservation(id: number): void {
-    this.service.getById(id).subscribe(res => {
-      this.form.patchValue({
-        personalNumber: res.personalNumber,
-        firstName: res.firstName,
-        lastName: res.lastName,
-        phoneNumber: res.phoneNumber,
-        address: res.address,
-        email: res.email,
-        carId: res.carId,
-        pickupLocationId: res.pickupLocationId,
-        dropoffLocationId: res.dropoffLocationId,
-        pickupDate: res.pickupDate,
-        dropoffDate: res.dropoffDate,
-        discount: res.discount,
-        notes: res.notes
-      });
+  this.service.getById(id).subscribe(res => {
 
-      if (res.extraServices?.length) {
-        res.extraServices.forEach((e: any) => {
-          const fg: any = this.extraServices.controls.find(
-            c => c.get('id')?.value === e.extraServiceId
-          );
-          if (fg) {
-            fg.get('selected')?.setValue(true, { emitEvent: false });
-            fg.get('quantity')?.enable({ emitEvent: false });
-            fg.get('quantity')?.setValue(e.quantity, { emitEvent: false });
-          }
-        });
-      }
+    this.form.patchValue({
+      personalNumber: res.personalNumber,
+      firstName: res.firstName,
+      lastName: res.lastName,
+      phoneNumber: res.phoneNumber,
+      address: res.address,
+      email: res.email,
 
-      this.updateTotals();
+      carId: res.carId,
+      pickupLocationId: res.pickupLocationId,
+      dropoffLocationId: res.dropoffLocationId, 
+      pickupDateTime: res.pickupDate ? new Date(res.pickupDate + 'Z') : null,
+      dropoffDateTime: res.dropoffDate ? new Date(res.dropoffDate + 'Z') : null,
+      discount: res.discount,
+      notes: res.notes
     });
-  }
 
+    // ================= EXTRAS =================
+    if (res.extraServices?.length) {
+      res.extraServices.forEach((e: any) => {
+        const fg = this.extraServices.controls.find(
+          c => c.get('id')?.value === e.extraServiceId
+        );
+
+        if (fg) {
+          fg.get('selected')?.setValue(true, { emitEvent: false });
+          fg.get('quantity')?.enable({ emitEvent: false });
+          fg.get('quantity')?.setValue(e.quantity, { emitEvent: false });
+        }
+      });
+    }
+
+    // 🔄 rillogarit totalet me DateTime të reja
+    this.updateTotals();
+  });
+}
+
+ 
   // ================= CLIENT SEARCH =================
   searchCustomer(): void {
     const personalNumber = this.form.get('personalNumber')?.value;
@@ -173,7 +232,7 @@ export class ReservationFormComponent implements OnInit {
 
   // ================= EXTRAS =================
   onExtraToggle(index: number): void {
-    const fg = this.extraServices.at(index) as any;
+    const fg = this.extraServices.at(index) as FormGroup;
     const selected = fg.get('selected')?.value;
     const qty = fg.get('quantity');
 
@@ -195,6 +254,14 @@ export class ReservationFormComponent implements OnInit {
   }
 
   save(): void {
+
+     console.log('SUBMIT CLICKED');
+  console.log('form valid:', this.form.valid);
+  console.log('form invalid:', this.form.invalid);
+  console.log('errors:', this.form.errors);
+  console.log('raw value:', this.form.getRawValue());
+
+
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
@@ -211,19 +278,37 @@ export class ReservationFormComponent implements OnInit {
 
     const payload = {
       ...v,
+
+      // 🔴 KRYESORJA
+      pickupDate: v.pickupDateTime,
+      dropoffDate: v.dropoffDateTime,
+
+      // ❌ mos i dërgo këto
+      pickupDateTime: undefined,
+      dropoffDateTime: undefined,
+
       extraServices
     };
 
     if (this.isEdit && this.reservationId) {
-      this.service.update(this.reservationId, payload).subscribe(() =>
-        this.router.navigate(['/business/reservations'])
-      );
+
+      const payloadWithId = {
+        ...payload,
+        id: this.reservationId   // 🔑 KRITIKE
+      };
+
+      this.service.update(this.reservationId, payloadWithId).subscribe({
+        next: () => this.router.navigate(['/business/reservations']),
+        error: err => console.error('UPDATE ERROR', err)
+      });
+
     } else {
       this.service.create(payload).subscribe(() =>
         this.router.navigate(['/business/reservations'])
       );
     }
   }
+
 
   // ================= CALC =================
   listenChanges(): void {
@@ -232,20 +317,22 @@ export class ReservationFormComponent implements OnInit {
   }
 
   private updateTotals(): void {
-    const pickup = this.form.get('pickupDate')?.value;
-    const dropoff = this.form.get('dropoffDate')?.value;
+    const pickup: Date | null = this.form.get('pickupDateTime')?.value;
+    const dropoff: Date | null = this.form.get('dropoffDateTime')?.value;
     const carId = this.form.get('carId')?.value;
     const discount = Number(this.form.get('discount')?.value || 0);
 
     let days = 0;
-    if (pickup && dropoff) {
-      days = Math.max(
-        Math.ceil(
-          (new Date(dropoff).getTime() - new Date(pickup).getTime()) /
-          (1000 * 60 * 60 * 24)
-        ),
-        1
-      );
+
+    if (pickup instanceof Date && dropoff instanceof Date) {
+      const diffMs = dropoff.getTime() - pickup.getTime();
+
+      if (diffMs > 0) {
+        days = Math.max(
+          Math.ceil(diffMs / (1000 * 60 * 60 * 24)),
+          1
+        );
+      }
     }
 
     const car = this.cars.find(c => c.id === carId);
@@ -254,7 +341,11 @@ export class ReservationFormComponent implements OnInit {
 
     const extrasTotal = this.extraServices.controls.reduce((sum, fg: any) => {
       if (!fg.get('selected')?.value) return sum;
-      return sum + (fg.get('quantity').value * fg.get('pricePerDay').value * days);
+
+      const qty = Number(fg.get('quantity')?.value || 0);
+      const price = Number(fg.get('pricePerDay')?.value || 0);
+
+      return sum + (qty * price * days);
     }, 0);
 
     this.form.patchValue({
@@ -265,4 +356,5 @@ export class ReservationFormComponent implements OnInit {
       totalPrice: Math.max(carTotal + extrasTotal - discount, 0)
     }, { emitEvent: false });
   }
+   
 }

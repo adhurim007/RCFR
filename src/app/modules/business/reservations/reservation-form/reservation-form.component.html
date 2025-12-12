@@ -43,7 +43,16 @@
         <input matInput formControlName="address">
        </mat-form-field>
     </div>
-
+    
+    <fuse-alert
+      *ngIf="form.hasError('carUnavailable')"
+      type="error"
+      appearance="outline"
+    >
+      <span fuseAlertTitle>Veturë e padisponueshme</span>
+      Kjo veturë është tashmë e rezervuar për intervalin e zgjedhur.
+      Ju lutem ndryshoni datën/orën ose zgjidhni një veturë tjetër.
+    </fuse-alert>
 
     <!-- =====================  SEKSIONI 2: REZERVIMI ===================== -->
     <h2 class="text-xl font-semibold mb-3">Detajet e rezervimit</h2>
@@ -60,7 +69,6 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- Pickup Location -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Pickup Location *</mat-label>
         <mat-select formControlName="pickupLocationId">
@@ -68,9 +76,12 @@
             {{ loc.name }}
           </mat-option>
         </mat-select>
+
+        <mat-error *ngIf="form.get('pickupLocationId')?.hasError('required')">
+          Pickup location është e detyrueshme
+        </mat-error>
       </mat-form-field>
 
-      <!-- Dropoff Location -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Dropoff Location *</mat-label>
         <mat-select formControlName="dropoffLocationId">
@@ -78,24 +89,43 @@
             {{ loc.name }}
           </mat-option>
         </mat-select>
-      </mat-form-field>
 
-      <!-- Pickup Date -->
+        <mat-error *ngIf="form.get('dropoffLocationId')?.hasError('required')">
+          Dropoff location është e detyrueshme
+        </mat-error>
+      </mat-form-field>
+ 
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Pickup Date *</mat-label>
-        <input matInput [matDatepicker]="picker1" formControlName="pickupDate">
-        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-        <mat-datepicker #picker1></mat-datepicker>
+        <mat-label>Pickup Date & Time *</mat-label> 
+        <input
+          matInput
+          readonly
+          [value]="form.get('pickupDateTime')?.value | date:'dd/MM/yyyy - HH:mm'"
+          (click)="openDateTime('pickupDateTime')"
+        />
+
+        <mat-icon matSuffix>event</mat-icon>
+
+        <!-- REAL FORM CONTROL (HIDDEN) -->
+        <input type="hidden" formControlName="pickupDateTime" />
       </mat-form-field>
 
-      <!-- Dropoff Date -->
+
       <mat-form-field appearance="outline" class="w-full">
-        <mat-label>Dropoff Date *</mat-label>
-        <input matInput [matDatepicker]="picker2" formControlName="dropoffDate">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
+        <mat-label>Dropoff Date & Time *</mat-label>
 
+        <input
+          matInput
+          readonly
+          [value]="form.get('dropoffDateTime')?.value | date:'dd/MM/yyyy - HH:mm'"
+          (click)="openDateTime('dropoffDateTime')"
+        />
+
+        <mat-icon matSuffix>event</mat-icon>
+
+        <input type="hidden" formControlName="dropoffDateTime" />
+      </mat-form-field> 
+ 
       <!-- Discount -->
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Zbritje (€)</mat-label>

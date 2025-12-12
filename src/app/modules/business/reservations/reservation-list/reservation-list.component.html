@@ -1,63 +1,105 @@
-<div class="p-6 w-full">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-    <h2 class="text-2xl font-semibold text-gray-800">
+<div class="flex flex-col flex-auto w-full p-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">
       Lista e rezervimeve
-    </h2>
+    </h1>
 
     <button
       mat-flat-button
       color="primary"
-      (click)="createReservation()"
-      class="mt-4 sm:mt-0"
-    >
+      class="px-6"
+      (click)="createReservation()">
       <mat-icon class="mr-2">add</mat-icon>
       Shto rezervim
     </button>
   </div>
 
-  <div class="w-full bg-white rounded-2xl shadow-md border border-gray-200 overflow-x-auto">
+  <!-- Table Card -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 w-full overflow-x-auto">
+
     <table class="min-w-full text-sm text-left text-gray-700">
+
+      <!-- Header -->
       <thead class="bg-gray-100 text-xs uppercase text-gray-600">
         <tr>
           <th class="px-6 py-3">Nr. Rezervimit</th>
           <th class="px-6 py-3">Klienti</th>
-          <th class="px-6 py-3">Veturë</th>
-          <th class="px-6 py-3">Data Pickup</th>
-          <th class="px-6 py-3">Data Dropoff</th>
+          <th class="px-6 py-3">Vetura</th>
+          <th class="px-6 py-3">Pickup</th>
+          <th class="px-6 py-3">Dropoff</th>
           <th class="px-6 py-3">Totali</th>
           <th class="px-6 py-3 text-right">Veprime</th>
         </tr>
       </thead>
 
-      <tbody>
-        <tr
-          *ngFor="let r of reservations"
-          class="border-b hover:bg-gray-50 transition-colors duration-150"
-        >
-          <td class="px-6 py-4">{{ r.reservationNumber }}</td>
-          <td class="px-6 py-4">{{ r.customerName }}</td>
-          <td class="px-6 py-4">{{ r.carName }}</td>
-          <td class="px-6 py-4">{{ r.pickupDate | date:'dd.MM.yyyy' }}</td>
-          <td class="px-6 py-4">{{ r.dropoffDate | date:'dd.MM.yyyy' }}</td>
-          <td class="px-6 py-4">{{ r.totalPrice }} €</td>
+      <!-- Body -->
+     <tbody>
 
-          <td class="px-6 py-4 text-right space-x-2">
-            <button mat-icon-button color="primary" (click)="editReservation(r.id)">
+          <tr *ngFor="let r of reservations" class="border-b hover:bg-gray-50">
+
+            <td class="px-6 py-4">{{ r.reservationNumber }}</td>
+            <td class="px-6 py-4">{{ r.customerName }}</td>
+            <td class="px-6 py-4">{{ r.carName }}</td>
+            <td class="px-6 py-4">{{ r.pickupDate | date:'dd.MM.yyyy' }}</td>
+            <td class="px-6 py-4">{{ r.dropoffDate | date:'dd.MM.yyyy' }}</td>
+            <td class="px-6 py-4">{{ r.totalPrice }} €</td>
+
+            <!-- ACTIONS -->
+            <td class="px-6 py-4 text-right">
+
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="actionsMenu"
+                (click)="selectedReservation = r"> <!-- ✅ KJO ËSHTË KYÇI -->
+                <mat-icon>more_vert</mat-icon>
+              </button>
+
+            </td>
+          </tr>
+
+          <!-- EMPTY -->
+          <tr *ngIf="reservations.length === 0 && !loading">
+            <td colspan="7" class="text-center py-6 text-gray-400">
+              Nuk ka asnjë rezervim të regjistruar.
+            </td>
+          </tr>
+
+        </tbody>
+          <mat-menu #actionsMenu="matMenu">
+
+            <button mat-menu-item (click)="editReservation(selectedReservation.id)">
               <mat-icon>edit</mat-icon>
+              <span>Përditëso</span>
             </button>
 
-            <button mat-icon-button color="warn" (click)="deleteReservation(r.id)">
-              <mat-icon>delete</mat-icon>
+            <button mat-menu-item (click)="openContract(selectedReservation.id)">
+              <mat-icon>description</mat-icon>
+              <span>Kontrata</span>
             </button>
-          </td>
-        </tr>
 
-        <tr *ngIf="reservations.length === 0 && !loading">
-          <td colspan="7" class="text-center py-6 text-gray-400">
-            Nuk ka asnjë rezervim të regjistruar.
-          </td>
-        </tr>
-      </tbody>
+            <button mat-menu-item (click)="openInvoice(selectedReservation.id)">
+              <mat-icon>receipt_long</mat-icon>
+              <span>Fatura</span>
+            </button>
+
+            <mat-divider></mat-divider>
+
+            <button
+              mat-menu-item
+              class="text-red-600"
+              (click)="deleteReservation(selectedReservation.id)">
+              <mat-icon color="warn">delete</mat-icon>
+              <span>Fshij</span>
+            </button> 
+          </mat-menu> 
     </table>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="p-6 text-center text-gray-400">  
+      Duke u ngarkuar rezervimet...
+    </div>
+
   </div>
 </div>

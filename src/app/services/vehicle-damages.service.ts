@@ -23,13 +23,11 @@ export class VehicleDamagesService {
 
     return this.http.get<any[]>(url);
   }
-
-  // ✅ GET BY ID
+ 
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
-
-  // ✅ CREATE
+ 
   create(formData: FormData): Observable<number> {
     return this.http.post<number>(this.baseUrl, formData);
   }

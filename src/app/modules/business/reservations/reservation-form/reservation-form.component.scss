@@ -1,0 +1,22 @@
+.error-box-red {
+  border: 2px solid #d32f2f !important;;
+  border-radius: 6px;
+
+  padding: 16px 18px;
+  margin: 16px 0;
+
+  background-color: #ffffff;
+}
+
+.error-box-title {
+  color: #d32f2f !important;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.error-box-text {
+  color: #d32f2f !important;
+  font-size: 14px;
+  line-height: 1.5;
+}

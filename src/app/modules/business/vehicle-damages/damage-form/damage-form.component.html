@@ -10,13 +10,13 @@
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
         <!-- Reservation -->
-        <mat-form-field appearance="outline" class="w-full">
-            <mat-label>Reservation</mat-label>
-            <mat-select formControlName="reservationId">
-                <mat-option *ngFor="let r of reservations" [value]="r.id">
-                    #{{ r.id }} – {{ r.customerName }}
-                </mat-option>
-            </mat-select>
+    <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Reservation *</mat-label>
+        <mat-select formControlName="reservationId">
+            <mat-option *ngFor="let r of reservations" [value]="r.id">
+            #{{ r.reservationNumber }} – {{ r.customerName }}
+            </mat-option>
+        </mat-select>
         </mat-form-field>
 
         <!-- Damage Type -->

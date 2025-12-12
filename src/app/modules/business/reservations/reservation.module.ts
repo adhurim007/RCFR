@@ -13,22 +13,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { ReservationRoutingModule } from './reservation-routing.module';
 import { ReservationListComponent } from './reservation-list/reservation-list.component';
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
+import { DateTimeDialogComponent } from './date-time-dialog.component';
 @NgModule({
   declarations: [
     ReservationListComponent,
-    ReservationFormComponent
+    ReservationFormComponent,
+    DateTimeDialogComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     ReactiveFormsModule,
-    FormsModule,
-
+    FormsModule, 
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -39,8 +41,23 @@ import { ReservationFormComponent } from './reservation-form/reservation-form.co
     MatTableModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
-    ReservationRoutingModule
+    MatMenuModule,
+    MatDividerModule,
+    MatIconModule,
+    MatButtonModule, 
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDividerModule,
+    ReservationRoutingModule,
+       // ✅ Angular Material
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule  
   ]
 })
 export class ReservationModule {}

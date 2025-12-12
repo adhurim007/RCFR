@@ -26,20 +26,34 @@ export class DamageFormComponent implements OnInit {
     private reservationService: ReservationService
   ) {}
 
-  ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.isEdit = !!this.id;
+ ngOnInit(): void {
+  this.id = Number(this.route.snapshot.paramMap.get('id'));
+  this.isEdit = !!this.id;
 
-    this.buildForm();
-    this.loadReservations();
+  this.buildForm();
 
+  // Load reservations FIRST
+  this.reservationService.getByBusiness().subscribe(reservations => {
+    this.reservations = reservations;
+
+    // Vetëm pasi të jenë gati rezervimet
     if (this.isEdit) {
       this.service.getById(this.id).subscribe(res => {
-        this.form.patchValue(res);
+        this.form.patchValue({
+          id: res.id,
+          reservationId: res.reservationId,
+          damageType: res.damageType,
+          estimatedCost: res.estimatedCost,
+          status: res.status,
+          description: res.description
+        });
+
         this.existingImages = res.photos || [];
       });
     }
-  }
+  });
+}
+
 
   damageTypes = [
     { value: 'Scratch', label: 'Scratch' },
@@ -61,10 +75,13 @@ export class DamageFormComponent implements OnInit {
     });
   }
 
-  loadReservations(): void {
+  loadReservations(done?: () => void): void {
     this.reservationService
       .getByBusiness()
-      .subscribe(r => (this.reservations = r));
+      .subscribe(r => {
+        this.reservations = r;
+        if (done) done();
+      });
   }
 
   onFilesSelected(event: any): void {

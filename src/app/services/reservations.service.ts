@@ -127,4 +127,28 @@ export class ReservationService {
       { params: { personalNumber } }
     );
   }
+
+  checkAvailability(
+  carId: number,
+  from: Date,
+  to: Date,
+  excludeReservationId?: number | null
+): Observable<{ available: boolean }> {
+
+  const params: any = {
+    carId,
+    from: from.toISOString(),
+    to: to.toISOString()
+  };
+
+  if (excludeReservationId) {
+    params.excludeReservationId = excludeReservationId;
+  }
+
+  return this.http.get<{ available: boolean }>(
+    `${this.baseUrl}/check-availability`,
+    { params }
+  );
+}
+
 }
