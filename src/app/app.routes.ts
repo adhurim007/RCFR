@@ -81,6 +81,8 @@ export const appRoutes: Route[] = [
                 .then(m => m.VehicleDamagesModule)
           },
           { path: 'car-pricing-rules', loadChildren: () => import('app/modules/business/car-pricing-rules/car-pricing-rules.module').then(m => m.CarPricingRulesModule) },
+          { path: 'car-services', loadChildren: () => import('app/modules/business/car-services/car-services.module').then(m => m.CarServicesModule) },
+          { path: 'car-registrations', loadChildren: () => import('app/modules/business/car-registrations/car-registrations.module').then(m => m.CarRegistrationsModule) },
           { path: '', pathMatch: 'full', redirectTo: 'reservations' }
         ]
       }

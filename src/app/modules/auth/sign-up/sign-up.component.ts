@@ -87,7 +87,7 @@ export class AuthSignUpComponent implements OnInit {
         console.log("Submitting form", this.signUpForm.value);  // 👈 add this
 
         this._authService.signUpBusiness(this.signUpForm.value).subscribe({
-            next: () => this._router.navigateByUrl('/confirmation-required'),
+            next: () => this._router.navigateByUrl('/sign-in'),
             error: (err) => {
             console.error('Register error:', err);  // 👈 log backend errors
             this.signUpForm.enable();

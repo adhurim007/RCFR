@@ -1,0 +1,89 @@
+<div class="flex flex-col w-full px-8 py-6">
+
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold">Car Registrations</h1>
+
+    <button
+      mat-flat-button
+      color="primary"
+      class="rounded-full"
+      (click)="create()">
+      + Shto servis
+    </button>
+  </div>
+
+  <!-- Table wrapper -->
+  <div class="bg-card rounded-xl shadow overflow-x-auto">
+
+    <table class="w-full">
+      <thead>
+        <tr class="border-b text-left text-gray-500 text-sm">
+          <th class="p-4">CAR</th>
+          <th class="p-4">REG. NUMBER</th>
+          <th class="p-4">ISSUED</th>
+          <th class="p-4">EXPIRY</th>
+          <th class="p-4">COST</th>
+          <th class="p-4 text-right">ACTIONS</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="let r of registrations"
+          class="border-b hover:bg-gray-50">
+
+          <td class="p-4">
+            {{ r.car?.licensePlate }}
+          </td>
+
+          <td class="p-4">
+            {{ r.registrationNumber }}
+          </td>
+
+          <td class="p-4">
+            {{ r.issuedDate | date }}
+          </td>
+
+          <td class="p-4">
+            {{ r.expiryDate | date }}
+          </td>
+
+          <td class="p-4">
+            {{ r.cost | currency:'EUR' }}
+          </td>
+
+          <td class="p-4 text-right">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="edit(r.id)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+
+              <button mat-menu-item (click)="delete(r.id)">
+                <mat-icon color="warn">delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+
+        </tr>
+
+        <!-- Empty -->
+        <tr *ngIf="!loading && registrations.length === 0">
+          <td colspan="6" class="p-8 text-center text-gray-400">
+            No registrations found
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<div class="w-full bg-white p-10 rounded-xl shadow">
+
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold">
+      {{ isEdit ? 'Edit Car Service' : 'Add Car Service' }}
+    </h1>
+  </div>
+
+  <!-- Form -->
+  <form
+    [formGroup]="form"
+    class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+    <!-- Car -->
+    <mat-form-field class="w-full">
+      <mat-label>Car *</mat-label>
+      <mat-select formControlName="carId">
+        <mat-option *ngFor="let car of cars" [value]="car.id">
+          {{ car.licensePlate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Service Type -->
+    <mat-form-field class="w-full">
+      <mat-label>Service Type *</mat-label>
+      <mat-select formControlName="serviceType">
+        <mat-option *ngFor="let t of serviceTypes" [value]="t.value">
+          {{ t.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Service Date -->
+    <mat-form-field class="w-full">
+      <mat-label>Service Date</mat-label>
+
+      <input
+        matInput
+        [matDatepicker]="serviceDatePicker"
+        formControlName="serviceDate">
+
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="serviceDatePicker">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #serviceDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <!-- Mileage -->
+    <mat-form-field class="w-full">
+      <mat-label>Mileage</mat-label>
+      <input matInput type="number" formControlName="mileage" />
+    </mat-form-field>
+
+    <!-- Cost -->
+    <mat-form-field class="w-full">
+      <mat-label>Cost *</mat-label>
+      <input matInput type="number" formControlName="cost" />
+    </mat-form-field>
+
+    <!-- Service Center -->
+    <mat-form-field class="w-full">
+      <mat-label>Service Center</mat-label>
+      <input matInput formControlName="serviceCenter" />
+    </mat-form-field>
+
+    <!-- Next Service Date -->
+    <mat-form-field class="w-full">
+      <mat-label>Next Service Date</mat-label>
+
+      <input
+        matInput
+        [matDatepicker]="nextServiceDatePicker"
+        formControlName="nextServiceDate">
+
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="nextServiceDatePicker">
+      </mat-datepicker-toggle>
+
+      <mat-datepicker #nextServiceDatePicker></mat-datepicker>
+</mat-form-field>
+
+
+    <!-- Next Service Mileage -->
+    <mat-form-field class="w-full">
+      <mat-label>Next Service Mileage</mat-label>
+      <input matInput type="number" formControlName="nextServiceMileage" />
+    </mat-form-field>
+
+    <!-- Notes – FULL WIDTH -->
+    <mat-form-field class="w-full xl:col-span-3">
+      <mat-label>Notes</mat-label>
+      <textarea matInput rows="3" formControlName="notes"></textarea>
+    </mat-form-field>
+
+    <!-- Actions – FULL WIDTH -->
+    <div class="xl:col-span-3 flex justify-end gap-4 pt-6">
+      <button mat-button type="button" (click)="cancel()">
+        Cancel
+      </button>
+
+      <button mat-flat-button color="primary" type="button" (click)="submit()">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+    </div>
+
+  </form>
+</div>

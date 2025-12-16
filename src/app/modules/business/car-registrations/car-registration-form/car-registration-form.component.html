@@ -1,0 +1,74 @@
+<div class="w-full bg-white p-10">
+
+  <h1 class="text-2xl font-semibold mb-8">
+    {{ isEdit ? 'Edit Car Registration' : 'Add Car Registration' }}
+  </h1>
+
+  <form
+    [formGroup]="form"
+    class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+    <mat-form-field>
+      <mat-label>Car *</mat-label>
+      <mat-select formControlName="carId">
+        <mat-option *ngFor="let car of cars" [value]="car.id">
+          {{ car.licensePlate }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Registration Number *</mat-label>
+      <input matInput formControlName="registrationNumber">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Issued Date *</mat-label>
+      <input matInput [matDatepicker]="issued" formControlName="issuedDate">
+      <mat-datepicker-toggle matSuffix [for]="issued"></mat-datepicker-toggle>
+      <mat-datepicker #issued></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Expiry Date *</mat-label>
+      <input matInput [matDatepicker]="expiry" formControlName="expiryDate">
+      <mat-datepicker-toggle matSuffix [for]="expiry"></mat-datepicker-toggle>
+      <mat-datepicker #expiry></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Cost *</mat-label>
+      <input matInput type="number" formControlName="cost">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Insurance Company</mat-label>
+      <input matInput formControlName="insuranceCompany">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Insurance Expiry Date</mat-label>
+      <input matInput [matDatepicker]="insExp" formControlName="insuranceExpiryDate">
+      <mat-datepicker-toggle matSuffix [for]="insExp"></mat-datepicker-toggle>
+      <mat-datepicker #insExp></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Document URL</mat-label>
+      <input matInput formControlName="documentUrl">
+    </mat-form-field>
+
+    <mat-form-field class="xl:col-span-3">
+      <mat-label>Notes</mat-label>
+      <textarea matInput rows="3" formControlName="notes"></textarea>
+    </mat-form-field>
+
+    <div class="xl:col-span-3 flex justify-end gap-4 pt-6">
+      <button mat-button type="button" (click)="cancel()">Cancel</button>
+      <button mat-flat-button color="primary" type="button" (click)="submit()">
+        {{ isEdit ? 'Update' : 'Save' }}
+      </button>
+    </div>
+
+  </form>
+</div>
