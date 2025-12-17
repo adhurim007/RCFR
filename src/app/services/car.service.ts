@@ -18,14 +18,18 @@ export class CarService {
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
+  
+  getDetails(carId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${carId}/details`);
+  }
 
   getByBusiness(businessId: number): Observable<any[]> {
     return this.http.get<any[]>(`${environment.apiUrl}/api/cars/by-business/${businessId}`);
   }
 
-  create(payload: any): Observable<number> {
-    return this.http.post<number>(this.baseUrl, payload);
-  }
+  create(payload: FormData): Observable<number> {
+  return this.http.post<number>(this.baseUrl, payload);
+}
 
   update(id: number, payload: any): Observable<void> {
     return this.http.put<void>(`${this.baseUrl}/${id}`, payload);

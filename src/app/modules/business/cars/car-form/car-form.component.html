@@ -81,11 +81,49 @@
                 <input type="file" multiple (change)="onFilesSelected($event)" class="border p-2 rounded">
                 <small class="text-xs text-gray-500">You can upload multiple images.</small>
             </div>
+            <div class="flex flex-col w-full"> 
+                <!-- IMAGE PREVIEW LIST -->
+                <div *ngIf="imagePreviews.length > 0" class="col-span-full mt-6">
 
-            <!-- Available -->
-            <mat-checkbox formControlName="isAvailable" class="mt-4">
-                Available
-            </mat-checkbox>
+                    <h3 class="text-base font-semibold mb-4 text-gray-800">
+                        Images to be uploaded ({{ imagePreviews.length }})
+                    </h3>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
+                        <div *ngFor="let img of imagePreviews; let i = index"
+                            class="relative rounded-xl overflow-hidden border shadow-sm">
+
+                            <img
+                                [src]="img"
+                                class="w-full h-56 object-cover"
+                            />
+
+                            <!-- REMOVE BUTTON -->
+                            <button
+                                type="button"
+                                (click)="removeImage(i)"
+                                class="absolute top-3 right-3 bg-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm shadow hover:bg-red-700">
+                                ✕
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-span-full mt-4">
+                <div class="flex items-center gap-3 bg-gray-50 border rounded-lg px-4 py-3 w-fit">
+
+                    <mat-checkbox formControlName="isAvailable">
+                        <span class="font-medium text-gray-800">
+                            Available for rent
+                        </span>
+                    </mat-checkbox>
+
+                </div>
+            </div>
+
 
         </div>
 

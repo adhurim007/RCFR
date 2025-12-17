@@ -32,6 +32,10 @@ export class CarListComponent implements OnInit {
     this.loadCars();
   }
 
+  viewDetails(carId: number): void {
+    this.router.navigate(['/business/cars', carId, 'details']);
+  }
+
   loadCars(): void {
     this.loading = true;
 

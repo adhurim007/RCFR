@@ -14,12 +14,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatMenuModule  } from '@angular/material/menu';
 import { CarRoutingModule } from './car-routing.module';
 import { CarListComponent } from './car-list/car-list.component';
-import { CarFormComponent } from './car-form/car-form.component';
-
+import { CarFormComponent } from './car-form/car-form.component'; 
+import { CarDetailsComponent } from './car-details/car-details.component';
 @NgModule({
   declarations: [
     CarListComponent,
-    CarFormComponent
+    CarFormComponent,
+    CarDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -32,12 +33,12 @@ import { CarFormComponent } from './car-form/car-form.component';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCheckboxModule,
-    MatIconModule,
+    MatCheckboxModule, 
     MatCardModule,
     MatTableModule,
     MatMenuModule ,
-    CarRoutingModule
+    CarRoutingModule,
+    MatIconModule
   ]
 })
 export class CarModule {}

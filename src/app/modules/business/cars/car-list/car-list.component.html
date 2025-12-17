@@ -61,24 +61,22 @@
               <mat-menu #carActionsMenu="matMenu">
                   <button mat-menu-item (click)="edit(car.id)">
                     <mat-icon>edit</mat-icon>
-                    Përditëso
+                       Përditëso
                   </button>
 
-                <button
-                  mat-menu-item
-                  (click)="addDetails(car.id)"
-                >
-                  <mat-icon>playlist_add</mat-icon>
-                  <span>Shto detaje</span>
-                </button>
+                  <button
+                    mat-menu-item
+                    (click)="viewDetails(car.id)">
+                    <mat-icon>visibility</mat-icon>
+                    <span>Shiko detajet</span>
+                  </button>
 
-                <button
-                  mat-menu-item
-                  (click)="delete(car.id)"
-                >
-                  <mat-icon color="warn">delete</mat-icon>
-                  <span>Fshij</span>
-                </button>
+                  <button
+                    mat-menu-item
+                    (click)="delete(car.id)" >
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>Fshij</span>
+                  </button>
               </mat-menu>
             </td>
 

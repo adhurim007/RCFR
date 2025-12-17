@@ -24,7 +24,9 @@ export class CarFormComponent implements OnInit {
   transmissions: any[] = [];
 
   selectedFiles: File[] = [];
+imagePreviews: string[] = [];
 
+  
   constructor(
     private fb: FormBuilder,
     private lookup: CarLookupService,
@@ -147,13 +149,33 @@ export class CarFormComponent implements OnInit {
   // FILE UPLOAD
   // =====================================================
   onFilesSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (!input.files || input.files.length === 0) {
-      this.selectedFiles = [];
-      return;
-    }
-    this.selectedFiles = Array.from(input.files);
+  const input = event.target as HTMLInputElement;
+  if (!input.files || input.files.length === 0) {
+    this.selectedFiles = [];
+    this.imagePreviews = [];
+    return;
   }
+
+  // reset
+  this.selectedFiles = [];
+  this.imagePreviews = [];
+
+  Array.from(input.files).forEach(file => {
+    this.selectedFiles.push(file);
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreviews.push(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+
+removeImage(index: number): void {
+  this.selectedFiles.splice(index, 1);
+  this.imagePreviews.splice(index, 1);
+}
 
   // =====================================================
   // DROPDOWNS
@@ -183,21 +205,42 @@ export class CarFormComponent implements OnInit {
   save(): void {
     if (this.form.invalid) return;
 
-    const payload = {
-      ...this.form.value,
-      businessId: this.businessId   // sigurohemi që dërgohet gjithmonë
-    };
+    // ============================
+    // FormData (për fields + images)
+    // ============================
+    const formData = new FormData();
 
+    // shto të gjitha fushat e formës
+    Object.entries(this.form.value).forEach(([key, value]) => {
+      if (value !== null && value !== undefined) {
+        formData.append(key, value as any);
+      }
+    });
+
+    // sigurohemi që businessId dërgohet gjithmonë
+    formData.set('businessId', this.businessId.toString());
+
+    // shto imazhet (opsionale)
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      this.selectedFiles.forEach(file => {
+        formData.append('Images', file);
+      });
+    }
+
+    // ============================
+    // CREATE / UPDATE
+    // ============================
     if (this.isEdit) {
-      this.carService.update(this.carId, payload).subscribe(() => {
-        this.afterSave(this.carId);
+      this.carService.update(this.carId, formData).subscribe(() => {
+        this.router.navigate(['/business/cars']);
       });
     } else {
-      this.carService.create(payload).subscribe((newId: number) => {
-        this.afterSave(newId);
+      this.carService.create(formData).subscribe(() => {
+        this.router.navigate(['/business/cars']);
       });
     }
   }
+
 
   private afterSave(carId: number): void {
     if (this.selectedFiles.length) {
