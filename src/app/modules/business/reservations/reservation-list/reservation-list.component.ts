@@ -46,10 +46,30 @@ import { ReservationService } from 'app/services/reservations.service';
   editReservation(id: number): void {
     this.router.navigate(['/business/reservations/edit', id]);
   }
+ 
 
-  openContract(id: number): void {
-    console.log('Contract for reservation', id);
-  }
+  loadingContract = false;
+
+openContract(id: number): void {
+  this.loadingContract = true;
+
+  this.reservationService.getContractReport(id).subscribe({
+    next: (res) => {
+      if (res?.url) {
+        window.open(res.url, '_blank');
+      } else {
+        console.error('Contract URL not found in response', res);
+      }
+
+      this.loadingContract = false;
+    },
+    error: (err) => {
+      console.error('Failed to generate/open contract', err);
+      this.loadingContract = false;
+    }
+  });
+}
+
 
   openInvoice(id: number): void {
     console.log('Invoice for reservation', id);

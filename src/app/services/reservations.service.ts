@@ -22,9 +22,7 @@ export class ReservationService {
     private userService: UserService
   ) {}
 
-  // =========================================================
-  //  BUSINESS ID (merret nga /api/users/{userId}/business-id)
-  // =========================================================
+ 
   private ensureBusinessId(): Observable<number | null> {
 
     // nëse e kemi ruajtur më herët, mos e thirr API-n prapë
@@ -52,11 +50,7 @@ export class ReservationService {
   loadBusinessId(): Observable<number | null> {
     return this.ensureBusinessId();
   }
-
-  // =========================================================
-  //  RESERVATIONS
-  // =========================================================
-
+ 
   // Lista për një biznes (pa parametër; vetë e gjen businessId)
   getByBusiness(): Observable<any[]> {
     return this.ensureBusinessId().pipe(
@@ -109,10 +103,7 @@ export class ReservationService {
       })
     );
   }
-
-  // =========================================================
-  //  EXTRAS, CUSTOMERS
-  // =========================================================
+ 
   getExtraServices(): Observable<any[]> {
     return this.http.get<any[]>(this.extrasUrl);
   }
@@ -149,6 +140,10 @@ export class ReservationService {
     `${this.baseUrl}/check-availability`,
     { params }
   );
+}
+
+ getContractReport(id: number): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}/${id}/contract-report`);
 }
 
 }
