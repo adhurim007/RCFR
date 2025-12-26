@@ -142,8 +142,27 @@ export class ReservationService {
   );
 }
 
- getContractReport(id: number): Observable<any> {
-  return this.http.get<any>(`${this.baseUrl}/${id}/contract-report`);
+ getContractReport(id: number) {
+  return this.http.get(
+    `${this.baseUrl}/${id}/contract-report`,
+    {
+      responseType: 'blob',
+      observe: 'response' // 👈 shumë e rëndësishme
+    }
+  );
 }
+
+getInvoiceReport(id: number) {
+  return this.http.get(
+    `${this.baseUrl}/${id}/invoice-report`,
+    {
+      responseType: 'blob',
+      observe: 'response'
+    }
+  );
+}
+
+
+
 
 }

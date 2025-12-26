@@ -74,14 +74,26 @@
               <span>Përditëso</span>
             </button>
 
-            <button mat-menu-item (click)="openContract(selectedReservation.id)">
-              <mat-icon>description</mat-icon>
-              <span>Kontrata</span>
-            </button>
+            <button
+                  mat-menu-item
+                  (click)="openContract(selectedReservation.id)"
+                  [disabled]="loadingContract">
 
-            <button mat-menu-item (click)="openInvoice(selectedReservation.id)">
+                  <mat-icon>description</mat-icon>
+
+                  <span *ngIf="!loadingContract">Kontrata</span>
+                  <span *ngIf="loadingContract">Duke u hapur...</span>
+                </button>
+                
+            <button
+              mat-menu-item
+              (click)="openInvoice(selectedReservation.id)"
+              [disabled]="loadingInvoice">
+
               <mat-icon>receipt_long</mat-icon>
-              <span>Fatura</span>
+
+              <span *ngIf="!loadingInvoice">Fatura</span>
+              <span *ngIf="loadingInvoice">Duke u hapur...</span>
             </button>
 
             <mat-divider></mat-divider>

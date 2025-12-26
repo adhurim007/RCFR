@@ -50,31 +50,52 @@ import { ReservationService } from 'app/services/reservations.service';
 
   loadingContract = false;
 
-openContract(id: number): void {
-  this.loadingContract = true;
+  openContract(id: number): void {
+    this.loadingContract = true;
 
-  this.reservationService.getContractReport(id).subscribe({
+    this.reservationService.getContractReport(id).subscribe({
+      next: (res) => {
+        if (res?.url) {
+          window.open(res.url, '_blank');
+        } else {
+          console.error('Contract URL not found in response', res);
+        }
+
+        this.loadingContract = false;
+      },
+      error: (err) => {
+        console.error('Failed to generate/open contract', err);
+        this.loadingContract = false;
+      }
+    });
+  }
+
+  loadingInvoice = false;
+
+openInvoice(id: number): void {
+  this.loadingInvoice = true;
+
+  this.reservationService.getInvoiceReport(id).subscribe({
     next: (res) => {
-      if (res?.url) {
-        window.open(res.url, '_blank');
+      const blob = res.body;
+
+      if (blob) {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
       } else {
-        console.error('Contract URL not found in response', res);
+        console.error('Invoice PDF not found in response');
       }
 
-      this.loadingContract = false;
+      this.loadingInvoice = false;
     },
     error: (err) => {
-      console.error('Failed to generate/open contract', err);
-      this.loadingContract = false;
+      console.error('Failed to generate/open invoice', err);
+      this.loadingInvoice = false;
     }
   });
 }
-
-
-  openInvoice(id: number): void {
-    console.log('Invoice for reservation', id);
-  }
-
+ 
   deleteReservation(id: number): void {
     if (!confirm('A je i sigurt që dëshiron ta fshish këtë rezervim?')) return;
 
