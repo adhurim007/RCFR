@@ -66,5 +66,6 @@ export class CarService {
     const formData = new FormData();
     files.forEach(file => formData.append('files', file));
     return this.http.post(`${this.baseUrl}/${carId}/images`, formData);
-  }
+  } 
+ 
 }

@@ -54,26 +54,32 @@
             {{ r.cost | currency:'EUR' }}
           </td>
 
-          <td class="p-4 text-right">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="menu">
-              <mat-icon>more_vert</mat-icon>
+         <td class="p-4 text-right">
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions">
+            <mat-icon svgIcon="heroicons_outline:dots-vertical"></mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="edit(r.id)">
+              <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+              <span>Edit</span>
             </button>
 
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="edit(r.id)">
-                <mat-icon>edit</mat-icon>
-                <span>Edit</span>
-              </button>
+            <button mat-menu-item (click)="delete(r.id)">
+              <mat-icon svgIcon="heroicons_outline:trash" class="text-red-500"></mat-icon>
+              <span class="text-red-500">Delete</span>
+            </button>
 
-              <button mat-menu-item (click)="delete(r.id)">
-                <mat-icon color="warn">delete</mat-icon>
-                <span>Delete</span>
-              </button>
-            </mat-menu>
-          </td>
-
+            <button
+              mat-menu-item
+              (click)="openCarRegistrationsReport(r.carId)"
+              [disabled]="!r.carId || loadingCarRegistrationsReportId === r.carId">
+              <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
+              <span *ngIf="loadingCarRegistrationsReportId !== r.carId">Raporti i regjistrimeve</span>
+              <span *ngIf="loadingCarRegistrationsReportId === r.carId">Duke gjeneruar...</span>
+            </button>
+          </mat-menu>
+        </td> 
         </tr>
 
         <!-- Empty -->

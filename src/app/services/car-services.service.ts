@@ -89,4 +89,11 @@ private ensureBusinessId(): Observable<number | null> {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getCarServicesReport(carId: number) {
+    return this.http.get(
+      `${this.baseUrl}/${carId}/car-services-report`,
+      { responseType: 'blob' }
+    );
+  }
 }

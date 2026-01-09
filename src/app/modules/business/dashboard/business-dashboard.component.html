@@ -1,0 +1,145 @@
+<div class="flex flex-col w-full p-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <div class="text-2xl font-semibold">Dashboard</div>
+      <div class="text-gray-500">Përmbledhje e biznesit</div>
+    </div>
+
+    <button mat-stroked-button (click)="load()" [disabled]="loading">
+      <mat-icon>refresh</mat-icon>
+      <span class="ml-2">Refresh</span>
+    </button>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" *ngIf="data as d">
+
+    <fuse-card class="p-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-sm text-gray-500">Total rezervime</div>
+          <div class="text-3xl font-bold mt-1">{{ d.cards.totalReservations }}</div>
+        </div>
+        <mat-icon class="text-gray-400">event</mat-icon>
+      </div>
+      <div class="text-xs text-gray-500 mt-3">Gjithsej</div>
+    </fuse-card>
+
+    <fuse-card class="p-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-sm text-gray-500">Rezervime këtë muaj</div>
+          <div class="text-3xl font-bold mt-1">{{ d.cards.reservationsThisMonth }}</div>
+        </div>
+        <mat-icon class="text-gray-400">calendar_month</mat-icon>
+      </div>
+      <div class="text-xs text-gray-500 mt-3">Muaji aktual</div>
+    </fuse-card>
+
+    <fuse-card class="p-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-sm text-gray-500">Klientë</div>
+          <div class="text-3xl font-bold mt-1">{{ d.cards.totalClients }}</div>
+        </div>
+        <mat-icon class="text-gray-400">group</mat-icon>
+      </div>
+      <div class="text-xs text-gray-500 mt-3">Gjithsej klientë</div>
+    </fuse-card>
+
+    <fuse-card class="p-5">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-sm text-gray-500">Të ardhura këtë muaj</div>
+          <div class="text-3xl font-bold mt-1">{{ d.cards.incomeThisMonth | number:'1.0-2' }} €</div>
+        </div>
+        <mat-icon class="text-gray-400">payments</mat-icon>
+      </div>
+      <div class="text-xs text-gray-500 mt-3">Vetëm të paguara</div>
+    </fuse-card>
+
+  </div>
+
+  <!-- 2 CHARTS -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6" *ngIf="data">
+
+    <!-- Reservations line -->
+    <fuse-card class="p-5">
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-lg font-semibold">Rezervime (12 muajt e fundit)</div>
+        <div class="text-sm text-gray-500">{{ rangeLabel }}</div>
+      </div>
+
+      <apx-chart
+        [series]="reservationsLine.series"
+        [chart]="reservationsLine.chart"
+        [xaxis]="reservationsLine.xaxis"
+        [stroke]="reservationsLine.stroke"
+        [dataLabels]="reservationsLine.dataLabels"
+        [tooltip]="reservationsLine.tooltip">
+      </apx-chart>
+    </fuse-card>
+
+    <!-- Income bar -->
+    <fuse-card class="p-5">
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-lg font-semibold">Të ardhura (12 muajt e fundit)</div>
+        <div class="text-sm text-gray-500">{{ rangeLabel }}</div>
+      </div>
+
+      <apx-chart
+        [series]="incomeBar.series"
+        [chart]="incomeBar.chart"
+        [xaxis]="incomeBar.xaxis"
+        [plotOptions]="incomeBar.plotOptions"
+        [dataLabels]="incomeBar.dataLabels"
+        [tooltip]="incomeBar.tooltip">
+      </apx-chart>
+    </fuse-card>
+
+  </div>
+
+  <!-- DONUT + SMALL STATS -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6" *ngIf="data">
+
+    <fuse-card class="p-5 lg:col-span-1">
+      <div class="text-lg font-semibold mb-3">Rezervime sipas statusit</div>
+
+      <apx-chart
+        [series]="statusDonut.series"
+        [chart]="statusDonut.chart"
+        [labels]="statusDonut.labels"
+        [legend]="statusDonut.legend"
+        [dataLabels]="statusDonut.dataLabels"
+        [tooltip]="statusDonut.tooltip">
+      </apx-chart>
+
+      <div class="grid grid-cols-2 gap-3 mt-4 text-sm text-gray-600">
+        <div class="flex items-center justify-between">
+          <span>Pending</span>
+          <span class="font-semibold">{{ data?.cards.pendingReservations }}</span>
+        </div>
+        <div class="flex items-center justify-between">
+          <span>Veturat</span>
+          <span class="font-semibold">{{ data?.cards.totalCars }}</span>
+        </div>
+      </div>
+    </fuse-card>
+
+    <!-- Latest reservations placeholder (opsionale) -->
+    <fuse-card class="p-5 lg:col-span-2">
+      <div class="flex items-center justify-between mb-3">
+        <div class="text-lg font-semibold">Rezervimet e fundit</div>
+        <div class="text-sm text-gray-500">Opsionale</div>
+      </div>
+
+      <div class="text-sm text-gray-500">
+        Në hapin tjetër e lidhim me endpoint dhe e shfaqim listën (Top 5/10).
+      </div>
+    </fuse-card>
+
+  </div>
+
+</div>

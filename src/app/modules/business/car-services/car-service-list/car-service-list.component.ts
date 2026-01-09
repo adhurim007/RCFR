@@ -57,4 +57,23 @@ export class CarServiceListComponent implements OnInit {
       this.loadServices();
     });
   }
+
+ loadingCarServicesReportId: number | null = null;
+
+  openCarServicesReport(carId: number): void {
+    this.loadingCarServicesReportId = carId;
+
+    this.service.getCarServicesReport(carId).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        this.loadingCarServicesReportId = null;
+      },
+      error: (err) => {
+        console.error('Failed to generate/open car services report', err);
+        this.loadingCarServicesReportId = null;
+      }
+    });
+  }
 }

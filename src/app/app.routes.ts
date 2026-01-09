@@ -7,8 +7,8 @@ import { LayoutComponent } from 'app/layout/layout.component';
 export const appRoutes: Route[] = [
 
   // Redirects
-  { path: '', pathMatch: 'full', redirectTo: 'business/reservations' },
-  { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'business/reservations' },
+  { path: '', pathMatch: 'full', redirectTo: 'business/dashboard' },
+  { path: 'signed-in-redirect', pathMatch: 'full', redirectTo: 'business/dashboard' },
 
   // ================= GUEST =================
   {
@@ -55,11 +55,8 @@ export const appRoutes: Route[] = [
           { path: 'roles', loadChildren: () => import('app/modules/admin/roles/roles.module').then(m => m.RolesModule) },
           { path: 'menu', loadChildren: () => import('app/modules/admin/menus/menus.module').then(m => m.MenusModule) },
           { path: 'users', loadChildren: () => import('app/modules/admin/user/users.module').then(m => m.UsersModule) },
-          
-        
           { path: 'carbrands', loadChildren: () => import('app/modules/admin/car-brands/car-brands.module').then(m => m.CarBrandsModule) },
           { path: 'carmodels', loadChildren: () => import('app/modules/admin/car-models/car-models.module').then(m => m.CarModelsModule) },
-         
           { path: '', pathMatch: 'full', redirectTo: 'example' }
         ]
       },
@@ -68,6 +65,9 @@ export const appRoutes: Route[] = [
       {
         path: 'business',
         children: [
+          // ✅ KJO DUHET TË EKZISTOJË si module/route
+          { path: 'dashboard', loadChildren: () => import('app/modules/business/dashboard/dashboard.module').then(m => m.DashboardModule) },
+
           { path: 'reservations', loadChildren: () => import('app/modules/business/reservations/reservation.module').then(m => m.ReservationModule) },
           { path: 'customers', loadChildren: () => import('app/modules/business/customers/customer.module').then(m => m.CustomerModule) },
           { path: 'cars', loadChildren: () => import('app/modules/business/cars/car.module').then(m => m.CarModule) },
@@ -83,11 +83,11 @@ export const appRoutes: Route[] = [
           { path: 'car-pricing-rules', loadChildren: () => import('app/modules/business/car-pricing-rules/car-pricing-rules.module').then(m => m.CarPricingRulesModule) },
           { path: 'car-services', loadChildren: () => import('app/modules/business/car-services/car-services.module').then(m => m.CarServicesModule) },
           { path: 'car-registrations', loadChildren: () => import('app/modules/business/car-registrations/car-registrations.module').then(m => m.CarRegistrationsModule) },
-          { path: '', pathMatch: 'full', redirectTo: 'reservations' }
+
+          // ✅ edhe kur shkon /business (pa path), shko dashboard
+          { path: '', pathMatch: 'full', redirectTo: 'dashboard' }
         ]
       }
     ]
   },
-
-  
 ];

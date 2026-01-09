@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { DamageListComponent } from './damage-list/damage-list.component';
 import { DamageFormComponent } from './damage-form/damage-form.component';
 import { VehicleDamagesRoutingModule } from './vehicle-damages.routes';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
     declarations: [
@@ -29,7 +30,7 @@ import { VehicleDamagesRoutingModule } from './vehicle-damages.routes';
         MatButtonModule,
         MatIconModule,
         MatTableModule,
-
+        MatMenuModule,
         VehicleDamagesRoutingModule 
     ]
 })

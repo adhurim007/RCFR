@@ -74,6 +74,15 @@
             <mat-icon class="text-red-500">delete</mat-icon>
             <span class="text-red-500">Delete</span>
           </button>
+
+        <button mat-menu-item
+                (click)="openCarServicesReport(s?.carId)"
+                [disabled]="!s?.carId || loadingReportCarId === s?.carId">
+          <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
+          <span *ngIf="loadingReportCarId !== s?.carId">Raporti i servisit</span>
+          <span *ngIf="loadingReportCarId === s?.carId">Duke gjeneruar...</span>
+        </button>
+        
         </mat-menu>
       </div>
     </div> 

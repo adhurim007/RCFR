@@ -41,4 +41,11 @@ export class VehicleDamagesService {
   delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
+  getDamageReport(id: number) {
+  return this.http.get(
+    `${this.baseUrl}/${id}/damage-report`,
+    { responseType: 'blob' }
+  );
+}
 }

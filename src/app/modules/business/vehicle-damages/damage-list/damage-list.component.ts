@@ -11,6 +11,7 @@ export class DamageListComponent implements OnInit {
   damages: any[] = [];
   displayedColumns = [
     'id',
+    'reservationId',
     'damageType',
     'estimatedCost',
     'status',
@@ -45,5 +46,24 @@ export class DamageListComponent implements OnInit {
     if (!confirm('Delete this damage?')) return;
 
     this.service.delete(id).subscribe(() => this.load());
+  }
+
+  loadingDamageReportId: number | null = null;
+
+  openDamageReport(id: number): void {
+    this.loadingDamageReportId = id;
+
+    this.service.getDamageReport(id).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        this.loadingDamageReportId = null;
+      },
+      error: (err) => {
+        console.error('Failed to generate/open damage report', err);
+        this.loadingDamageReportId = null;
+      }
+    });
   }
 }

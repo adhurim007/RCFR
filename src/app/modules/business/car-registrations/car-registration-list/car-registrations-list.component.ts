@@ -53,4 +53,23 @@ export class CarRegistrationsListComponent implements OnInit {
             this.load();
         });
     }
+    
+    loadingCarRegistrationsReportId: number | null = null;
+
+    openCarRegistrationsReport(carId: number): void {
+    this.loadingCarRegistrationsReportId = carId;
+
+    this.service.getCarRegistrationsReport(carId).subscribe({
+        next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        this.loadingCarRegistrationsReportId = null;
+        },
+        error: (err) => {
+        console.error('Failed to generate/open car registrations report', err);
+        this.loadingCarRegistrationsReportId = null;
+        }
+    });
+}
 }

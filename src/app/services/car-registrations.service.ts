@@ -78,4 +78,11 @@ export class CarRegistrationsService {
     delete(id: number): Observable<void> {
         return this.http.delete<void>(`${this.baseUrl}/${id}`);
     }
+
+    getCarRegistrationsReport(carId: number) {
+        return this.http.get(
+            `${this.baseUrl}/${carId}/car-registrations-report`,
+            { responseType: 'blob' }
+        );
+    }
 }
