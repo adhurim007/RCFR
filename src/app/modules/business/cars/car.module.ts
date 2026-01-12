@@ -16,6 +16,7 @@ import { CarRoutingModule } from './car-routing.module';
 import { CarListComponent } from './car-list/car-list.component';
 import { CarFormComponent } from './car-form/car-form.component'; 
 import { CarDetailsComponent } from './car-details/car-details.component';
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
   declarations: [
     CarListComponent,
@@ -27,7 +28,7 @@ import { CarDetailsComponent } from './car-details/car-details.component';
     RouterModule,
     ReactiveFormsModule,
     FormsModule,
-
+    TranslocoModule,
     // Material modules
     MatButtonModule,
     MatFormFieldModule,

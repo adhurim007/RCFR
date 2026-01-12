@@ -3,59 +3,54 @@
   <div class="header">
     <button mat-stroked-button color="primary" (click)="backToCars()">
       <mat-icon>arrow_back</mat-icon>
-      Back to cars
+      {{ 'PRICING.BACK_TO_CARS' | transloco }}
     </button>
 
-    <h1 class="title">Car pricing rules</h1>
+    <h1 class="title">{{ 'PRICING.TITLE' | transloco }}</h1>
 
     <button mat-flat-button color="primary" (click)="openCreateModal()">
       <mat-icon>add</mat-icon>
-      Add rule
+      {{ 'PRICING.ADD_RULE' | transloco }}
     </button>
   </div>
 
   <div class="table-wrapper" *ngIf="!isLoading; else loadingTpl">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z2 full-width-table">
 
-      <!-- Rule Type -->
       <ng-container matColumnDef="ruleType">
-        <th mat-header-cell *matHeaderCellDef>Rule type</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'PRICING.RULE_TYPE' | transloco }}</th>
         <td mat-cell *matCellDef="let row">{{ row.ruleType }}</td>
       </ng-container>
 
-      <!-- Price per day -->
       <ng-container matColumnDef="pricePerDay">
-        <th mat-header-cell *matHeaderCellDef>Price / day (€)</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'PRICING.PRICE_PER_DAY' | transloco }}</th>
         <td mat-cell *matCellDef="let row">{{ row.pricePerDay | number : '1.2-2' }}</td>
       </ng-container>
 
-      <!-- From date -->
       <ng-container matColumnDef="fromDate">
-        <th mat-header-cell *matHeaderCellDef>From</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.FROM' | transloco }}</th>
         <td mat-cell *matCellDef="let row">{{ displayDate(row.fromDate) }}</td>
       </ng-container>
 
-      <!-- To date -->
       <ng-container matColumnDef="toDate">
-        <th mat-header-cell *matHeaderCellDef>To</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.TO' | transloco }}</th>
         <td mat-cell *matCellDef="let row">{{ displayDate(row.toDate) }}</td>
       </ng-container>
 
-      <!-- Days of week -->
       <ng-container matColumnDef="daysOfWeek">
-        <th mat-header-cell *matHeaderCellDef>Days</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'PRICING.DAYS' | transloco }}</th>
         <td mat-cell *matCellDef="let row">{{ row.daysOfWeek || '-' }}</td>
       </ng-container>
 
-      <!-- Description -->
       <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <th mat-header-cell *matHeaderCellDef>{{ 'COMMON.DESCRIPTION' | transloco }}</th>
         <td mat-cell *matCellDef="let row">{{ row.description }}</td>
       </ng-container>
 
-      <!-- Actions -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef class="actions-header"></th>
+        <th mat-header-cell *matHeaderCellDef class="actions-header">
+          {{ 'COMMON.ACTIONS' | transloco }}
+        </th>
         <td mat-cell *matCellDef="let row" class="actions-cell">
           <button mat-icon-button color="primary" (click)="openEditModal(row)">
             <mat-icon>edit</mat-icon>
@@ -71,11 +66,11 @@
     </table>
 
     <div class="no-data" *ngIf="dataSource.data.length === 0">
-      No pricing rules found for this car.
+      {{ 'PRICING.NO_DATA' | transloco }}
     </div>
   </div>
 
   <ng-template #loadingTpl>
-    <div class="loading">Loading...</div>
+    <div class="loading">{{ 'COMMON.LOADING' | transloco }}</div>
   </ng-template>
 </div>

@@ -16,6 +16,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatMenu } from '@angular/material/menu';
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
   declarations: [
     CarRegistrationsListComponent,
@@ -33,7 +34,8 @@ import { MatMenu } from '@angular/material/menu';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    TranslocoModule
   ]
 })
 export class CarRegistrationsModule {}

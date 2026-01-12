@@ -1,9 +1,8 @@
 <div class="flex flex-col flex-auto w-full p-6">
 
-  <!-- Header -->
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-2xl font-semibold text-gray-800">
-      Lista e rezervimeve
+      {{ 'RESERVATIONS.LIST_TITLE' | transloco }}
     </h1>
 
     <button
@@ -12,105 +11,90 @@
       class="px-6"
       (click)="createReservation()">
       <mat-icon class="mr-2">add</mat-icon>
-      Shto rezervim
+      {{ 'RESERVATIONS.ADD_BUTTON' | transloco }}
     </button>
   </div>
 
-  <!-- Table Card -->
   <div class="bg-white rounded-xl shadow border border-gray-200 w-full overflow-x-auto">
 
     <table class="min-w-full text-sm text-left text-gray-700">
-
-      <!-- Header -->
       <thead class="bg-gray-100 text-xs uppercase text-gray-600">
         <tr>
-          <th class="px-6 py-3">Nr. Rezervimit</th>
-          <th class="px-6 py-3">Klienti</th>
-          <th class="px-6 py-3">Vetura</th>
-          <th class="px-6 py-3">Pickup</th>
-          <th class="px-6 py-3">Dropoff</th>
-          <th class="px-6 py-3">Totali</th>
-          <th class="px-6 py-3 text-right">Veprime</th>
+          <th class="px-6 py-3">{{ 'RESERVATIONS.TABLE.NUMBER' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'RESERVATIONS.TABLE.CUSTOMER' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'RESERVATIONS.TABLE.CAR' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'RESERVATIONS.TABLE.PICKUP' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'RESERVATIONS.TABLE.DROPOFF' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'RESERVATIONS.TABLE.TOTAL' | transloco }}</th>
+          <th class="px-6 py-3 text-right">{{ 'COMMON.ACTIONS' | transloco }}</th>
         </tr>
       </thead>
 
-      <!-- Body -->
-     <tbody>
+      <tbody>
 
-          <tr *ngFor="let r of reservations" class="border-b hover:bg-gray-50">
+        <tr *ngFor="let r of reservations" class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4">{{ r.reservationNumber }}</td>
+          <td class="px-6 py-4">{{ r.customerName }}</td>
+          <td class="px-6 py-4">{{ r.carName }}</td>
+          <td class="px-6 py-4">{{ r.pickupDate | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4">{{ r.dropoffDate | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4">{{ r.totalPrice }} €</td>
 
-            <td class="px-6 py-4">{{ r.reservationNumber }}</td>
-            <td class="px-6 py-4">{{ r.customerName }}</td>
-            <td class="px-6 py-4">{{ r.carName }}</td>
-            <td class="px-6 py-4">{{ r.pickupDate | date:'dd.MM.yyyy' }}</td>
-            <td class="px-6 py-4">{{ r.dropoffDate | date:'dd.MM.yyyy' }}</td>
-            <td class="px-6 py-4">{{ r.totalPrice }} €</td>
-
-            <!-- ACTIONS -->
-            <td class="px-6 py-4 text-right">
-
-              <button
-                mat-icon-button
-                [matMenuTriggerFor]="actionsMenu"
-                (click)="selectedReservation = r"> <!-- ✅ KJO ËSHTË KYÇI -->
-                <mat-icon>more_vert</mat-icon>
-              </button>
-
-            </td>
-          </tr>
-
-          <!-- EMPTY -->
-          <tr *ngIf="reservations.length === 0 && !loading">
-            <td colspan="7" class="text-center py-6 text-gray-400">
-              Nuk ka asnjë rezervim të regjistruar.
-            </td>
-          </tr>
-
-        </tbody>
-          <mat-menu #actionsMenu="matMenu">
-
-            <button mat-menu-item (click)="editReservation(selectedReservation.id)">
-              <mat-icon>edit</mat-icon>
-              <span>Përditëso</span>
+          <td class="px-6 py-4 text-right">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="actionsMenu"
+              (click)="selectedReservation = r">
+              <mat-icon>more_vert</mat-icon>
             </button>
+          </td>
+        </tr>
 
-            <button
-                  mat-menu-item
-                  (click)="openContract(selectedReservation.id)"
-                  [disabled]="loadingContract">
+        <tr *ngIf="reservations.length === 0 && !loading">
+          <td colspan="7" class="text-center py-6 text-gray-400">
+            {{ 'RESERVATIONS.NO_DATA' | transloco }}
+          </td>
+        </tr>
 
-                  <mat-icon>description</mat-icon>
+      </tbody>
 
-                  <span *ngIf="!loadingContract">Kontrata</span>
-                  <span *ngIf="loadingContract">Duke u hapur...</span>
-                </button>
-                
-            <button
-              mat-menu-item
-              (click)="openInvoice(selectedReservation.id)"
-              [disabled]="loadingInvoice">
+      <mat-menu #actionsMenu="matMenu">
 
-              <mat-icon>receipt_long</mat-icon>
+        <button mat-menu-item (click)="editReservation(selectedReservation.id)">
+          <mat-icon>edit</mat-icon>
+          <span>{{ 'RESERVATIONS.MENU.UPDATE' | transloco }}</span>
+        </button>
 
-              <span *ngIf="!loadingInvoice">Fatura</span>
-              <span *ngIf="loadingInvoice">Duke u hapur...</span>
-            </button>
+        <button
+          mat-menu-item
+          (click)="openContract(selectedReservation.id)"
+          [disabled]="loadingContract">
+          <mat-icon>description</mat-icon>
+          <span *ngIf="!loadingContract">{{ 'RESERVATIONS.MENU.CONTRACT' | transloco }}</span>
+          <span *ngIf="loadingContract">{{ 'RESERVATIONS.MENU.OPENING' | transloco }}</span>
+        </button>
 
-            <mat-divider></mat-divider>
+        <button
+          mat-menu-item
+          (click)="openInvoice(selectedReservation.id)"
+          [disabled]="loadingInvoice">
+          <mat-icon>receipt_long</mat-icon>
+          <span *ngIf="!loadingInvoice">{{ 'RESERVATIONS.MENU.INVOICE' | transloco }}</span>
+          <span *ngIf="loadingInvoice">{{ 'RESERVATIONS.MENU.OPENING' | transloco }}</span>
+        </button>
 
-            <button
-              mat-menu-item
-              class="text-red-600"
-              (click)="deleteReservation(selectedReservation.id)">
-              <mat-icon color="warn">delete</mat-icon>
-              <span>Fshij</span>
-            </button> 
-          </mat-menu> 
+        <mat-divider></mat-divider>
+
+        <button mat-menu-item class="text-red-600" (click)="deleteReservation(selectedReservation.id)">
+          <mat-icon color="warn">delete</mat-icon>
+          <span>{{ 'COMMON.DELETE' | transloco }}</span>
+        </button>
+
+      </mat-menu>
     </table>
 
-    <!-- Loading -->
-    <div *ngIf="loading" class="p-6 text-center text-gray-400">  
-      Duke u ngarkuar rezervimet...
+    <div *ngIf="loading" class="p-6 text-center text-gray-400">
+      {{ 'RESERVATIONS.LOADING_LIST' | transloco }}
     </div>
 
   </div>

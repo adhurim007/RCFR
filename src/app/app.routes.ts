@@ -66,7 +66,7 @@ export const appRoutes: Route[] = [
         path: 'business',
         children: [
           // ✅ KJO DUHET TË EKZISTOJË si module/route
-          { path: 'dashboard', loadChildren: () => import('app/modules/business/dashboard/dashboard.module').then(m => m.DashboardModule) },
+          { path: 'dashboard', loadChildren: () => import('app/modules/dashboard/dashboard.module').then(m => m.DashboardModule) },
 
           { path: 'reservations', loadChildren: () => import('app/modules/business/reservations/reservation.module').then(m => m.ReservationModule) },
           { path: 'customers', loadChildren: () => import('app/modules/business/customers/customer.module').then(m => m.CustomerModule) },

@@ -13,7 +13,7 @@
 
     <button mat-stroked-button (click)="back()">
       <mat-icon>arrow_back</mat-icon>
-      Back
+      {{ 'COMMON.BACK' | transloco }}
     </button>
   </div>
 
@@ -28,39 +28,39 @@
     <!-- BASIC INFO -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
       <div>
-        <span class="text-gray-500 text-sm">Brand</span>
+        <span class="text-gray-500 text-sm">{{ 'CARS.BRAND' | transloco }}</span>
         <div class="font-medium">{{ car.brand }}</div>
       </div>
 
       <div>
-        <span class="text-gray-500 text-sm">Model</span>
+        <span class="text-gray-500 text-sm">{{ 'CARS.MODEL' | transloco }}</span>
         <div class="font-medium">{{ car.model }}</div>
       </div>
 
       <div>
-        <span class="text-gray-500 text-sm">Type</span>
+        <span class="text-gray-500 text-sm">{{ 'CARS.TYPE' | transloco }}</span>
         <div class="font-medium">{{ car.type }}</div>
       </div>
 
       <div>
-        <span class="text-gray-500 text-sm">Fuel</span>
+        <span class="text-gray-500 text-sm">{{ 'CARS.FUEL' | transloco }}</span>
         <div class="font-medium">{{ car.fuelType }}</div>
       </div>
 
       <div>
-        <span class="text-gray-500 text-sm">Transmission</span>
+        <span class="text-gray-500 text-sm">{{ 'CARS.TRANSMISSION' | transloco }}</span>
         <div class="font-medium">{{ car.transmission }}</div>
       </div>
 
       <div>
-        <span class="text-gray-500 text-sm">Daily Price</span>
+        <span class="text-gray-500 text-sm">{{ 'CARS.DAILY_PRICE' | transloco }}</span>
         <div class="font-medium">{{ car.dailyPrice | currency }}</div>
       </div>
     </div>
 
     <!-- IMAGES -->
     <div class="mb-10" *ngIf="car.images?.length">
-      <h2 class="text-lg font-semibold mb-4">Images</h2>
+      <h2 class="text-lg font-semibold mb-4">{{ 'CARS.IMAGES' | transloco }}</h2>
 
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <img
@@ -73,16 +73,16 @@
 
     <!-- SERVICES -->
     <div class="mb-10">
-      <h2 class="text-lg font-semibold mb-4">Services</h2>
+      <h2 class="text-lg font-semibold mb-4">{{ 'SERVICE.LIST_TITLE' | transloco }}</h2>
 
       <table class="w-full border">
         <thead class="bg-gray-50">
           <tr>
-            <th class="p-3 text-left">Type</th>
-            <th class="p-3 text-left">Date</th>
-            <th class="p-3 text-left">Mileage</th>
-            <th class="p-3 text-left">Cost</th>
-            <th class="p-3 text-left">Center</th>
+            <th class="p-3 text-left">{{ 'SERVICE.TABLE.TYPE' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'SERVICE.TABLE.DATE' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'SERVICE.TABLE.MILEAGE' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'SERVICE.TABLE.COST' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'SERVICE.TABLE.CENTER' | transloco }}</th>
           </tr>
         </thead>
 
@@ -97,7 +97,7 @@
 
           <tr *ngIf="!car.services?.length">
             <td colspan="5" class="p-4 text-center text-gray-400">
-              No services found
+              {{ 'SERVICE.NO_DATA' | transloco }}
             </td>
           </tr>
         </tbody>
@@ -106,16 +106,16 @@
 
     <!-- REGISTRATIONS -->
     <div>
-      <h2 class="text-lg font-semibold mb-4">Registrations</h2>
+      <h2 class="text-lg font-semibold mb-4">{{ 'REGISTRATION.LIST_TITLE' | transloco }}</h2>
 
       <table class="w-full border">
         <thead class="bg-gray-50">
           <tr>
-            <th class="p-3 text-left">Number</th>
-            <th class="p-3 text-left">Issued</th>
-            <th class="p-3 text-left">Expiry</th>
-            <th class="p-3 text-left">Cost</th>
-            <th class="p-3 text-left">Insurance</th>
+            <th class="p-3 text-left">{{ 'REGISTRATION.TABLE.NUMBER' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'REGISTRATION.TABLE.ISSUED' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'REGISTRATION.TABLE.EXPIRY' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'REGISTRATION.TABLE.COST' | transloco }}</th>
+            <th class="p-3 text-left">{{ 'REGISTRATION.TABLE.INSURANCE' | transloco }}</th>
           </tr>
         </thead>
 
@@ -130,7 +130,7 @@
 
           <tr *ngIf="!car.registrations?.length">
             <td colspan="5" class="p-4 text-center text-gray-400">
-              No registrations found
+              {{ 'REGISTRATION.NO_DATA' | transloco }}
             </td>
           </tr>
         </tbody>

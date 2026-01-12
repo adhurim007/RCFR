@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
     declarations: [
         ExtraServicesListComponent,
@@ -25,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
         MatFormFieldModule,
         MatInputModule,
         MatIconModule,
+        TranslocoModule,
         RouterModule.forChild(extraServicesRoutes)
     ]
 })

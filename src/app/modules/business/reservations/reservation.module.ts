@@ -20,6 +20,7 @@ import { ReservationListComponent } from './reservation-list/reservation-list.co
 import { ReservationFormComponent } from './reservation-form/reservation-form.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DateTimeDialogComponent } from './date-time-dialog.component';
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
   declarations: [
     ReservationListComponent,
@@ -50,6 +51,7 @@ import { DateTimeDialogComponent } from './date-time-dialog.component';
     MatButtonModule,
     MatDividerModule,
     ReservationRoutingModule,
+    TranslocoModule,
        // ✅ Angular Material
     MatDialogModule,
     MatFormFieldModule,

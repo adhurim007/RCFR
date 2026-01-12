@@ -6,9 +6,8 @@ import { CustomerRoutingModule } from './customer-routing.module';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerFormComponent } from './customer-form/customer-form.component';
 import { MatButtonModule } from '@angular/material/button';
- 
-
- import { MatDatepickerModule } from '@angular/material/datepicker';
+import { TranslocoModule } from '@ngneat/transloco'; 
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -36,7 +35,8 @@ import { MatTableModule } from '@angular/material/table';
         MatCardModule,
         MatTableModule,
         MatDatepickerModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        TranslocoModule
     ]
 })
 export class CustomerModule {}

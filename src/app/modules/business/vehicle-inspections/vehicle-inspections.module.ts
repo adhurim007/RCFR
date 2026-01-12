@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { VehicleInspectionsRoutingModule } from './vehicle-inspections.routes';
 import { InspectionListComponent } from './inspection-list/inspection-list.component';
 import { InspectionFormComponent } from './inspection-form/inspection-form.component';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
   declarations: [
     InspectionListComponent,
@@ -23,7 +23,7 @@ import { InspectionFormComponent } from './inspection-form/inspection-form.compo
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-
+    TranslocoModule,
     // MATERIAL
     MatButtonModule,
     MatInputModule,

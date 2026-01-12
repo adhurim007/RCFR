@@ -1,5 +1,301 @@
 {
-    "welcome-back": "Welcome back",
-    "Project": "Project",
-    "Analytics": "Analytics"
+  "COMMON": {
+    "NAME": "Name",
+    "ADDRESS": "Address",
+    "STATE": "State",
+    "CITY": "City",
+    "ACTIONS": "Actions",
+    "FROM": "From",
+    "TO": "To",
+    "DESCRIPTION": "Description",
+    "LOADING": "Loading...",
+    "NOTES": "Notes",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "BACK": "Back"
+  },
+  "LOCATIONS": {
+    "TITLE": "Business Locations",
+    "ADD_BUTTON": "Add Location",
+    "NO_DATA": "No business locations found."
+  },
+  "PRICING": {
+    "CREATE_RULE_TITLE": "Create pricing rule",
+    "EDIT_RULE_TITLE": "Edit pricing rule",
+    "SELECT_CAR": "Select car *",
+    "RULE_TYPE_REQUIRED": "Rule type *",
+    "PRICE_PER_DAY_REQUIRED": "Price per day (€) *",
+    "FROM_DATE": "From date",
+    "TO_DATE": "To date",
+    "DAYS_OF_WEEK": "Days of week",
+    "DAYS_OF_WEEK_PLACEHOLDER": "e.g. Mon,Tue,Wed"
+  },
+  "REGISTRATION": {
+    "LIST_TITLE": "Car Registrations",
+    "ADD_BUTTON": "+ Add registration",
+    "NO_DATA": "No registrations found",
+    "TABLE": {
+      "CAR": "Car",
+      "REG_NUMBER": "Reg. number",
+      "NUMBER": "Number",
+      "ISSUED": "Issued",
+      "EXPIRY": "Expiry",
+      "COST": "Cost",
+      "INSURANCE": "Insurance"
+    },
+    "REPORT": {
+      "BUTTON": "Registration report",
+      "GENERATING": "Generating..."
+    }
+  },
+  "SERVICE": {
+    "ADD_TITLE": "Add Car Service",
+    "EDIT_TITLE": "Edit Car Service",
+    "CAR_REQUIRED": "Car *",
+    "TYPE_REQUIRED": "Service Type *",
+    "DATE": "Service Date",
+    "MILEAGE": "Mileage",
+    "COST_REQUIRED": "Cost *",
+    "CENTER": "Service Center",
+    "NEXT_DATE": "Next Service Date",
+    "NEXT_MILEAGE": "Next Service Mileage",
+    "LIST_TITLE": "Car Services",
+    "ADD_BUTTON": "+ Add service",
+    "NO_DATA": "No services recorded",
+    "TABLE": {
+      "TYPE": "Type",
+      "DATE": "Date",
+      "MILEAGE": "Mileage",
+      "COST": "Cost",
+      "CENTER": "Service center"
+    },
+    "REPORT": {
+      "BUTTON": "Service report",
+      "GENERATING": "Generating..."
+    }
+  },
+  "CARS": {
+    "LIST_TITLE": "Cars list",
+    "ADD_BUTTON": "Add car",
+    "NO_DATA": "No cars registered.",
+    "CREATE_TITLE": "Create Car",
+    "EDIT_TITLE": "Edit Car",
+    "CREATE_BUTTON": "Create Car",
+    "UPDATE_BUTTON": "Update Car",
+    "BRAND": "Brand",
+    "MODEL": "Model",
+    "TYPE": "Type",
+    "FUEL": "Fuel",
+    "TRANSMISSION": "Transmission",
+    "LICENSE_PLATE": "License Plate",
+    "LICENSE_PLATE_REQUIRED": "License Plate *",
+    "COLOR": "Color",
+    "DAILY_PRICE": "Daily Price",
+    "DAILY_PRICE_REQUIRED": "Daily Price (€) *",
+    "BRAND_REQUIRED": "Brand *",
+    "MODEL_REQUIRED": "Model *",
+    "TYPE_REQUIRED": "Car Type *",
+    "FUEL_REQUIRED": "Fuel Type *",
+    "TRANSMISSION_REQUIRED": "Transmission *",
+    "IMAGES": "Images",
+    "IMAGES_HINT": "You can upload multiple images.",
+    "IMAGES_TO_UPLOAD": "Images to be uploaded ({{count}})",
+    "AVAILABLE_FOR_RENT": "Available for rent",
+    "STATUS": "Status",
+    "STATUS_ACTIVE": "Active",
+    "STATUS_INACTIVE": "Inactive",
+    "MENU": {
+      "UPDATE": "Update",
+      "VIEW_DETAILS": "View details"
+    }
+  }, 
+  "CUSTOMERS": {
+    "LIST_TITLE": "Customers list",
+    "ADD_BUTTON": "Add customer",
+    "NO_DATA": "No customers registered.",
+
+    "CREATE_TITLE": "Create Customer",
+    "EDIT_TITLE": "Edit Customer",
+    "CREATE_BUTTON": "Create Customer",
+    "UPDATE_BUTTON": "Update Customer",
+
+    "FULL_NAME_REQUIRED": "Full Name *",
+    "FULL_NAME_REQUIRED_ERROR": "Full Name is required",
+    "EMAIL": "Email",
+    "PHONE_REQUIRED": "Phone Number *",
+    "DOCUMENT_TYPE_REQUIRED": "Document Type *",
+    "DOCUMENT_NUMBER_REQUIRED": "Document Number *",
+    "DATE_OF_BIRTH": "Date of Birth",
+    "ADDRESS": "Address",
+
+    "DOC_TYPES": {
+      "ID": "ID",
+      "PASSPORT": "Passport",
+      "DRIVER_LICENSE": "Driver License"
+    },
+
+    "TABLE": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "PHONE": "Phone",
+      "DOCUMENT": "Document",
+      "BIRTHDAY": "Birthday"
+    }
+  },
+    "EXTRA_SERVICES": {
+    "LIST_TITLE": "Extra services",
+    "ADD_BUTTON": "+ Add service",
+    "NO_DATA": "No extra services found.",
+    "ADD_TITLE": "Add Extra Service",
+    "EDIT_TITLE": "Edit Extra Service",
+    "PRICE_PER_DAY": "Price Per Day",
+    "TABLE": {
+      "PRICE_PER_DAY": "Price per day (€)"
+    }
+  },
+  "RESERVATIONS": {
+    "LIST_TITLE": "Reservations list",
+    "ADD_BUTTON": "Add reservation",
+    "NO_DATA": "No reservations registered.",
+    "LOADING_LIST": "Loading reservations...",
+
+    "CREATE_TITLE": "Create reservation",
+    "EDIT_TITLE": "Update reservation",
+    "CREATE_BUTTON": "Create reservation",
+    "SAVE_CHANGES": "Save changes",
+
+    "SECTIONS": {
+      "CUSTOMER": "Customer information",
+      "DETAILS": "Reservation details"
+    },
+
+    "FORM": {
+      "PERSONAL_NUMBER_REQUIRED": "Personal number *",
+      "FIRST_NAME_REQUIRED": "First name *",
+      "LAST_NAME_REQUIRED": "Last name *",
+      "PHONE_REQUIRED": "Phone *",
+      "ADDRESS_REQUIRED": "Address *",
+      "CAR_REQUIRED": "Car *",
+      "PICKUP_LOCATION_REQUIRED": "Pickup Location *",
+      "DROPOFF_LOCATION_REQUIRED": "Dropoff Location *",
+      "PICKUP_DATETIME_REQUIRED": "Pickup Date & Time *",
+      "DROPOFF_DATETIME_REQUIRED": "Dropoff Date & Time *",
+      "DISCOUNT": "Discount (€)",
+      "TOTAL_DAYS": "Total days"
+    },
+
+    "VALIDATION": {
+      "PICKUP_LOCATION_REQUIRED": "Pickup location is required",
+      "DROPOFF_LOCATION_REQUIRED": "Dropoff location is required"
+    },
+
+    "ALERT": {
+      "CAR_UNAVAILABLE_TITLE": "Car unavailable",
+      "CAR_UNAVAILABLE_TEXT": "This car is already reserved for the selected interval. Please change the date/time or select another car."
+    },
+
+    "EXTRAS": {
+      "TITLE": "Extra services",
+      "PER_DAY": "€ / day"
+    },
+
+    "SUMMARY": {
+      "TITLE": "Summary",
+      "CAR_TOTAL": "Car total:",
+      "EXTRAS_TOTAL": "Extra services:",
+      "TOTAL_WITHOUT_DISCOUNT": "Total without discount:",
+      "DISCOUNT": "Discount:",
+      "FINAL_TOTAL": "Final total:"
+    },
+
+    "TABLE": {
+      "NUMBER": "Reservation no.",
+      "CUSTOMER": "Customer",
+      "CAR": "Car",
+      "PICKUP": "Pickup",
+      "DROPOFF": "Dropoff",
+      "TOTAL": "Total"
+    },
+
+    "MENU": {
+      "UPDATE": "Update",
+      "CONTRACT": "Contract",
+      "INVOICE": "Invoice",
+      "OPENING": "Opening..."
+    }
+  },
+  "DAMAGES": {
+    "LIST_TITLE": "Vehicle Damages",
+    "NEW_BUTTON": "New Damage",
+    "NO_DATA": "No vehicle damages found.",
+
+    "CREATE_TITLE": "New Vehicle Damage",
+    "EDIT_TITLE": "Edit Vehicle Damage",
+
+    "FORM": {
+      "RESERVATION_REQUIRED": "Reservation *",
+      "DAMAGE_TYPE": "Damage Type",
+      "ESTIMATED_COST": "Estimated Cost (€)",
+      "STATUS": "Status",
+      "IMAGES": "Damage Images",
+      "SELECTED_IMAGES": "Selected images ({{count}})"
+    },
+
+    "STATUS": {
+      "PENDING": "Pending",
+      "APPROVED": "Approved",
+      "REJECTED": "Rejected"
+    },
+
+    "TABLE": {
+      "ID": "ID",
+      "RESERVATION": "Reservation",
+      "DAMAGE_TYPE": "Damage Type",
+      "ESTIMATED_COST": "Estimated Cost",
+      "STATUS": "Status",
+      "DATE": "Date"
+    },
+
+    "REPORT": {
+      "BUTTON": "Damage report",
+      "GENERATING": "Generating..."
+    }
+  },
+  "INSPECTIONS": {
+    "LIST_TITLE": "Vehicle Inspections",
+    "NEW_BUTTON": "New Inspection",
+    "NO_DATA": "No vehicle inspections found.",
+
+    "CREATE_TITLE": "New Vehicle Inspection",
+    "EDIT_TITLE": "Edit Vehicle Inspection",
+
+    "FORM": {
+      "RESERVATION": "Reservation",
+      "TYPE": "Type",
+      "MILEAGE": "Mileage",
+      "FUEL_LEVEL": "Fuel Level (%)",
+      "TIRE_CONDITION": "Tire Condition",
+      "OVERALL_CONDITION": "Overall Condition",
+      "IMAGES": "Inspection Images",
+      "SELECTED_IMAGES": "Selected Images ({{count}})",
+      "EXISTING_IMAGES": "Existing Inspection Images",
+      "IMAGE_ALT": "Inspection image"
+    },
+
+    "TYPE": {
+      "CHECKIN": "Check-in",
+      "CHECKOUT": "Check-out"
+    },
+
+    "TABLE": {
+      "RESERVATION": "Reservation",
+      "TYPE": "Type",
+      "MILEAGE": "Mileage",
+      "FUEL": "Fuel"
+    }
+  }
+
 }
+

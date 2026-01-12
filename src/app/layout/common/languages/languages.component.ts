@@ -1,10 +1,11 @@
-import { NgFor, NgTemplateOutlet } from '@angular/common';
+import { NgFor, NgTemplateOutlet, CommonModule} from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
 import { AvailableLangs, TranslocoService } from '@ngneat/transloco';
 import { take } from 'rxjs';
+import { } from '@angular/common';
 
 @Component({
     selector       : 'languages',
@@ -13,7 +14,7 @@ import { take } from 'rxjs';
     changeDetection: ChangeDetectionStrategy.OnPush,
     exportAs       : 'languages',
     standalone     : true,
-    imports        : [MatButtonModule, MatMenuModule, NgTemplateOutlet, NgFor],
+    imports        : [MatButtonModule, MatMenuModule, NgTemplateOutlet, NgFor, CommonModule],
 })
 export class LanguagesComponent implements OnInit, OnDestroy
 {
@@ -57,7 +58,7 @@ export class LanguagesComponent implements OnInit, OnDestroy
         // Set the country iso codes for languages for flags
         this.flagCodes = {
             'en': 'us',
-            'tr': 'tr',
+            'sq': 'al',
         };
     }
 

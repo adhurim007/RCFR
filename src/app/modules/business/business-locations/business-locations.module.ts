@@ -11,6 +11,7 @@ import { MatTableModule } from '@angular/material/table';
 import { businessLocationsRoutes } from './business-locations.routes';
 import { BusinessLocationsComponent } from './business-locations.component';
 import { BusinessLocationModalComponent } from './business-location-modal.component';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BusinessLocationModalComponent } from './business-location-modal.compon
     MatInputModule,
     MatSelectModule,
     MatIconModule,
-    MatTableModule   ,
+    MatTableModule,
+    TranslocoModule,
     RouterModule.forChild(businessLocationsRoutes)
   ]
 })

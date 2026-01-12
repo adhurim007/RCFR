@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-
+import { TranslocoModule } from '@ngneat/transloco';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -32,6 +32,7 @@ import { PricingRuleModalComponent } from './pricing-rule-modal.component';
       }
     ]),
         CommonModule,
+        TranslocoModule,
     ReactiveFormsModule,
     MatTableModule,
     MatIconModule,

@@ -13,7 +13,7 @@ import { DamageListComponent } from './damage-list/damage-list.component';
 import { DamageFormComponent } from './damage-form/damage-form.component';
 import { VehicleDamagesRoutingModule } from './vehicle-damages.routes';
 import { MatMenuModule } from '@angular/material/menu';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
     declarations: [
         DamageListComponent,
@@ -31,6 +31,7 @@ import { MatMenuModule } from '@angular/material/menu';
         MatIconModule,
         MatTableModule,
         MatMenuModule,
+        TranslocoModule,
         VehicleDamagesRoutingModule 
     ]
 })

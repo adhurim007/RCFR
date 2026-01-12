@@ -1,40 +1,40 @@
 <h2 mat-dialog-title>
-  {{ data.isEdit ? 'Edit Location' : 'Add Location' }}
+  {{ data.isEdit ? ('LOCATIONS.EDIT_TITLE' | transloco) : ('LOCATIONS.ADD_TITLE' | transloco) }}
 </h2>
 
-<div mat-dialog-content [formGroup]="form"> 
-    
-    <mat-form-field class="w-full">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-    </mat-form-field>
+<div mat-dialog-content [formGroup]="form">
 
-    <mat-form-field class="w-full">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="address">
-    </mat-form-field>
+  <mat-form-field class="w-full">
+    <mat-label>{{ 'COMMON.NAME' | transloco }}</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
 
-    <mat-form-field class="w-full">
-        <mat-label>State</mat-label>
-        <mat-select formControlName="stateId" (selectionChange)="onStateChange($event)">
-            <mat-option *ngFor="let s of states" [value]="s.id">
-                {{ s.name }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field class="w-full">
+    <mat-label>{{ 'COMMON.ADDRESS' | transloco }}</mat-label>
+    <input matInput formControlName="address">
+  </mat-form-field>
 
-    <mat-form-field class="w-full">
-        <mat-label>City</mat-label>
-        <mat-select formControlName="cityId">
-            <mat-option *ngFor="let c of cities" [value]="c.id">
-                {{ c.name }}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
+  <mat-form-field class="w-full">
+    <mat-label>{{ 'COMMON.STATE' | transloco }}</mat-label>
+    <mat-select formControlName="stateId" (selectionChange)="onStateChange($event)">
+      <mat-option *ngFor="let s of states" [value]="s.id">
+        {{ s.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>{{ 'COMMON.CITY' | transloco }}</mat-label>
+    <mat-select formControlName="cityId">
+      <mat-option *ngFor="let c of cities" [value]="c.id">
+        {{ c.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
 </div>
 
 <div mat-dialog-actions align="end">
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-raised-button color="primary" (click)="save()">Save</button>
+  <button mat-button (click)="close()">{{ 'COMMON.CANCEL' | transloco }}</button>
+  <button mat-raised-button color="primary" (click)="save()">{{ 'COMMON.SAVE' | transloco }}</button>
 </div>

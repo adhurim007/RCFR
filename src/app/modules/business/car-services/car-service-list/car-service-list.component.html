@@ -1,14 +1,14 @@
-<div class="flex flex-col w-full px-6 py-6"> 
+<div class="flex flex-col w-full px-6 py-6">
   <!-- Header -->
   <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-semibold">Lista e servisimeve</h1>
+    <h1 class="text-2xl font-semibold">{{ 'SERVICE.LIST_TITLE' | transloco }}</h1>
 
     <button
       mat-flat-button
       color="primary"
       class="rounded-full"
       (click)="create()">
-      + Shto servis
+      {{ 'SERVICE.ADD_BUTTON' | transloco }}
     </button>
   </div>
 
@@ -17,12 +17,12 @@
 
     <!-- Table Header -->
     <div class="grid grid-cols-12 gap-4 px-6 py-4 text-xs font-semibold text-gray-500 border-b bg-gray-50">
-      <div class="col-span-2">TIPI</div>
-      <div class="col-span-2">DATA</div>
-      <div class="col-span-2">KILOMETRAZHA</div>
-      <div class="col-span-2">KOSTO</div>
-      <div class="col-span-3">SERVISI</div>
-      <div class="col-span-1 text-right">VEPRIME</div>
+      <div class="col-span-2">{{ 'SERVICE.TABLE.TYPE' | transloco }}</div>
+      <div class="col-span-2">{{ 'SERVICE.TABLE.DATE' | transloco }}</div>
+      <div class="col-span-2">{{ 'SERVICE.TABLE.MILEAGE' | transloco }}</div>
+      <div class="col-span-2">{{ 'SERVICE.TABLE.COST' | transloco }}</div>
+      <div class="col-span-3">{{ 'SERVICE.TABLE.CENTER' | transloco }}</div>
+      <div class="col-span-1 text-right">{{ 'COMMON.ACTIONS' | transloco }}</div>
     </div>
 
     <!-- Rows -->
@@ -67,30 +67,32 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="edit(s.id)">
             <mat-icon>edit</mat-icon>
-            <span>Edit</span>
+            <span>{{ 'COMMON.EDIT' | transloco }}</span>
           </button>
 
           <button mat-menu-item (click)="delete(s.id)">
             <mat-icon class="text-red-500">delete</mat-icon>
-            <span class="text-red-500">Delete</span>
+            <span class="text-red-500">{{ 'COMMON.DELETE' | transloco }}</span>
           </button>
 
-        <button mat-menu-item
-                (click)="openCarServicesReport(s?.carId)"
-                [disabled]="!s?.carId || loadingReportCarId === s?.carId">
-          <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
-          <span *ngIf="loadingReportCarId !== s?.carId">Raporti i servisit</span>
-          <span *ngIf="loadingReportCarId === s?.carId">Duke gjeneruar...</span>
-        </button>
-        
+          <button
+            mat-menu-item
+            (click)="openCarServicesReport(s?.carId)"
+            [disabled]="!s?.carId || loadingReportCarId === s?.carId">
+            <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
+            <span *ngIf="loadingReportCarId !== s?.carId">{{ 'SERVICE.REPORT.BUTTON' | transloco }}</span>
+            <span *ngIf="loadingReportCarId === s?.carId">{{ 'SERVICE.REPORT.GENERATING' | transloco }}</span>
+          </button>
+
         </mat-menu>
       </div>
-    </div> 
+    </div>
+
     <!-- Empty -->
     <div
       *ngIf="!loading && services.length === 0"
       class="px-6 py-10 text-center text-gray-400">
-      Nuk ka servisime të regjistruara
+      {{ 'SERVICE.NO_DATA' | transloco }}
     </div>
 
   </div>

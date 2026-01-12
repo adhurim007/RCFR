@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BusinessLocationService } from 'app/services/business-location.service';
-import { LocationService } from 'app/core/locations/location.service';
+import { LocationService } from 'app/core/locations/location.service'; 
 
 @Component({
   selector: 'app-business-location-modal',

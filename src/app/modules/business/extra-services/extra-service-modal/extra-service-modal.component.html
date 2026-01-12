@@ -1,26 +1,24 @@
 <h2 mat-dialog-title>
-    {{ data.isEdit ? 'Edit Extra Service' : 'Add Extra Service' }}
+  {{ data.isEdit ? ('EXTRA_SERVICES.EDIT_TITLE' | transloco) : ('EXTRA_SERVICES.ADD_TITLE' | transloco) }}
 </h2>
 
 <div mat-dialog-content>
+  <form [formGroup]="form" class="flex flex-col gap-4">
 
-    <form [formGroup]="form" class="flex flex-col gap-4">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'COMMON.NAME' | transloco }}</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" />
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'EXTRA_SERVICES.PRICE_PER_DAY' | transloco }}</mat-label>
+      <input type="number" matInput formControlName="pricePerDay" />
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Price Per Day</mat-label>
-            <input type="number" matInput formControlName="pricePerDay" />
-        </mat-form-field>
-
-    </form>
-
+  </form>
 </div>
 
 <div mat-dialog-actions align="end">
-    <button mat-button (click)="close()">Cancel</button>
-    <button mat-flat-button color="primary" (click)="save()">Save</button>
+  <button mat-button (click)="close()">{{ 'COMMON.CANCEL' | transloco }}</button>
+  <button mat-flat-button color="primary" (click)="save()">{{ 'COMMON.SAVE' | transloco }}</button>
 </div>

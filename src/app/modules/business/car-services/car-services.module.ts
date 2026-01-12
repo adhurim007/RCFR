@@ -16,6 +16,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'; 
 import { MatMenuModule } from '@angular/material/menu';
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
   declarations: [
     CarServiceListComponent,
@@ -35,7 +36,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatInputModule,
     MatSelectModule,
     MatProgressSpinnerModule, 
-    MatMenuModule
+    MatMenuModule,
+    TranslocoModule
   ]
 })
 export class CarServicesModule {}

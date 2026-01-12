@@ -2,14 +2,14 @@
 
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-semibold">Car Registrations</h1>
+    <h1 class="text-2xl font-semibold">{{ 'REGISTRATION.LIST_TITLE' | transloco }}</h1>
 
     <button
       mat-flat-button
       color="primary"
       class="rounded-full"
       (click)="create()">
-      + Shto servis
+      {{ 'REGISTRATION.ADD_BUTTON' | transloco }}
     </button>
   </div>
 
@@ -19,12 +19,12 @@
     <table class="w-full">
       <thead>
         <tr class="border-b text-left text-gray-500 text-sm">
-          <th class="p-4">CAR</th>
-          <th class="p-4">REG. NUMBER</th>
-          <th class="p-4">ISSUED</th>
-          <th class="p-4">EXPIRY</th>
-          <th class="p-4">COST</th>
-          <th class="p-4 text-right">ACTIONS</th>
+          <th class="p-4">{{ 'REGISTRATION.TABLE.CAR' | transloco }}</th>
+          <th class="p-4">{{ 'REGISTRATION.TABLE.REG_NUMBER' | transloco }}</th>
+          <th class="p-4">{{ 'REGISTRATION.TABLE.ISSUED' | transloco }}</th>
+          <th class="p-4">{{ 'REGISTRATION.TABLE.EXPIRY' | transloco }}</th>
+          <th class="p-4">{{ 'REGISTRATION.TABLE.COST' | transloco }}</th>
+          <th class="p-4 text-right">{{ 'COMMON.ACTIONS' | transloco }}</th>
         </tr>
       </thead>
 
@@ -54,38 +54,42 @@
             {{ r.cost | currency:'EUR' }}
           </td>
 
-         <td class="p-4 text-right">
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions">
-            <mat-icon svgIcon="heroicons_outline:dots-vertical"></mat-icon>
-          </button>
-
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="edit(r.id)">
-              <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
-              <span>Edit</span>
+          <td class="p-4 text-right">
+            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions">
+              <mat-icon svgIcon="heroicons_outline:dots-vertical"></mat-icon>
             </button>
 
-            <button mat-menu-item (click)="delete(r.id)">
-              <mat-icon svgIcon="heroicons_outline:trash" class="text-red-500"></mat-icon>
-              <span class="text-red-500">Delete</span>
-            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="edit(r.id)">
+                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
+                <span>{{ 'COMMON.EDIT' | transloco }}</span>
+              </button>
 
-            <button
-              mat-menu-item
-              (click)="openCarRegistrationsReport(r.carId)"
-              [disabled]="!r.carId || loadingCarRegistrationsReportId === r.carId">
-              <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
-              <span *ngIf="loadingCarRegistrationsReportId !== r.carId">Raporti i regjistrimeve</span>
-              <span *ngIf="loadingCarRegistrationsReportId === r.carId">Duke gjeneruar...</span>
-            </button>
-          </mat-menu>
-        </td> 
+              <button mat-menu-item (click)="delete(r.id)">
+                <mat-icon svgIcon="heroicons_outline:trash" class="text-red-500"></mat-icon>
+                <span class="text-red-500">{{ 'COMMON.DELETE' | transloco }}</span>
+              </button>
+
+              <button
+                mat-menu-item
+                (click)="openCarRegistrationsReport(r.carId)"
+                [disabled]="!r.carId || loadingCarRegistrationsReportId === r.carId">
+                <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
+                <span *ngIf="loadingCarRegistrationsReportId !== r.carId">
+                  {{ 'REGISTRATION.REPORT.BUTTON' | transloco }}
+                </span>
+                <span *ngIf="loadingCarRegistrationsReportId === r.carId">
+                  {{ 'REGISTRATION.REPORT.GENERATING' | transloco }}
+                </span>
+              </button>
+            </mat-menu>
+          </td>
         </tr>
 
         <!-- Empty -->
         <tr *ngIf="!loading && registrations.length === 0">
           <td colspan="6" class="p-8 text-center text-gray-400">
-            No registrations found
+            {{ 'REGISTRATION.NO_DATA' | transloco }}
           </td>
         </tr>
 

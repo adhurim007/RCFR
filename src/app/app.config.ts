@@ -13,114 +13,85 @@ import { provideIcons } from 'app/core/icons/icons.provider';
 import { mockApiServices } from 'app/mock-api';
 import { TranslocoHttpLoader } from './core/transloco/transloco.http-loader';
 
+const LANG_STORAGE_KEY = 'lang';
+const DEFAULT_LANG: 'sq' | 'en' = 'sq';
+
 export const appConfig: ApplicationConfig = {
-    providers: [
-        provideAnimations(),
-        provideHttpClient(),
-        provideRouter(appRoutes,
-            withPreloading(PreloadAllModules),
-            withInMemoryScrolling({scrollPositionRestoration: 'enabled'}),
-        ),
+  providers: [
+    provideAnimations(),
+    provideHttpClient(),
+    provideRouter(
+      appRoutes,
+      withPreloading(PreloadAllModules),
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
+    ),
 
-        // Material Date Adapter
-        {
-            provide : DateAdapter,
-            useClass: LuxonDateAdapter,
+    // Material Date Adapter
+    { provide: DateAdapter, useClass: LuxonDateAdapter },
+    {
+      provide: MAT_DATE_FORMATS,
+      useValue: {
+        parse: { dateInput: 'D' },
+        display: {
+          dateInput: 'DDD',
+          monthYearLabel: 'LLL yyyy',
+          dateA11yLabel: 'DD',
+          monthYearA11yLabel: 'LLLL yyyy',
         },
-        {
-            provide : MAT_DATE_FORMATS,
-            useValue: {
-                parse  : {
-                    dateInput: 'D',
-                },
-                display: {
-                    dateInput         : 'DDD',
-                    monthYearLabel    : 'LLL yyyy',
-                    dateA11yLabel     : 'DD',
-                    monthYearA11yLabel: 'LLLL yyyy',
-                },
-            },
-        },
+      },
+    },
 
-        // Transloco Config
-        provideTransloco({
-            config: {
-                availableLangs      : [
-                    {
-                        id   : 'en',
-                        label: 'English',
-                    },
-                    {
-                        id   : 'tr',
-                        label: 'Turkish',
-                    },
-                ],
-                defaultLang         : 'en',
-                fallbackLang        : 'en',
-                reRenderOnLangChange: true,
-                prodMode            : true,
-            },
-            loader: TranslocoHttpLoader,
-        }),
-        {
-            // Preload the default language before the app starts to prevent empty/jumping content
-            provide   : APP_INITIALIZER,
-            useFactory: () =>
-            {
-                const translocoService = inject(TranslocoService);
-                const defaultLang = translocoService.getDefaultLang();
-                translocoService.setActiveLang(defaultLang);
+    // Transloco Config (vetëm sq + en)
+    provideTransloco({
+      config: {
+        availableLangs: [
+          { id: 'sq', label: 'Shqip' },
+          { id: 'en', label: 'English' },
+        ],
+        defaultLang: DEFAULT_LANG,
+        fallbackLang: 'en',
+        reRenderOnLangChange: true,
+        prodMode: true,
+      },
+      loader: TranslocoHttpLoader,
+    }),
 
-                return () => firstValueFrom(translocoService.load(defaultLang));
-            },
-            multi     : true,
-        },
+    // Preload gjuhën aktive (nga localStorage nëse ekziston)
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => {
+        const transloco = inject(TranslocoService);
 
-        // Fuse
-        provideAuth(),
-        provideIcons(),
-        provideFuse({
-            mockApi: {
-                delay   : 0,
-                services: mockApiServices,
-            },
-            fuse   : {
-                layout : 'classic',
-                scheme : 'light',
-                screens: {
-                    sm: '600px',
-                    md: '960px',
-                    lg: '1280px',
-                    xl: '1440px',
-                },
-                theme  : 'theme-default',
-                themes : [
-                    {
-                        id  : 'theme-default',
-                        name: 'Default',
-                    },
-                    {
-                        id  : 'theme-brand',
-                        name: 'Brand',
-                    },
-                    {
-                        id  : 'theme-teal',
-                        name: 'Teal',
-                    },
-                    {
-                        id  : 'theme-rose',
-                        name: 'Rose',
-                    },
-                    {
-                        id  : 'theme-purple',
-                        name: 'Purple',
-                    },
-                    {
-                        id  : 'theme-amber',
-                        name: 'Amber',
-                    },
-                ],
-            },
-        }),
-    ],
+        const saved = (localStorage.getItem(LANG_STORAGE_KEY) as 'sq' | 'en' | null);
+        const langToUse: 'sq' | 'en' = saved ?? DEFAULT_LANG;
+
+        transloco.setDefaultLang(DEFAULT_LANG);
+        transloco.setActiveLang(langToUse);
+
+        return () => firstValueFrom(transloco.load(langToUse));
+      },
+      multi: true,
+    },
+
+    // Fuse
+    provideAuth(),
+    provideIcons(),
+    provideFuse({
+      mockApi: { delay: 0, services: mockApiServices },
+      fuse: {
+        layout: 'classic',
+        scheme: 'light',
+        screens: { sm: '600px', md: '960px', lg: '1280px', xl: '1440px' },
+        theme: 'theme-default',
+        themes: [
+          { id: 'theme-default', name: 'Default' },
+          { id: 'theme-brand', name: 'Brand' },
+          { id: 'theme-teal', name: 'Teal' },
+          { id: 'theme-rose', name: 'Rose' },
+          { id: 'theme-purple', name: 'Purple' },
+          { id: 'theme-amber', name: 'Amber' },
+        ],
+      },
+    }),
+  ],
 };
