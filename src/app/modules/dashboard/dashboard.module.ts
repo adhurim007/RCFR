@@ -5,24 +5,30 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+
 import { TranslocoModule } from '@ngneat/transloco';
 import { FuseCardComponent } from '@fuse/components/card';
+
+import { NgApexchartsModule } from 'ng-apexcharts'; // ✅ SHTO KËTË
+
 import { BusinessDashboardComponent } from './business-dashboard.component';
 import { dashboardRoutes } from './dashboard.routing';
 
 @NgModule({
-  declarations: [
-    BusinessDashboardComponent
-  ],
+  declarations: [BusinessDashboardComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FuseCardComponent,
     RouterModule.forChild(dashboardRoutes),
-TranslocoModule,
+    TranslocoModule,
+
+    // ✅ ApexCharts
+    NgApexchartsModule,
+
     // Material
     MatButtonModule,
-    MatIconModule, 
+    MatIconModule,
   ]
 })
 export class DashboardModule {}
