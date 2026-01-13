@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import { TranslocoModule } from '@ngneat/transloco';
 const routes: Routes = [
   { path: '', component: RoleListComponent }
 ];
@@ -28,6 +28,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
+    TranslocoModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,

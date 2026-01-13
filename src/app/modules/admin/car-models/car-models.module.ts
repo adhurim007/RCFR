@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { carModelsRoutes } from './car-models.routes';
 import { CarModelsListComponent } from './car-models-list/car-models-list.component';
 import { CarModelModalComponent } from './car-model-modal/car-model-modal.component';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
     declarations: [
         CarModelsListComponent,
@@ -25,7 +25,7 @@ import { CarModelModalComponent } from './car-model-modal/car-model-modal.compon
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
+        TranslocoModule,
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,

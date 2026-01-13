@@ -8,13 +8,13 @@ import { FuseNavigationItem } from '@fuse/components/navigation/navigation.types
 import { FuseVerticalNavigationComponent } from '@fuse/components/navigation/vertical/vertical.component';
 import { FuseUtilsService } from '@fuse/services/utils/utils.service';
 import { Subject, takeUntil } from 'rxjs';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @Component({
     selector       : 'fuse-vertical-navigation-basic-item',
     templateUrl    : './basic.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone     : true,
-    imports        : [NgClass, NgIf, RouterLink, RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatIconModule],
+    imports        : [NgClass, NgIf, RouterLink,TranslocoModule,RouterLinkActive, MatTooltipModule, NgTemplateOutlet, MatIconModule],
 })
 export class FuseVerticalNavigationBasicItemComponent implements OnInit, OnDestroy
 {

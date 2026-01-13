@@ -1,7 +1,8 @@
 <div class="p-8 max-w-xl w-full mx-auto">
+
   <!-- Title -->
   <h2 class="text-2xl font-bold text-gray-800 mb-6">
-    {{ isEdit ? 'Ndrysho rolin' : 'Krijo rol të ri' }}
+    {{ (isEdit ? 'ROLES.EDIT_TITLE' : 'ROLES.CREATE_TITLE') | transloco }}
   </h2>
 
   <!-- Form -->
@@ -9,10 +10,10 @@
 
     <!-- Role Name -->
     <mat-form-field appearance="outline" class="w-full">
-      <mat-label>Emri i rolit *</mat-label>
+      <mat-label>{{ 'ROLES.FORM.ROLE_NAME_REQUIRED' | transloco }}</mat-label>
       <input matInput formControlName="name" />
       <mat-error *ngIf="roleForm.controls.name.hasError('required')">
-        Emri i rolit është i detyrueshëm
+        {{ 'ROLES.FORM.ROLE_NAME_REQUIRED_ERROR' | transloco }}
       </mat-error>
     </mat-form-field>
 
@@ -23,7 +24,7 @@
         color="warn"
         type="button"
         mat-dialog-close>
-        Anulo
+        {{ 'COMMON.CANCEL' | transloco }}
       </button>
 
       <button
@@ -31,7 +32,7 @@
         color="primary"
         type="submit"
         [disabled]="roleForm.invalid">
-        {{ isEdit ? 'Përditëso' : 'Krijo' }}
+        {{ (isEdit ? 'COMMON.UPDATE' : 'COMMON.CREATE') | transloco }}
       </button>
     </div>
 

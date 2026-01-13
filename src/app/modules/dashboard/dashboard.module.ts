@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
+import { TranslocoModule } from '@ngneat/transloco';
 import { FuseCardComponent } from '@fuse/components/card';
 import { BusinessDashboardComponent } from './business-dashboard.component';
 import { dashboardRoutes } from './dashboard.routing';
@@ -19,7 +19,7 @@ import { dashboardRoutes } from './dashboard.routing';
     ReactiveFormsModule,
     FuseCardComponent,
     RouterModule.forChild(dashboardRoutes),
-
+TranslocoModule,
     // Material
     MatButtonModule,
     MatIconModule, 

@@ -3,13 +3,13 @@
   <!-- Header -->
   <div class="flex items-center justify-between mb-6">
     <div>
-      <div class="text-2xl font-semibold">Dashboard</div>
-      <div class="text-gray-500">Përmbledhje e biznesit</div>
+      <div class="text-2xl font-semibold">{{ 'DASHBOARD.TITLE' | transloco }}</div>
+      <div class="text-gray-500">{{ 'DASHBOARD.SUBTITLE' | transloco }}</div>
     </div>
 
     <button mat-stroked-button (click)="load()" [disabled]="loading">
       <mat-icon>refresh</mat-icon>
-      <span class="ml-2">Refresh</span>
+      <span class="ml-2">{{ 'COMMON.REFRESH' | transloco }}</span>
     </button>
   </div>
 
@@ -19,45 +19,45 @@
     <fuse-card class="p-5">
       <div class="flex items-center justify-between">
         <div>
-          <div class="text-sm text-gray-500">Total rezervime</div>
+          <div class="text-sm text-gray-500">{{ 'DASHBOARD.KPI.TOTAL_RESERVATIONS' | transloco }}</div>
           <div class="text-3xl font-bold mt-1">{{ d.cards.totalReservations }}</div>
         </div>
         <mat-icon class="text-gray-400">event</mat-icon>
       </div>
-      <div class="text-xs text-gray-500 mt-3">Gjithsej</div>
+      <div class="text-xs text-gray-500 mt-3">{{ 'COMMON.TOTAL' | transloco }}</div>
     </fuse-card>
 
     <fuse-card class="p-5">
       <div class="flex items-center justify-between">
         <div>
-          <div class="text-sm text-gray-500">Rezervime këtë muaj</div>
+          <div class="text-sm text-gray-500">{{ 'DASHBOARD.KPI.RESERVATIONS_THIS_MONTH' | transloco }}</div>
           <div class="text-3xl font-bold mt-1">{{ d.cards.reservationsThisMonth }}</div>
         </div>
         <mat-icon class="text-gray-400">calendar_month</mat-icon>
       </div>
-      <div class="text-xs text-gray-500 mt-3">Muaji aktual</div>
+      <div class="text-xs text-gray-500 mt-3">{{ 'COMMON.CURRENT_MONTH' | transloco }}</div>
     </fuse-card>
 
     <fuse-card class="p-5">
       <div class="flex items-center justify-between">
         <div>
-          <div class="text-sm text-gray-500">Klientë</div>
+          <div class="text-sm text-gray-500">{{ 'DASHBOARD.KPI.CLIENTS' | transloco }}</div>
           <div class="text-3xl font-bold mt-1">{{ d.cards.totalClients }}</div>
         </div>
         <mat-icon class="text-gray-400">group</mat-icon>
       </div>
-      <div class="text-xs text-gray-500 mt-3">Gjithsej klientë</div>
+      <div class="text-xs text-gray-500 mt-3">{{ 'DASHBOARD.KPI.TOTAL_CLIENTS' | transloco }}</div>
     </fuse-card>
 
     <fuse-card class="p-5">
       <div class="flex items-center justify-between">
         <div>
-          <div class="text-sm text-gray-500">Të ardhura këtë muaj</div>
+          <div class="text-sm text-gray-500">{{ 'DASHBOARD.KPI.INCOME_THIS_MONTH' | transloco }}</div>
           <div class="text-3xl font-bold mt-1">{{ d.cards.incomeThisMonth | number:'1.0-2' }} €</div>
         </div>
         <mat-icon class="text-gray-400">payments</mat-icon>
       </div>
-      <div class="text-xs text-gray-500 mt-3">Vetëm të paguara</div>
+      <div class="text-xs text-gray-500 mt-3">{{ 'DASHBOARD.KPI.PAID_ONLY' | transloco }}</div>
     </fuse-card>
 
   </div>
@@ -68,7 +68,7 @@
     <!-- Reservations line -->
     <fuse-card class="p-5">
       <div class="flex items-center justify-between mb-3">
-        <div class="text-lg font-semibold">Rezervime (12 muajt e fundit)</div>
+        <div class="text-lg font-semibold">{{ 'DASHBOARD.CHARTS.RESERVATIONS_12M' | transloco }}</div>
         <div class="text-sm text-gray-500">{{ rangeLabel }}</div>
       </div>
 
@@ -85,7 +85,7 @@
     <!-- Income bar -->
     <fuse-card class="p-5">
       <div class="flex items-center justify-between mb-3">
-        <div class="text-lg font-semibold">Të ardhura (12 muajt e fundit)</div>
+        <div class="text-lg font-semibold">{{ 'DASHBOARD.CHARTS.INCOME_12M' | transloco }}</div>
         <div class="text-sm text-gray-500">{{ rangeLabel }}</div>
       </div>
 
@@ -105,7 +105,7 @@
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-6" *ngIf="data">
 
     <fuse-card class="p-5 lg:col-span-1">
-      <div class="text-lg font-semibold mb-3">Rezervime sipas statusit</div>
+      <div class="text-lg font-semibold mb-3">{{ 'DASHBOARD.STATUS.TITLE' | transloco }}</div>
 
       <apx-chart
         [series]="statusDonut.series"
@@ -118,25 +118,25 @@
 
       <div class="grid grid-cols-2 gap-3 mt-4 text-sm text-gray-600">
         <div class="flex items-center justify-between">
-          <span>Pending</span>
+          <span>{{ 'DASHBOARD.STATUS.PENDING' | transloco }}</span>
           <span class="font-semibold">{{ data?.cards.pendingReservations }}</span>
         </div>
         <div class="flex items-center justify-between">
-          <span>Veturat</span>
+          <span>{{ 'DASHBOARD.STATUS.CARS' | transloco }}</span>
           <span class="font-semibold">{{ data?.cards.totalCars }}</span>
         </div>
       </div>
     </fuse-card>
 
-    <!-- Latest reservations placeholder (opsionale) -->
+    <!-- Latest reservations placeholder -->
     <fuse-card class="p-5 lg:col-span-2">
       <div class="flex items-center justify-between mb-3">
-        <div class="text-lg font-semibold">Rezervimet e fundit</div>
-        <div class="text-sm text-gray-500">Opsionale</div>
+        <div class="text-lg font-semibold">{{ 'DASHBOARD.LATEST.TITLE' | transloco }}</div>
+        <div class="text-sm text-gray-500">{{ 'COMMON.OPTIONAL' | transloco }}</div>
       </div>
 
       <div class="text-sm text-gray-500">
-        Në hapin tjetër e lidhim me endpoint dhe e shfaqim listën (Top 5/10).
+        {{ 'DASHBOARD.LATEST.DESCRIPTION' | transloco }}
       </div>
     </fuse-card>
 

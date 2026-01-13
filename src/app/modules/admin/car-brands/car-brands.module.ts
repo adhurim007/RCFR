@@ -11,7 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { carBrandsRoutes } from './car-brands.routes';
 import { CarBrandsListComponent } from './car-brands-list/car-brands-list.component';
 import { CarBrandModalComponent } from './car-brand-modal/car-brand-modal.component';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
     declarations: [
         CarBrandsListComponent,
@@ -19,6 +19,7 @@ import { CarBrandModalComponent } from './car-brand-modal/car-brand-modal.compon
     ],
 imports: [
     CommonModule,
+    TranslocoModule,
     FormsModule,
     ReactiveFormsModule, 
     MatFormFieldModule,

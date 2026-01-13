@@ -1,19 +1,22 @@
 <h2 mat-dialog-title>
-    {{ isEdit ? 'Edit Car Brand' : 'Add Car Brand' }}
+  {{ (isEdit ? 'CAR_BRANDS.EDIT_TITLE' : 'CAR_BRANDS.CREATE_TITLE') | transloco }}
 </h2>
 
 <div mat-dialog-content>
-    <form [formGroup]="form" class="flex flex-col gap-4">
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name">
-        </mat-form-field>
-    </form>
+  <form [formGroup]="form" class="flex flex-col gap-4">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'COMMON.NAME' | transloco }}</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+  </form>
 </div>
 
 <div mat-dialog-actions align="end">
-    <button mat-button (click)="dialogRef.close()">Cancel</button>
-    <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">
-        {{ isEdit ? 'Update' : 'Create' }}
-    </button>
+  <button mat-button (click)="dialogRef.close()">
+    {{ 'COMMON.CANCEL' | transloco }}
+  </button>
+
+  <button mat-flat-button color="primary" (click)="save()" [disabled]="form.invalid">
+    {{ (isEdit ? 'COMMON.UPDATE' : 'COMMON.CREATE') | transloco }}
+  </button>
 </div>

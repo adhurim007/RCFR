@@ -1,28 +1,33 @@
-<h2 mat-dialog-title>{{ isEdit ? 'Edit Model' : 'Add Model' }}</h2>
+<h2 mat-dialog-title>
+  {{ (isEdit ? 'CAR_MODELS.EDIT_TITLE' : 'CAR_MODELS.CREATE_TITLE') | transloco }}
+</h2>
 
 <div mat-dialog-content>
-    <form [formGroup]="form" class="flex flex-col gap-4">
+  <form [formGroup]="form" class="flex flex-col gap-4">
 
-        <mat-form-field appearance="outline">
-            <mat-label>Model Name</mat-label>
-            <input matInput formControlName="name" />
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'CAR_MODELS.FIELDS.MODEL_NAME' | transloco }}</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Brand</mat-label>
-            <mat-select formControlName="carBrandId">
-                <mat-option *ngFor="let b of brands" [value]="b.id">
-                    {{ b.name }}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>{{ 'COMMON.BRAND' | transloco }}</mat-label>
+      <mat-select formControlName="carBrandId">
+        <mat-option *ngFor="let b of brands" [value]="b.id">
+          {{ b.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    </form>
+  </form>
 </div>
 
 <div mat-dialog-actions align="end">
-    <button mat-button (click)="dialogRef.close()">Cancel</button>
-    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="save()">
-        {{ isEdit ? 'Update' : 'Create' }}
-    </button>
+  <button mat-button (click)="dialogRef.close()">
+    {{ 'COMMON.CANCEL' | transloco }}
+  </button>
+
+  <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="save()">
+    {{ (isEdit ? 'COMMON.UPDATE' : 'COMMON.CREATE') | transloco }}
+  </button>
 </div>

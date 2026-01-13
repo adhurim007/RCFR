@@ -1,49 +1,51 @@
 <div class="p-6 w-full h-full">
   <div class="bg-white shadow rounded-lg p-6 w-full h-full">
+
     <h2 class="text-xl font-semibold mb-4">
-      {{ isEdit ? 'Update User' : 'Create User' }}
+      {{ (isEdit ? 'USERS.EDIT_TITLE' : 'USERS.CREATE_TITLE') | transloco }}
     </h2>
 
     <form [formGroup]="userForm" (ngSubmit)="submit()" class="grid gap-4 md:grid-cols-3">
+
       <!-- First Name -->
       <mat-form-field appearance="outline">
-        <mat-label>First Name*</mat-label>
+        <mat-label>{{ 'USERS.FORM.FIRST_NAME_REQUIRED' | transloco }}</mat-label>
         <input matInput formControlName="firstName" />
       </mat-form-field>
 
       <!-- Last Name -->
       <mat-form-field appearance="outline">
-        <mat-label>Last Name*</mat-label>
+        <mat-label>{{ 'USERS.FORM.LAST_NAME_REQUIRED' | transloco }}</mat-label>
         <input matInput formControlName="lastName" />
       </mat-form-field>
 
       <!-- Email -->
       <mat-form-field appearance="outline">
-        <mat-label>Email*</mat-label>
+        <mat-label>{{ 'USERS.FORM.EMAIL_REQUIRED' | transloco }}</mat-label>
         <input matInput type="email" formControlName="email" />
       </mat-form-field>
 
       <!-- Phone -->
       <mat-form-field appearance="outline">
-        <mat-label>Phone</mat-label>
+        <mat-label>{{ 'USERS.FORM.PHONE' | transloco }}</mat-label>
         <input matInput formControlName="phone" />
       </mat-form-field>
 
       <!-- Password -->
       <mat-form-field appearance="outline">
-        <mat-label>Password*</mat-label>
+        <mat-label>{{ 'USERS.FORM.PASSWORD_REQUIRED' | transloco }}</mat-label>
         <input matInput type="password" formControlName="password" />
       </mat-form-field>
 
       <!-- Confirm Password -->
       <mat-form-field appearance="outline">
-        <mat-label>Confirm Password*</mat-label>
+        <mat-label>{{ 'USERS.FORM.CONFIRM_PASSWORD_REQUIRED' | transloco }}</mat-label>
         <input matInput type="password" formControlName="confirmPassword" />
       </mat-form-field>
 
       <!-- Role -->
       <mat-form-field appearance="outline">
-        <mat-label>Role*</mat-label>
+        <mat-label>{{ 'USERS.FORM.ROLE_REQUIRED' | transloco }}</mat-label>
         <mat-select formControlName="role">
           <mat-option *ngFor="let role of roles" [value]="role.name">
             {{ role.name }}
@@ -53,24 +55,25 @@
 
       <!-- Business Fields (only for BusinessAdmin) -->
       <ng-container *ngIf="userForm.get('role')?.value === 'BusinessAdmin'">
+
         <mat-form-field appearance="outline" class="col-span-3">
-          <mat-label>Company Name</mat-label>
+          <mat-label>{{ 'USERS.FORM.COMPANY_NAME' | transloco }}</mat-label>
           <input matInput formControlName="companyName" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-span-3">
-          <mat-label>Contact Phone</mat-label>
+          <mat-label>{{ 'USERS.FORM.CONTACT_PHONE' | transloco }}</mat-label>
           <input matInput formControlName="contactPhone" />
         </mat-form-field>
 
         <mat-form-field appearance="outline" class="col-span-3">
-          <mat-label>Address</mat-label>
+          <mat-label>{{ 'COMMON.ADDRESS' | transloco }}</mat-label>
           <input matInput formControlName="address" />
         </mat-form-field>
 
         <!-- State -->
         <mat-form-field appearance="outline" class="col-span-3">
-          <mat-label>State</mat-label>
+          <mat-label>{{ 'COMMON.STATE' | transloco }}</mat-label>
           <mat-select formControlName="stateId">
             <mat-option *ngFor="let state of states" [value]="state.id">
               {{ state.name }}
@@ -80,22 +83,23 @@
 
         <!-- City -->
         <mat-form-field appearance="outline" class="col-span-3">
-          <mat-label>City</mat-label>
+          <mat-label>{{ 'COMMON.CITY' | transloco }}</mat-label>
           <mat-select formControlName="cityId">
             <mat-option *ngFor="let city of cities" [value]="city.id">
               {{ city.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
+
       </ng-container>
 
       <!-- Submit -->
       <div class="col-span-3 flex justify-end">
         <button mat-flat-button color="primary" type="submit">
-          {{ isEdit ? 'Update' : 'Create' }}
+          {{ (isEdit ? 'COMMON.UPDATE' : 'COMMON.CREATE') | transloco }}
         </button>
       </div>
+
     </form>
   </div>
 </div>
-

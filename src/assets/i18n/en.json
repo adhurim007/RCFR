@@ -14,7 +14,12 @@
     "CANCEL": "Cancel",
     "DELETE": "Delete",
     "EDIT": "Edit",
-    "BACK": "Back"
+    "BACK": "Back",
+    "REFRESH": "Refresh",
+    "TOTAL": "Total",
+    "CURRENT_MONTH": "Current month",
+    "OPTIONAL": "Optional",
+     "UPDATE":"Update"
   },
   "LOCATIONS": {
     "TITLE": "Business Locations",
@@ -294,6 +299,153 @@
       "TYPE": "Type",
       "MILEAGE": "Mileage",
       "FUEL": "Fuel"
+    }
+  },
+    "MENU": {
+    "USERS": "Users",
+    "ROLES": "Roles",
+    "MENU_MANAGEMENT": "Menu management",
+    "CARS": "Cars",
+    "BRANDS": "Brands",
+    "PRICING_RULES": "Pricing rules",
+    "CAR_MODELS": "Car models",
+    "EXTRA_SERVICES": "Extra services",
+    "BUSINESS_LOCATIONS": "Business locations",
+    "ADMINISTRATION": "Administration",
+    "VEHICLE_INSPECTIONS": "Vehicle inspections",
+    "CUSTOMERS": "Customers",
+    "RESERVATIONS": "Reservations",
+    "DAMAGE_INSPECTIONS": "Damage inspections",
+    "CAR_SERVICES": "Car services",
+    "CAR_REGISTRATIONS": "Car registrations"
+  },
+  "DASHBOARD": {
+    "TITLE": "Dashboard",
+    "SUBTITLE": "Business summary",
+    "KPI": {
+      "TOTAL_RESERVATIONS": "Total reservations",
+      "RESERVATIONS_THIS_MONTH": "Reservations this month",
+      "CLIENTS": "Clients",
+      "TOTAL_CLIENTS": "Total clients",
+      "INCOME_THIS_MONTH": "Income this month",
+      "PAID_ONLY": "Paid only"
+    },
+    "CHARTS": {
+      "RESERVATIONS_12M": "Reservations (last 12 months)",
+      "INCOME_12M": "Income (last 12 months)"
+    },
+    "STATUS": {
+      "TITLE": "Reservations by status",
+      "PENDING": "Pending",
+      "CARS": "Cars"
+    },
+    "LATEST": {
+      "TITLE": "Latest reservations",
+      "DESCRIPTION": "In the next step we will connect it to an endpoint and show the list (Top 5/10)."
+    }
+  },"CAR_BRANDS": {
+    "LIST_TITLE": "Car Brands",
+    "ADD_BUTTON": "Add Brand",
+    "CREATE_TITLE": "Add Car Brand",
+    "EDIT_TITLE": "Edit Car Brand",
+    "NO_DATA": "No car brands found."
+  },
+  "CAR_MODELS": {
+    "LIST_TITLE": "Car Models",
+    "ADD_BUTTON": "Add Model",
+    "CREATE_TITLE": "Add Model",
+    "EDIT_TITLE": "Edit Model",
+    "NO_DATA": "No car models found.",
+    "FIELDS": {
+    "MODEL_NAME": "Model Name"
+   
+    },
+    "TABLE": {
+      "MODEL": "Model",
+       "BRAND": "Brand"
+    }
+  },
+  "MENUS": {
+    "CREATE_TITLE": "Create menu",
+    "EDIT_TITLE": "Edit menu",
+
+    "LIST_TITLE": "Menus list",
+    "CREATE_BUTTON": "Create Menu",
+    "NO_DATA": "No menu registered.",
+
+    "FORM": {
+      "TITLE": "Title *",
+      "SUBTITLE": "Subtitle",
+      "TYPE": "Type *",
+      "SORT_NUMBER": "Sort number *",
+      "ICON": "Icon",
+      "URL": "Url",
+      "CLAIMS": "Claims",
+      "HAS_SUBMENU": "Has submenu",
+      "ACTIVE": "Active"
+    },
+
+    "TABLE": {
+      "TITLE": "Title",
+      "SUBTITLE": "Subtitle",
+      "TYPE": "Type",
+      "ICON": "Icon",
+      "URL": "Url",
+      "ACTIVE": "Active"
+    }
+  },
+  "ROLES": {
+    "LIST_TITLE": "Roles",
+    "CREATE_BUTTON": "Create Role",
+    "CREATE_TITLE": "Create new role",
+    "EDIT_TITLE": "Edit role",
+    "TABLE": {
+      "ROLE_NAME": "Role Name"
+    },
+    "FORM": {
+      "ROLE_NAME_REQUIRED": "Role name *",
+      "ROLE_NAME_REQUIRED_ERROR": "Role name is required"
+    }
+  },
+  "USERS": {
+    "LIST_TITLE": "Users",
+    "CREATE_BUTTON": "Create User",
+    "CREATE_TITLE": "Create User",
+    "EDIT_TITLE": "Update User",
+    "RESET_PASSWORD": "Reset Password",
+    "NO_DATA": "No users found.",
+    "TABLE": {
+      "EMAIL": "Email",
+      "PHONE": "Phone",
+      "BUSINESS": "Business",
+      "ROLES": "Roles"
+    },
+    "FORM": {
+      "FIRST_NAME_REQUIRED": "First Name*",
+      "LAST_NAME_REQUIRED": "Last Name*",
+      "EMAIL_REQUIRED": "Email*",
+      "PHONE": "Phone",
+      "PASSWORD_REQUIRED": "Password*",
+      "CONFIRM_PASSWORD_REQUIRED": "Confirm Password*",
+      "ROLE_REQUIRED": "Role*",
+      "COMPANY_NAME": "Company Name",
+      "CONTACT_PHONE": "Contact Phone"
+    }
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Reset Password",
+    "NEW_PASSWORD": "New Password",
+    "CONFIRM_PASSWORD": "Confirm Password",
+    "RESET": "Reset",
+    "ERRORS": {
+      "REQUIRED": "Password is required",
+      "MIN_LENGTH": "Minimum 6 characters",
+      "CONFIRM_REQUIRED": "Confirm password is required"
+    }
+  },
+  "DIALOG": {
+    "CONFIRM": {
+      "TITLE": "Confirm"
     }
   }
 

@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MenuFormComponent } from './menu-form/menu-form.component';
 import { MenuListComponent } from './menu-list.component';   // ✅ add this
 import { MenusRoutingModule } from './menus-routing.module';
-
+import { TranslocoModule } from '@ngneat/transloco';
 @NgModule({
   declarations: [
     MenuFormComponent,
@@ -22,6 +22,7 @@ import { MenusRoutingModule } from './menus-routing.module';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    TranslocoModule,
     MatSelectModule,
     MatCheckboxModule,
     MatButtonModule,

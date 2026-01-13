@@ -14,7 +14,12 @@
     "CANCEL": "Anulo",
     "DELETE": "Fshij",
     "EDIT": "Edito",
-    "BACK": "Kthehu"
+    "BACK": "Kthehu",
+    "REFRESH": "Rifresko",
+    "TOTAL": "Gjithsej",
+    "CURRENT_MONTH": "Muaji aktual",
+    "OPTIONAL": "Opsionale",
+    "UPDATE":"Përditeso"
   },
   "LOCATIONS": {
     "TITLE": "Lokacionet e biznesit",
@@ -294,6 +299,154 @@
       "TYPE": "Tipi",
       "MILEAGE": "Kilometrazha",
       "FUEL": "Karburanti"
+    }
+  },
+    "MENU": {
+    "USERS": "Përdoruesit",
+    "ROLES": "Rolet",
+    "MENU_MANAGEMENT": "Menaxhimi i menuve",
+    "CARS": "Veturat",
+    "BRANDS": "Brendet",
+    "PRICING_RULES": "Kalkulimi i çmimeve",
+    "CAR_MODELS": "Modelet e veturave",
+    "EXTRA_SERVICES": "Shërbime shtesë",
+    "BUSINESS_LOCATIONS": "Lokacionet e biznesit",
+    "ADMINISTRATION": "Administrimi",
+    "VEHICLE_INSPECTIONS": "Inspektimi i veturës",
+    "CUSTOMERS": "Klientët",
+    "RESERVATIONS": "Rezervimet",
+    "DAMAGE_INSPECTIONS": "Inspektimi i dëmtimeve",
+    "CAR_SERVICES": "Servisi i veturës",
+    "CAR_REGISTRATIONS": "Regjistrimi i veturës"
+  },
+  "DASHBOARD": {
+    "TITLE": "Paneli",
+    "SUBTITLE": "Përmbledhje e biznesit",
+    "KPI": {
+      "TOTAL_RESERVATIONS": "Total rezervime",
+      "RESERVATIONS_THIS_MONTH": "Rezervime këtë muaj",
+      "CLIENTS": "Klientë",
+      "TOTAL_CLIENTS": "Gjithsej klientë",
+      "INCOME_THIS_MONTH": "Të ardhura këtë muaj",
+      "PAID_ONLY": "Vetëm të paguara"
+    },
+    "CHARTS": {
+      "RESERVATIONS_12M": "Rezervime (12 muajt e fundit)",
+      "INCOME_12M": "Të ardhura (12 muajt e fundit)"
+    },
+    "STATUS": {
+      "TITLE": "Rezervime sipas statusit",
+      "PENDING": "Në pritje",
+      "CARS": "Veturat"
+    },
+    "LATEST": {
+      "TITLE": "Rezervimet e fundit",
+      "DESCRIPTION": "Në hapin tjetër e lidhim me endpoint dhe e shfaqim listën (Top 5/10)."
+    }
+  },
+  "CAR_BRANDS": {
+    "LIST_TITLE": "Brendet e veturave",
+    "ADD_BUTTON": "Shto brend",
+    "CREATE_TITLE": "Shto brend veture",
+    "EDIT_TITLE": "Ndrysho brend veture",
+    "NO_DATA": "Nuk u gjet asnjë brend veture."
+  },
+  "CAR_MODELS": {
+    "LIST_TITLE": "Modelet e veturave",
+    "ADD_BUTTON": "Shto model",
+    "CREATE_TITLE": "Shto model",
+    "EDIT_TITLE": "Ndrysho model",
+    "NO_DATA": "Nuk u gjet asnjë model veture.",
+    "FIELDS": {
+    "MODEL_NAME": "Emri i modelit"
+    
+    },
+    "TABLE": {
+      "MODEL": "Modeli",
+       "BRAND": "Brendi i veturës"
+    }
+  },
+  "MENUS": {
+    "CREATE_TITLE": "Krijo menu",
+    "EDIT_TITLE": "Ndrysho menu",
+
+    "LIST_TITLE": "Listë e menuve",
+    "CREATE_BUTTON": "Krijo Menu",
+    "NO_DATA": "Nuk ka meny të regjistruar.",
+
+    "FORM": {
+      "TITLE": "Titulli *",
+      "SUBTITLE": "Nëntitulli",
+      "TYPE": "Lloji *",
+      "SORT_NUMBER": "Numri i renditjes *",
+      "ICON": "Ikona",
+      "URL": "Url",
+      "CLAIMS": "Kërkesat",
+      "HAS_SUBMENU": "Ka nënmeny",
+      "ACTIVE": "Aktiv"
+    },
+
+    "TABLE": {
+      "TITLE": "Titulli",
+      "SUBTITLE": "Nëntitulli",
+      "TYPE": "Lloji",
+      "ICON": "Ikona",
+      "URL": "Url",
+      "ACTIVE": "Aktiv"
+    }
+  },
+  "ROLES": {
+    "LIST_TITLE": "Rolet",
+    "CREATE_BUTTON": "Krijo rol",
+    "CREATE_TITLE": "Krijo rol të ri",
+    "EDIT_TITLE": "Ndrysho rolin",
+    "TABLE": {
+      "ROLE_NAME": "Emri i rolit"
+    },
+    "FORM": {
+      "ROLE_NAME_REQUIRED": "Emri i rolit *",
+      "ROLE_NAME_REQUIRED_ERROR": "Emri i rolit është i detyrueshëm"
+    }
+  },
+   "USERS": {
+    "LIST_TITLE": "Përdoruesit",
+    "CREATE_BUTTON": "Krijo përdorues",
+    "CREATE_TITLE": "Krijo përdorues",
+    "EDIT_TITLE": "Përditëso përdorues",
+    "RESET_PASSWORD": "Rivendos fjalëkalimin",
+    "NO_DATA": "Nuk ka përdorues.",
+    "TABLE": {
+      "EMAIL": "Email",
+      "PHONE": "Telefoni",
+      "BUSINESS": "Biznesi",
+      "ROLES": "Rolet"
+    },
+    "FORM": {
+      "FIRST_NAME_REQUIRED": "Emri*",
+      "LAST_NAME_REQUIRED": "Mbiemri*",
+      "EMAIL_REQUIRED": "Email*",
+      "PHONE": "Telefoni",
+      "PASSWORD_REQUIRED": "Fjalëkalimi*",
+      "CONFIRM_PASSWORD_REQUIRED": "Konfirmo fjalëkalimin*",
+      "ROLE_REQUIRED": "Roli*",
+      "COMPANY_NAME": "Emri i kompanisë",
+      "CONTACT_PHONE": "Telefoni kontaktues"
+    }
+  },
+  "RESET_PASSWORD": {
+    "TITLE": "Rivendos fjalëkalimin",
+    "NEW_PASSWORD": "Fjalëkalimi i ri",
+    "CONFIRM_PASSWORD": "Konfirmo fjalëkalimin",
+    "RESET": "Rivendos",
+    "ERRORS": {
+      "REQUIRED": "Fjalëkalimi është i detyrueshëm",
+      "MIN_LENGTH": "Minimumi 6 karaktere",
+      "CONFIRM_REQUIRED": "Konfirmimi i fjalëkalimit është i detyrueshëm"
+    }
+  },
+  "DIALOG": {
+    "CONFIRM": {
+      "TITLE": "Konfirmo"
     }
   }
 }

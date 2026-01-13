@@ -1,10 +1,15 @@
-<h2 mat-dialog-title>Confirm</h2>
+<h2 mat-dialog-title>{{ 'DIALOG.CONFIRM.TITLE' | transloco }}</h2>
 
 <mat-dialog-content>
   <p>{{ data.message }}</p>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-flat-button color="warn" (click)="onConfirm()">Delete</button>
+  <button mat-button (click)="onCancel()">
+    {{ 'COMMON.CANCEL' | transloco }}
+  </button>
+
+  <button mat-flat-button color="warn" (click)="onConfirm()">
+    {{ 'COMMON.DELETE' | transloco }}
+  </button>
 </mat-dialog-actions>
