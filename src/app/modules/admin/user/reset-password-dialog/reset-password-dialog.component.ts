@@ -5,7 +5,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-reset-password-dialog',
   templateUrl: './reset-password-dialog.component.html',
-  styleUrls: ['./reset-password-dialog.component.scss']
+  styleUrls: ['./reset-password-dialog.component.scss'],
+  standalone: false,
 })
 export class ResetPasswordDialogComponent {
   form: FormGroup;

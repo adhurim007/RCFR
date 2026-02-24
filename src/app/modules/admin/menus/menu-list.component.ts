@@ -8,6 +8,7 @@ import { MenuFormComponent } from './menu-form/menu-form.component';
 @Component({
   selector: 'app-menu-list',
   templateUrl: './menu-list.component.html',
+  standalone: false,
 })
 export class MenuListComponent implements OnInit {
   menus: MenuDto[] = [];

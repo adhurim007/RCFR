@@ -14,10 +14,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { CarPricingRulesComponent } from './car-pricing-rules.component';
-import { PricingRuleModalComponent } from './pricing-rule-modal.component';
-
+import { PricingRuleModalComponent } from './pricing-rule-modal.component'; 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
  
-
 @NgModule({
   declarations: [
     CarPricingRulesComponent,
@@ -52,7 +52,9 @@ import { PricingRuleModalComponent } from './pricing-rule-modal.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatTableModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule,
+    MatDividerModule
   ]
 })
 export class CarPricingRulesModule {}

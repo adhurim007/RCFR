@@ -4,12 +4,15 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inspection-list',
-  templateUrl: './inspection-list.component.html'
+  templateUrl: './inspection-list.component.html',
+  standalone: false,
 })
 export class InspectionListComponent implements OnInit {
 
   inspections: any[] = [];
-  displayedColumns = ['reservationId', 'type', 'mileage', 'fuelLevel', 'actions'];
+  loading = false;
+
+  selectedInspection: any | null = null;
 
   constructor(
     private service: VehicleInspectionsService,
@@ -21,18 +24,31 @@ export class InspectionListComponent implements OnInit {
   }
 
   load(): void {
-    this.service.getAll().subscribe(res => this.inspections = res);
+    this.loading = true;
+
+    this.service.getAll().subscribe({
+      next: (res) => {
+        this.inspections = res ?? [];
+        this.loading = false;
+      },
+      error: () => {
+        this.inspections = [];
+        this.loading = false;
+      }
+    });
   }
 
   create(): void {
-      this.router.navigate(['/business/vehicle-inspections/create']);
+    this.router.navigate(['/business/vehicle-inspections/create']);
   }
- 
-  edit(id: number): void {
+
+  edit(id?: number): void {
+    if (!id) return;
     this.router.navigate(['/business/vehicle-inspections/edit', id]);
   }
 
-  delete(id: number): void {
+  delete(id?: number): void {
+    if (!id) return;
     if (!confirm('Delete inspection?')) return;
 
     this.service.delete(id).subscribe(() => this.load());

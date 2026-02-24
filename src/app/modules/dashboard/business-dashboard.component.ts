@@ -3,7 +3,9 @@ import { DashboardService, DashboardSummaryDto } from 'app/services/dashboard.se
 
 @Component({
   selector: 'app-business-dashboard',
-  templateUrl: './business-dashboard.component.html'
+  templateUrl: './business-dashboard.component.html',
+  standalone: false,
+
 })
 export class BusinessDashboardComponent implements OnInit {
 

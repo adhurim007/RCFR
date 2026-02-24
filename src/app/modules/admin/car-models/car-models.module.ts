@@ -16,6 +16,11 @@ import { carModelsRoutes } from './car-models.routes';
 import { CarModelsListComponent } from './car-models-list/car-models-list.component';
 import { CarModelModalComponent } from './car-model-modal/car-model-modal.component';
 
+ 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+ 
+
 @NgModule({
     declarations: [
         CarModelsListComponent,
@@ -25,7 +30,8 @@ import { CarModelModalComponent } from './car-model-modal/car-model-modal.compon
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-
+        MatMenuModule,
+        MatDividerModule,
         MatFormFieldModule,
         MatInputModule,
         MatDialogModule,

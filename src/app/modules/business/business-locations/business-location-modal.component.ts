@@ -6,7 +6,8 @@ import { LocationService } from 'app/core/locations/location.service';
 
 @Component({
   selector: 'app-business-location-modal',
-  templateUrl: './business-location-modal.component.html'
+  templateUrl: './business-location-modal.component.html',
+  standalone: false,
 })
 export class BusinessLocationModalComponent implements OnInit {
 

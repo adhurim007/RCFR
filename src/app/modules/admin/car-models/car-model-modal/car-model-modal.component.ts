@@ -7,7 +7,8 @@ import { CarBrand } from 'app/models/car-brand.model';
 
 @Component({
     selector: 'app-car-model-modal',
-    templateUrl: './car-model-modal.component.html'
+    templateUrl: './car-model-modal.component.html',
+    standalone: false,
 })
 export class CarModelModalComponent implements OnInit {
 

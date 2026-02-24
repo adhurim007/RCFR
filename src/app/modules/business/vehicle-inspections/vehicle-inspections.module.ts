@@ -13,6 +13,10 @@ import { VehicleInspectionsRoutingModule } from './vehicle-inspections.routes';
 import { InspectionListComponent } from './inspection-list/inspection-list.component';
 import { InspectionFormComponent } from './inspection-form/inspection-form.component';
 import { TranslocoModule } from '@ngneat/transloco';
+
+ 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 @NgModule({
   declarations: [
     InspectionListComponent,
@@ -20,6 +24,8 @@ import { TranslocoModule } from '@ngneat/transloco';
   ],
   imports: [
     CommonModule,
+    MatMenuModule,
+    MatDividerModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,

@@ -1,20 +1,24 @@
-<div class="p-6 w-full">
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-    <h2 class="text-2xl font-semibold text-gray-800">
+<div class="flex flex-col flex-auto w-full p-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">
       {{ 'CARS.LIST_TITLE' | transloco }}
-    </h2>
+    </h1>
 
     <button
       mat-flat-button
       color="primary"
-      (click)="createCar()"
-      class="mt-4 sm:mt-0">
+      class="px-6"
+      (click)="createCar()">
       <mat-icon class="mr-2">add</mat-icon>
       {{ 'CARS.ADD_BUTTON' | transloco }}
     </button>
   </div>
 
-  <div class="w-full bg-white rounded-2xl shadow-md border border-gray-200 overflow-x-auto">
+  <!-- Card -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 w-full overflow-x-auto">
+
     <table class="min-w-full text-sm text-left text-gray-700">
       <thead class="bg-gray-100 text-xs uppercase text-gray-600">
         <tr>
@@ -28,7 +32,8 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let car of cars" class="border-b hover:bg-gray-50 transition-colors duration-150">
+
+        <tr *ngFor="let car of cars" class="border-b hover:bg-gray-50">
           <td class="px-6 py-4">{{ car.carBrandName }}</td>
           <td class="px-6 py-4">{{ car.carModelName }}</td>
           <td class="px-6 py-4">{{ car.licensePlate }}</td>
@@ -43,35 +48,58 @@
           </td>
 
           <td class="px-6 py-4 text-right">
-            <button mat-icon-button [matMenuTriggerFor]="carActionsMenu" [attr.aria-label]="'COMMON.ACTIONS' | transloco">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="carActionsMenu"
+              (click)="selectedCar = car">
               <mat-icon>more_vert</mat-icon>
             </button>
-
-            <mat-menu #carActionsMenu="matMenu">
-              <button mat-menu-item (click)="edit(car.id)">
-                <mat-icon>edit</mat-icon>
-                <span>{{ 'CARS.MENU.UPDATE' | transloco }}</span>
-              </button>
-
-              <button mat-menu-item (click)="viewDetails(car.id)">
-                <mat-icon>visibility</mat-icon>
-                <span>{{ 'CARS.MENU.VIEW_DETAILS' | transloco }}</span>
-              </button>
-
-              <button mat-menu-item (click)="delete(car.id)">
-                <mat-icon color="warn">delete</mat-icon>
-                <span>{{ 'COMMON.DELETE' | transloco }}</span>
-              </button>
-            </mat-menu>
           </td>
         </tr>
 
-        <tr *ngIf="cars.length === 0">
+        <!-- Empty -->
+        <tr *ngIf="cars.length === 0 && !loading">
           <td colspan="6" class="text-center py-6 text-gray-400">
             {{ 'CARS.NO_DATA' | transloco }}
           </td>
         </tr>
+
       </tbody>
     </table>
+
+    <!-- Actions Menu -->
+    <mat-menu #carActionsMenu="matMenu">
+
+      <button mat-menu-item (click)="editCar(selectedCar?.id)">
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'CARS.MENU.UPDATE' | transloco }}</span>
+      </button>
+
+      <button mat-menu-item (click)="viewDetails(selectedCar?.id)">
+        <mat-icon>visibility</mat-icon>
+        <span>{{ 'CARS.MENU.VIEW_DETAILS' | transloco }}</span>
+      </button>
+
+      <button mat-menu-item (click)="toggleAvailability(selectedCar)">
+        <mat-icon>{{ selectedCar?.isAvailable ? 'toggle_off' : 'toggle_on' }}</mat-icon>
+        <span>
+          {{ selectedCar?.isAvailable ? ('CARS.STATUS_INACTIVE' | transloco) : ('CARS.STATUS_ACTIVE' | transloco) }}
+        </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item class="text-red-600" (click)="deleteCar(selectedCar?.id)">
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'COMMON.DELETE' | transloco }}</span>
+      </button>
+
+    </mat-menu>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="p-6 text-center text-gray-400">
+      {{ 'COMMON.LOADING' | transloco }}
+    </div>
+
   </div>
 </div>

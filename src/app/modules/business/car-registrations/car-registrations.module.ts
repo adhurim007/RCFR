@@ -17,6 +17,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatMenu } from '@angular/material/menu';
 import { TranslocoModule } from '@ngneat/transloco';
+
+ 
+import { MatDividerModule } from '@angular/material/divider';
 @NgModule({
   declarations: [
     CarRegistrationsListComponent,
@@ -35,7 +38,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     MatNativeDateModule,
     MatIconModule,
     MatMenuModule,
-    TranslocoModule
+    TranslocoModule,
+    MatDividerModule
   ]
 })
 export class CarRegistrationsModule {}

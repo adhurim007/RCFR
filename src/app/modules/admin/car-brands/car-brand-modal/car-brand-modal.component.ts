@@ -6,7 +6,8 @@ import { CarBrand } from 'app/models/car-brand.model';
 
 @Component({
     selector: 'app-car-brand-modal',
-    templateUrl: './car-brand-modal.component.html'
+    templateUrl: './car-brand-modal.component.html',
+    standalone: false,
 })
 export class CarBrandModalComponent {
     form: FormGroup;

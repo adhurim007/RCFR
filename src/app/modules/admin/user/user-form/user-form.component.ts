@@ -7,7 +7,8 @@ import { LocationService } from 'app/core/locations/location.service';
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
+  standalone: false,
 })
 export class UserFormComponent implements OnInit {
   userForm!: FormGroup;

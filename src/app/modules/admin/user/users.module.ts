@@ -14,7 +14,11 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { ResetPasswordDialogComponent } from './reset-password-dialog/reset-password-dialog.component';  // ✅ import
-
+ 
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+ 
 const routes: Routes = [
   { path: '', component: UserListComponent },
   { path: 'create', component: UserFormComponent },
@@ -38,7 +42,10 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule,
+    MatMenuModule,
+    MatDividerModule
   ]
 })
 export class UsersModule {}

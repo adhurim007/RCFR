@@ -6,7 +6,8 @@ import { ReservationService } from 'app/services/reservations.service';
 
 @Component({
   selector: 'app-damage-form',
-  templateUrl: './damage-form.component.html'
+  templateUrl: './damage-form.component.html',
+  standalone: false,
 })
 export class DamageFormComponent implements OnInit {
 

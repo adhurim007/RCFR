@@ -14,7 +14,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+ 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+ 
 const routes: Routes = [
   { path: '', component: RoleListComponent }
 ];
@@ -33,7 +36,9 @@ const routes: Routes = [
     MatIconModule,
     MatDialogModule,        // ✅ Required for <mat-dialog-actions>
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatMenuModule,
+    MatDividerModule
   ]
 })
 export class RolesModule {}

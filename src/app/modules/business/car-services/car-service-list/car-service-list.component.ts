@@ -6,7 +6,8 @@ import { UserService } from 'app/core/user/user.service';
 @Component({
   selector: 'app-car-service-list',
   templateUrl: './car-service-list.component.html',
-  styleUrls: ['./car-service-list.component.scss']
+  styleUrls: ['./car-service-list.component.scss'],
+  standalone: false,
 })
 export class CarServiceListComponent implements OnInit {
 

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-menu-form',
   templateUrl: './menu-form.component.html',
+  standalone: false,
 })
 export class MenuFormComponent implements OnInit {
 

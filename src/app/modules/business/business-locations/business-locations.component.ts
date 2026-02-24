@@ -6,14 +6,16 @@ import { UserService } from 'app/core/user/user.service';
 
 @Component({
   selector: 'app-business-locations',
-  templateUrl: './business-locations.component.html'
+  templateUrl: './business-locations.component.html',
+  standalone: false,
 })
 export class BusinessLocationsComponent implements OnInit {
 
   locations: any[] = [];
   businessId!: number;
+  loading = false;
 
-  displayedColumns: string[] = ['name', 'address', 'state', 'city', 'actions'];
+  selectedLocation: any | null = null;
 
   constructor(
     private service: BusinessLocationService,
@@ -32,8 +34,19 @@ export class BusinessLocationsComponent implements OnInit {
   }
 
   load(): void {
+    this.loading = true;
+
     this.service.getByBusinessId(this.businessId)
-      .subscribe(res => this.locations = res);
+      .subscribe({
+        next: (res) => {
+          this.locations = res ?? [];
+          this.loading = false;
+        },
+        error: () => {
+          this.locations = [];
+          this.loading = false;
+        }
+      });
   }
 
   openCreate(): void {
@@ -41,28 +54,32 @@ export class BusinessLocationsComponent implements OnInit {
       width: '550px',
       data: {
         isEdit: false,
-        businessId: this.businessId     // ✅ KRYESORE
+        businessId: this.businessId
       }
     });
 
     ref.afterClosed().subscribe(r => r && this.load());
   }
 
-  openEdit(item: any): void {
+  openEdit(item?: any): void {
+    if (!item) return;
+
     const ref = this.dialog.open(BusinessLocationModalComponent, {
       width: '550px',
       data: {
         isEdit: true,
         location: item,
-        businessId: this.businessId    // ✅ KRYESORE
+        businessId: this.businessId
       }
     });
 
     ref.afterClosed().subscribe(r => r && this.load());
   }
 
-  delete(id: number): void {
+  delete(id?: number): void {
+    if (!id) return;
     if (!confirm('Delete this location?')) return;
+
     this.service.delete(id).subscribe(() => this.load());
   }
 }

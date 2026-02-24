@@ -11,14 +11,18 @@ import { MatTableModule } from '@angular/material/table';
 import { businessLocationsRoutes } from './business-locations.routes';
 import { BusinessLocationsComponent } from './business-locations.component';
 import { BusinessLocationModalComponent } from './business-location-modal.component';
-import { TranslocoModule } from '@ngneat/transloco';
-
+import { TranslocoModule } from '@ngneat/transloco'; 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+ 
 @NgModule({
   declarations: [
     BusinessLocationsComponent,
     BusinessLocationModalComponent
   ],
   imports: [
+    MatMenuModule,
+    MatDividerModule,
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,

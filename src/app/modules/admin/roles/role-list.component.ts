@@ -6,21 +6,37 @@ import { RoleCreateDialogComponent } from '../roles/role-create/role-create-dial
 @Component({
   selector: 'app-role-list',
   templateUrl: './role-list.component.html',
+  standalone: false,
 })
 export class RoleListComponent implements OnInit {
-  roles: any[] = [];
-  displayedColumns: string[] = ['name', 'actions'];
 
-  constructor(private roleService: RoleService, private dialog: MatDialog) {}
+  roles: any[] = [];
+  loading = false;
+
+  selectedRole: any | null = null;
+
+  constructor(
+    private roleService: RoleService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadRoles();
   }
 
   loadRoles(): void {
+    this.loading = true;
+
     this.roleService.getRoles().subscribe({
-      next: (data) => (this.roles = data),
-      error: (err) => console.error('Error loading roles', err),
+      next: (data) => {
+        this.roles = data ?? [];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading roles', err);
+        this.roles = [];
+        this.loading = false;
+      },
     });
   }
 
@@ -34,7 +50,9 @@ export class RoleListComponent implements OnInit {
     });
   }
 
-    openEditDialog(role: any): void {
+  openEditDialog(role?: any): void {
+    if (!role) return;
+
     const dialogRef = this.dialog.open(RoleCreateDialogComponent, {
       data: { role }
     });
@@ -46,16 +64,13 @@ export class RoleListComponent implements OnInit {
     });
   }
 
+  deleteRole(id?: string): void {
+    if (!id) return;
+    if (!confirm('Are you sure you want to delete this role?')) return;
 
-  deleteRole(id: string): void {
     this.roleService.deleteRole(id).subscribe({
-      next: (res) => {
-        console.log(res.message); // ✅ "Role deleted successfully"
-        this.loadRoles();
-      },
-      error: (err) => {
-        console.error('Error deleting role', err);
-      }
+      next: () => this.loadRoles(),
+      error: (err) => console.error('Error deleting role', err)
     });
-  } 
+  }
 }

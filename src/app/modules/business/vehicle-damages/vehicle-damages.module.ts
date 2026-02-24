@@ -14,6 +14,9 @@ import { DamageFormComponent } from './damage-form/damage-form.component';
 import { VehicleDamagesRoutingModule } from './vehicle-damages.routes';
 import { MatMenuModule } from '@angular/material/menu';
 import { TranslocoModule } from '@ngneat/transloco';
+
+ 
+import { MatDividerModule } from '@angular/material/divider';
 @NgModule({
     declarations: [
         DamageListComponent,
@@ -32,7 +35,8 @@ import { TranslocoModule } from '@ngneat/transloco';
         MatTableModule,
         MatMenuModule,
         TranslocoModule,
-        VehicleDamagesRoutingModule 
+        VehicleDamagesRoutingModule,
+        MatDividerModule
     ]
 })
 export class VehicleDamagesModule {}

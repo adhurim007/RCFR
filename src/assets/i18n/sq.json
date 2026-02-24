@@ -13,18 +13,35 @@
     "SAVE": "Ruaj",
     "CANCEL": "Anulo",
     "DELETE": "Fshij",
-    "EDIT": "Edito",
+    "EDIT": "Ndrysho",
     "BACK": "Kthehu"
   },
   "LOCATIONS": {
     "TITLE": "Lokacionet e biznesit",
     "ADD_BUTTON": "Shto lokacion",
-    "NO_DATA": "Nuk u gjet asnjë lokacion biznesi."
+    "NO_DATA": "Nuk u gjetën lokacione të biznesit."
+  },
+  "MENU": {
+    "BRANDS": "Brendet e veturave",
+    "CAR_MODELS": "Modelet e veturave",
+    "PRICING_RULES": "Rregullat e çmimeve",
+    "EXTRA_SERVICES": "Shërbime shtesë",
+    "BUSINESS_LOCATIONS": "Lokacionet e biznesit",
+    "ADMINISTRATION": "Administrimi",
+    "USERS": "Përdoruesit",
+    "ROLES": "Rolet",
+    "MENU_MANAGEMENT": "Menaxhimi i menusë",
+    "VEHICLE_INSPECTIONS": "Inspektimet e automjeteve",
+    "CUSTOMERS": "Klientët",
+    "RESERVATIONS": "Rezervimet",
+    "DAMAGE_INSPECTIONS": "Inspektimet e dëmtimeve",
+    "CAR_SERVICES": "Serviset e veturave",
+    "CAR_REGISTRATIONS": "Regjistrimet e veturave"
   },
   "PRICING": {
     "CREATE_RULE_TITLE": "Krijo rregull çmimi",
     "EDIT_RULE_TITLE": "Ndrysho rregull çmimi",
-    "SELECT_CAR": "Zgjidh veturën *",
+    "SELECT_CAR": "Zgjedh veturën *",
     "RULE_TYPE_REQUIRED": "Lloji i rregullit *",
     "PRICE_PER_DAY_REQUIRED": "Çmimi për ditë (€) *",
     "FROM_DATE": "Data nga",
@@ -35,107 +52,103 @@
   "REGISTRATION": {
     "LIST_TITLE": "Regjistrimet e veturave",
     "ADD_BUTTON": "+ Shto regjistrim",
-    "NO_DATA": "Nuk u gjet asnjë regjistrim",
+    "NO_DATA": "Nuk u gjetën regjistrime",
     "TABLE": {
       "CAR": "Vetura",
-      "REG_NUMBER": "Nr. regjistrimi",
+      "REG_NUMBER": "Nr. regj.",
       "NUMBER": "Numri",
       "ISSUED": "Lëshuar",
-      "EXPIRY": "Skadon",
+      "EXPIRY": "Skadimi",
       "COST": "Kosto",
       "INSURANCE": "Sigurimi"
     },
     "REPORT": {
-      "BUTTON": "Raporti i regjistrimeve",
-      "GENERATING": "Duke gjeneruar..."
+      "BUTTON": "Raporti i regjistrimit",
+      "GENERATING": "Duke u gjeneruar..."
     }
   },
   "SERVICE": {
-    "ADD_TITLE": "Shto servis për veturë",
-    "EDIT_TITLE": "Ndrysho servisin e veturës",
+    "ADD_TITLE": "Shto servis të veturës",
+    "EDIT_TITLE": "Ndrysho servis të veturës",
     "CAR_REQUIRED": "Vetura *",
-    "TYPE_REQUIRED": "Lloji i servisit *",
-    "DATE": "Data e servisit",
+    "TYPE_REQUIRED": "Lloji i servisimit *",
+    "DATE": "Data e servisimit",
     "MILEAGE": "Kilometrazha",
     "COST_REQUIRED": "Kosto *",
-    "CENTER": "Servisi",
-    "NEXT_DATE": "Data e servisit të radhës",
-    "NEXT_MILEAGE": "Kilometrazha e servisit të radhës",
-    "LIST_TITLE": "Lista e servisimeve",
+    "CENTER": "Qendra e servisimit",
+    "NEXT_DATE": "Data e servisimit të ardhshëm",
+    "NEXT_MILEAGE": "Kilometrazha për servisimin e ardhshëm",
+    "LIST_TITLE": "Serviset e veturave",
     "ADD_BUTTON": "+ Shto servis",
-    "NO_DATA": "Nuk ka servisime të regjistruara",
+    "NO_DATA": "Nuk ka servise të regjistruara",
     "TABLE": {
-      "TYPE": "Tipi",
+      "TYPE": "Lloji",
       "DATE": "Data",
       "MILEAGE": "Kilometrazha",
       "COST": "Kosto",
-      "CENTER": "Servisi"
+      "CENTER": "Qendra e servisimit"
     },
     "REPORT": {
-      "BUTTON": "Raporti i servisit",
-      "GENERATING": "Duke gjeneruar..."
+      "BUTTON": "Raporti i servisimit",
+      "GENERATING": "Duke u gjeneruar..."
     }
   },
   "CARS": {
     "LIST_TITLE": "Lista e veturave",
     "ADD_BUTTON": "Shto veturë",
-    "NO_DATA": "Nuk ka asnjë veturë të regjistruar.",
+    "NO_DATA": "Nuk ka vetura të regjistruara.",
     "CREATE_TITLE": "Krijo veturë",
     "EDIT_TITLE": "Ndrysho veturë",
     "CREATE_BUTTON": "Krijo veturë",
-    "UPDATE_BUTTON": "Përditëso veturën",
-    "BRAND": "Brendi",
+    "UPDATE_BUTTON": "Përditëso veturë",
+    "BRAND": "Marka",
     "MODEL": "Modeli",
     "TYPE": "Tipi",
     "FUEL": "Karburanti",
     "TRANSMISSION": "Transmisioni",
-    "LICENSE_PLATE": "Targat",
-    "LICENSE_PLATE_REQUIRED": "Targat *",
+    "LICENSE_PLATE": "Targa",
+    "LICENSE_PLATE_REQUIRED": "Targa *",
     "COLOR": "Ngjyra",
     "DAILY_PRICE": "Çmimi ditor",
     "DAILY_PRICE_REQUIRED": "Çmimi ditor (€) *",
-    "BRAND_REQUIRED": "Brendi *",
+    "BRAND_REQUIRED": "Marka *",
     "MODEL_REQUIRED": "Modeli *",
     "TYPE_REQUIRED": "Tipi i veturës *",
     "FUEL_REQUIRED": "Lloji i karburantit *",
     "TRANSMISSION_REQUIRED": "Transmisioni *",
-    "IMAGES": "Imazhet",
-    "IMAGES_HINT": "Mund të ngarkosh disa imazhe.",
-    "IMAGES_TO_UPLOAD": "Imazhe për ngarkim ({{count}})",
+    "IMAGES": "Fotografitë",
+    "IMAGES_HINT": "Mund të ngarkoni disa fotografi.",
+    "IMAGES_TO_UPLOAD": "Fotografitë për ngarkim ({{count}})",
     "AVAILABLE_FOR_RENT": "E disponueshme për qira",
     "STATUS": "Statusi",
-    "STATUS_ACTIVE": "Aktiv",
-    "STATUS_INACTIVE": "Jo aktiv",
+    "STATUS_ACTIVE": "Aktive",
+    "STATUS_INACTIVE": "Jo aktive",
     "MENU": {
       "UPDATE": "Përditëso",
       "VIEW_DETAILS": "Shiko detajet"
     }
-  }, 
+  },
   "CUSTOMERS": {
     "LIST_TITLE": "Lista e klientëve",
     "ADD_BUTTON": "Shto klient",
-    "NO_DATA": "Nuk ka asnjë klient të regjistruar.",
-
+    "NO_DATA": "Nuk ka klientë të regjistruar.",
     "CREATE_TITLE": "Krijo klient",
     "EDIT_TITLE": "Ndrysho klient",
     "CREATE_BUTTON": "Krijo klient",
-    "UPDATE_BUTTON": "Përditëso klientin",
-
-    "FULL_NAME_REQUIRED": "Emri dhe mbiemri *",
-    "FULL_NAME_REQUIRED_ERROR": "Emri dhe mbiemri është i detyrueshëm",
+    "UPDATE_BUTTON": "Përditëso klient",
+    "FULL_NAME_REQUIRED": "Emri i plotë *",
+    "FULL_NAME_REQUIRED_ERROR": "Emri i plotë është i detyrueshëm",
     "EMAIL": "Email",
     "PHONE_REQUIRED": "Numri i telefonit *",
     "DOCUMENT_TYPE_REQUIRED": "Lloji i dokumentit *",
     "DOCUMENT_NUMBER_REQUIRED": "Numri i dokumentit *",
-    "DATE_OF_BIRTH": "Datëlindja",
+    "DATE_OF_BIRTH": "Data e lindjes",
     "ADDRESS": "Adresa",
-
     "DOC_TYPES": {
-      "ID": "ID",
+      "ID": "Letërnjoftim",
       "PASSPORT": "Pasaportë",
       "DRIVER_LICENSE": "Patentë shoferi"
     },
-
     "TABLE": {
       "NAME": "Emri",
       "EMAIL": "Email",
@@ -145,9 +158,9 @@
     }
   },
   "EXTRA_SERVICES": {
-    "LIST_TITLE": "Shërbimet shtesë",
+    "LIST_TITLE": "Shërbime shtesë",
     "ADD_BUTTON": "+ Shto shërbim",
-    "NO_DATA": "Nuk u gjet asnjë shërbim shtesë.",
+    "NO_DATA": "Nuk u gjetën shërbime shtesë.",
     "ADD_TITLE": "Shto shërbim shtesë",
     "EDIT_TITLE": "Ndrysho shërbim shtesë",
     "PRICE_PER_DAY": "Çmimi për ditë",
@@ -155,70 +168,61 @@
       "PRICE_PER_DAY": "Çmimi për ditë (€)"
     }
   },
-    "RESERVATIONS": {
+  "RESERVATIONS": {
     "LIST_TITLE": "Lista e rezervimeve",
     "ADD_BUTTON": "Shto rezervim",
-    "NO_DATA": "Nuk ka asnjë rezervim të regjistruar.",
+    "NO_DATA": "Nuk ka rezervime të regjistruara.",
     "LOADING_LIST": "Duke u ngarkuar rezervimet...",
-
     "CREATE_TITLE": "Krijo rezervim",
-    "EDIT_TITLE": "Përditëso rezervimin",
+    "EDIT_TITLE": "Përditëso rezervim",
     "CREATE_BUTTON": "Krijo rezervim",
     "SAVE_CHANGES": "Ruaj ndryshimet",
-
     "SECTIONS": {
       "CUSTOMER": "Të dhënat e klientit",
       "DETAILS": "Detajet e rezervimit"
     },
-
     "FORM": {
       "PERSONAL_NUMBER_REQUIRED": "Numri personal *",
       "FIRST_NAME_REQUIRED": "Emri *",
       "LAST_NAME_REQUIRED": "Mbiemri *",
       "PHONE_REQUIRED": "Telefoni *",
       "ADDRESS_REQUIRED": "Adresa *",
-      "CAR_REQUIRED": "Veturë *",
-      "PICKUP_LOCATION_REQUIRED": "Pickup Location *",
-      "DROPOFF_LOCATION_REQUIRED": "Dropoff Location *",
-      "PICKUP_DATETIME_REQUIRED": "Pickup Date & Time *",
-      "DROPOFF_DATETIME_REQUIRED": "Dropoff Date & Time *",
+      "CAR_REQUIRED": "Vetura *",
+      "PICKUP_LOCATION_REQUIRED": "Lokacioni i marrjes *",
+      "DROPOFF_LOCATION_REQUIRED": "Lokacioni i dorëzimit *",
+      "PICKUP_DATETIME_REQUIRED": "Data & ora e marrjes *",
+      "DROPOFF_DATETIME_REQUIRED": "Data & ora e dorëzimit *",
       "DISCOUNT": "Zbritje (€)",
-      "TOTAL_DAYS": "Totali ditë"
+      "TOTAL_DAYS": "Numri total i ditëve"
     },
-
     "VALIDATION": {
-      "PICKUP_LOCATION_REQUIRED": "Pickup location është e detyrueshme",
-      "DROPOFF_LOCATION_REQUIRED": "Dropoff location është e detyrueshme"
+      "PICKUP_LOCATION_REQUIRED": "Lokacioni i marrjes është i detyrueshëm",
+      "DROPOFF_LOCATION_REQUIRED": "Lokacioni i dorëzimit është i detyrueshëm"
     },
-
     "ALERT": {
-      "CAR_UNAVAILABLE_TITLE": "Veturë e padisponueshme",
+      "CAR_UNAVAILABLE_TITLE": "Vetura nuk është e disponueshme",
       "CAR_UNAVAILABLE_TEXT": "Kjo veturë është tashmë e rezervuar për intervalin e zgjedhur. Ju lutem ndryshoni datën/orën ose zgjidhni një veturë tjetër."
     },
-
     "EXTRAS": {
-      "TITLE": "Shërbime ekstra",
+      "TITLE": "Shërbime shtesë",
       "PER_DAY": "€ / ditë"
     },
-
     "SUMMARY": {
       "TITLE": "Përmbledhje",
-      "CAR_TOTAL": "Totali veturë:",
-      "EXTRAS_TOTAL": "Shërbime ekstra:",
+      "CAR_TOTAL": "Totali i veturës:",
+      "EXTRAS_TOTAL": "Shërbime shtesë:",
       "TOTAL_WITHOUT_DISCOUNT": "Totali pa zbritje:",
       "DISCOUNT": "Zbritja:",
-      "FINAL_TOTAL": "Totali final:"
+      "FINAL_TOTAL": "Totali përfundimtar:"
     },
-
     "TABLE": {
-      "NUMBER": "Nr. Rezervimit",
+      "NUMBER": "Nr. rezervimi",
       "CUSTOMER": "Klienti",
       "CAR": "Vetura",
-      "PICKUP": "Pickup",
-      "DROPOFF": "Dropoff",
+      "PICKUP": "Marrja",
+      "DROPOFF": "Dorëzimi",
       "TOTAL": "Totali"
     },
-
     "MENU": {
       "UPDATE": "Përditëso",
       "CONTRACT": "Kontrata",
@@ -227,75 +231,64 @@
     }
   },
   "DAMAGES": {
-    "LIST_TITLE": "Dëmtimet e veturave",
+    "LIST_TITLE": "Dëmtimet e automjeteve",
     "NEW_BUTTON": "Dëmtim i ri",
-    "NO_DATA": "Nuk u gjet asnjë dëmtim i veturës.",
-
-    "CREATE_TITLE": "Dëmtim i ri i veturës",
-    "EDIT_TITLE": "Ndrysho dëmtimin e veturës",
-
+    "NO_DATA": "Nuk u gjetën dëmtime të automjeteve.",
+    "CREATE_TITLE": "Dëmtim i ri i automjetit",
+    "EDIT_TITLE": "Ndrysho dëmtim të automjetit",
     "FORM": {
       "RESERVATION_REQUIRED": "Rezervimi *",
       "DAMAGE_TYPE": "Lloji i dëmtimit",
-      "ESTIMATED_COST": "Kosto e parashikuar (€)",
+      "ESTIMATED_COST": "Kosto e vlerësuar (€)",
       "STATUS": "Statusi",
-      "IMAGES": "Imazhet e dëmtimit",
-      "SELECTED_IMAGES": "Imazhet e zgjedhura ({{count}})"
+      "IMAGES": "Fotografitë e dëmtimit",
+      "SELECTED_IMAGES": "Fotografitë e zgjedhura ({{count}})"
     },
-
     "STATUS": {
       "PENDING": "Në pritje",
       "APPROVED": "Aprovuar",
       "REJECTED": "Refuzuar"
     },
-
     "TABLE": {
       "ID": "ID",
       "RESERVATION": "Rezervimi",
       "DAMAGE_TYPE": "Lloji i dëmtimit",
-      "ESTIMATED_COST": "Kosto e parashikuar",
+      "ESTIMATED_COST": "Kosto e vlerësuar",
       "STATUS": "Statusi",
       "DATE": "Data"
     },
-
     "REPORT": {
-      "BUTTON": "Raporti i dëmtimeve",
-      "GENERATING": "Duke gjeneruar..."
+      "BUTTON": "Raporti i dëmtimit",
+      "GENERATING": "Duke u gjeneruar..."
     }
   },
   "INSPECTIONS": {
-    "LIST_TITLE": "Inspektimet e veturave",
+    "LIST_TITLE": "Inspektimet e automjeteve",
     "NEW_BUTTON": "Inspektim i ri",
-    "NO_DATA": "Nuk u gjet asnjë inspektim i veturës.",
-
-    "CREATE_TITLE": "Inspektim i ri i veturës",
-    "EDIT_TITLE": "Ndrysho inspektimin e veturës",
-
+    "NO_DATA": "Nuk u gjetën inspektime të automjeteve.",
+    "CREATE_TITLE": "Inspektim i ri i automjetit",
+    "EDIT_TITLE": "Ndrysho inspektim të automjetit",
     "FORM": {
       "RESERVATION": "Rezervimi",
-      "TYPE": "Tipi",
+      "TYPE": "Lloji",
       "MILEAGE": "Kilometrazha",
       "FUEL_LEVEL": "Niveli i karburantit (%)",
       "TIRE_CONDITION": "Gjendja e gomave",
       "OVERALL_CONDITION": "Gjendja e përgjithshme",
-      "IMAGES": "Imazhet e inspektimit",
-      "SELECTED_IMAGES": "Imazhet e zgjedhura ({{count}})",
-      "EXISTING_IMAGES": "Imazhet ekzistuese të inspektimit",
-      "IMAGE_ALT": "Imazh inspektimi"
+      "IMAGES": "Fotografitë e inspektimit",
+      "SELECTED_IMAGES": "Fotografitë e zgjedhura ({{count}})",
+      "EXISTING_IMAGES": "Fotografitë ekzistuese të inspektimit",
+      "IMAGE_ALT": "Fotografia e inspektimit"
     },
-
     "TYPE": {
-      "CHECKIN": "Pranim (Check-in)",
-      "CHECKOUT": "Dorëzim (Check-out)"
+      "CHECKIN": "Pranim",
+      "CHECKOUT": "Dorëzim"
     },
-
     "TABLE": {
       "RESERVATION": "Rezervimi",
-      "TYPE": "Tipi",
+      "TYPE": "Lloji",
       "MILEAGE": "Kilometrazha",
       "FUEL": "Karburanti"
     }
   }
 }
-
- 

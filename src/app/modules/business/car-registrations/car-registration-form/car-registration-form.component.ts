@@ -5,7 +5,8 @@ import { CarRegistrationsService } from 'app/services/car-registrations.service'
  
 @Component({
     selector: 'app-car-registration-form',
-    templateUrl: './car-registration-form.component.html'
+    templateUrl: './car-registration-form.component.html',
+    standalone: false,
 })
 export class CarRegistrationFormComponent implements OnInit {
 

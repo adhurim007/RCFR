@@ -4,7 +4,9 @@ import { RoleService } from 'app/core/roles/role.service';
 
 @Component({
   selector: 'app-role-create',
-  templateUrl: './role-create.component.html'
+  templateUrl: './role-create.component.html',
+  standalone: false,
+
 })
 export class RoleCreateComponent {
   roleForm = this.fb.group({

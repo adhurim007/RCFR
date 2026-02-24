@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-date-time-dialog',
+  standalone: false,
   template: `
     <h2 mat-dialog-title>Zgjidh datën dhe orën</h2>
 

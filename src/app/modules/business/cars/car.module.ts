@@ -17,6 +17,7 @@ import { CarListComponent } from './car-list/car-list.component';
 import { CarFormComponent } from './car-form/car-form.component'; 
 import { CarDetailsComponent } from './car-details/car-details.component';
 import { TranslocoModule } from '@ngneat/transloco';
+import { MatDividerModule } from '@angular/material/divider';
 @NgModule({
   declarations: [
     CarListComponent,
@@ -39,7 +40,8 @@ import { TranslocoModule } from '@ngneat/transloco';
     MatTableModule,
     MatMenuModule ,
     CarRoutingModule,
-    MatIconModule
+    MatIconModule,
+    MatDividerModule
   ]
 })
 export class CarModule {}

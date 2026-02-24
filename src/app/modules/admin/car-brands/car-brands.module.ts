@@ -11,7 +11,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { carBrandsRoutes } from './car-brands.routes';
 import { CarBrandsListComponent } from './car-brands-list/car-brands-list.component';
 import { CarBrandModalComponent } from './car-brand-modal/car-brand-modal.component';
-
+ 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+ 
 @NgModule({
     declarations: [
         CarBrandsListComponent,
@@ -27,6 +30,8 @@ imports: [
     MatButtonModule,
     MatIconModule,
     MatTableModule,
+    MatMenuModule,
+    MatDividerModule,
     RouterModule.forChild(carBrandsRoutes)
 ]
 })

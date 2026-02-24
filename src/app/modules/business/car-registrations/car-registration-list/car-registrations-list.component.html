@@ -1,99 +1,97 @@
-<div class="flex flex-col w-full px-8 py-6">
+<div class="flex flex-col flex-auto w-full p-6">
 
   <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-semibold">{{ 'REGISTRATION.LIST_TITLE' | transloco }}</h1>
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">
+      {{ 'REGISTRATION.LIST_TITLE' | transloco }}
+    </h1>
 
-    <button
-      mat-flat-button
-      color="primary"
-      class="rounded-full"
-      (click)="create()">
+    <button mat-flat-button color="primary" class="px-6" (click)="create()">
+      <mat-icon class="mr-2">add</mat-icon>
       {{ 'REGISTRATION.ADD_BUTTON' | transloco }}
     </button>
   </div>
 
-  <!-- Table wrapper -->
-  <div class="bg-card rounded-xl shadow overflow-x-auto">
+  <!-- Card -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 w-full overflow-x-auto">
 
-    <table class="w-full">
-      <thead>
-        <tr class="border-b text-left text-gray-500 text-sm">
-          <th class="p-4">{{ 'REGISTRATION.TABLE.CAR' | transloco }}</th>
-          <th class="p-4">{{ 'REGISTRATION.TABLE.REG_NUMBER' | transloco }}</th>
-          <th class="p-4">{{ 'REGISTRATION.TABLE.ISSUED' | transloco }}</th>
-          <th class="p-4">{{ 'REGISTRATION.TABLE.EXPIRY' | transloco }}</th>
-          <th class="p-4">{{ 'REGISTRATION.TABLE.COST' | transloco }}</th>
-          <th class="p-4 text-right">{{ 'COMMON.ACTIONS' | transloco }}</th>
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th class="px-6 py-3">{{ 'REGISTRATION.TABLE.CAR' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'REGISTRATION.TABLE.REG_NUMBER' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'REGISTRATION.TABLE.ISSUED' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'REGISTRATION.TABLE.EXPIRY' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'REGISTRATION.TABLE.COST' | transloco }}</th>
+          <th class="px-6 py-3 text-right">{{ 'COMMON.ACTIONS' | transloco }}</th>
         </tr>
       </thead>
 
       <tbody>
 
-        <tr
-          *ngFor="let r of registrations"
-          class="border-b hover:bg-gray-50">
+        <tr *ngFor="let r of registrations" class="border-b hover:bg-gray-50">
+          <td class="px-6 py-4">{{ r.car?.licensePlate || '-' }}</td>
+          <td class="px-6 py-4">{{ r.registrationNumber }}</td>
+          <td class="px-6 py-4">{{ r.issuedDate | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4">{{ r.expiryDate | date:'dd.MM.yyyy' }}</td>
+          <td class="px-6 py-4">{{ r.cost | number:'1.2-2' }} €</td>
 
-          <td class="p-4">
-            {{ r.car?.licensePlate }}
-          </td>
-
-          <td class="p-4">
-            {{ r.registrationNumber }}
-          </td>
-
-          <td class="p-4">
-            {{ r.issuedDate | date }}
-          </td>
-
-          <td class="p-4">
-            {{ r.expiryDate | date }}
-          </td>
-
-          <td class="p-4">
-            {{ r.cost | currency:'EUR' }}
-          </td>
-
-          <td class="p-4 text-right">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Actions">
-              <mat-icon svgIcon="heroicons_outline:dots-vertical"></mat-icon>
+          <td class="px-6 py-4 text-right">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="regMenu"
+              (click)="selectedRegistration = r"
+              aria-label="Actions">
+              <mat-icon>more_vert</mat-icon>
             </button>
-
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="edit(r.id)">
-                <mat-icon svgIcon="heroicons_outline:pencil"></mat-icon>
-                <span>{{ 'COMMON.EDIT' | transloco }}</span>
-              </button>
-
-              <button mat-menu-item (click)="delete(r.id)">
-                <mat-icon svgIcon="heroicons_outline:trash" class="text-red-500"></mat-icon>
-                <span class="text-red-500">{{ 'COMMON.DELETE' | transloco }}</span>
-              </button>
-
-              <button
-                mat-menu-item
-                (click)="openCarRegistrationsReport(r.carId)"
-                [disabled]="!r.carId || loadingCarRegistrationsReportId === r.carId">
-                <mat-icon svgIcon="heroicons_outline:document-text"></mat-icon>
-                <span *ngIf="loadingCarRegistrationsReportId !== r.carId">
-                  {{ 'REGISTRATION.REPORT.BUTTON' | transloco }}
-                </span>
-                <span *ngIf="loadingCarRegistrationsReportId === r.carId">
-                  {{ 'REGISTRATION.REPORT.GENERATING' | transloco }}
-                </span>
-              </button>
-            </mat-menu>
           </td>
         </tr>
 
         <!-- Empty -->
         <tr *ngIf="!loading && registrations.length === 0">
-          <td colspan="6" class="p-8 text-center text-gray-400">
+          <td colspan="6" class="text-center py-6 text-gray-400">
             {{ 'REGISTRATION.NO_DATA' | transloco }}
           </td>
         </tr>
 
       </tbody>
     </table>
+
+    <!-- Menu -->
+    <mat-menu #regMenu="matMenu">
+
+      <button mat-menu-item (click)="edit(selectedRegistration?.id)">
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'COMMON.EDIT' | transloco }}</span>
+      </button>
+
+      <button
+        mat-menu-item
+        (click)="openCarRegistrationsReport(selectedRegistration?.carId)"
+        [disabled]="!selectedRegistration?.carId || loadingCarRegistrationsReportId === selectedRegistration?.carId">
+        <mat-icon>description</mat-icon>
+
+        <span *ngIf="loadingCarRegistrationsReportId !== selectedRegistration?.carId">
+          {{ 'REGISTRATION.REPORT.BUTTON' | transloco }}
+        </span>
+        <span *ngIf="loadingCarRegistrationsReportId === selectedRegistration?.carId">
+          {{ 'REGISTRATION.REPORT.GENERATING' | transloco }}
+        </span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item class="text-red-600" (click)="delete(selectedRegistration?.id)">
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'COMMON.DELETE' | transloco }}</span>
+      </button>
+
+    </mat-menu>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="p-6 text-center text-gray-400">
+      {{ 'COMMON.LOADING' | transloco }}
+    </div>
+
   </div>
 </div>

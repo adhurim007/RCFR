@@ -1,47 +1,78 @@
-<div class="p-6 w-full">
+<div class="flex flex-col flex-auto w-full p-6">
 
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-semibold">{{ 'EXTRA_SERVICES.LIST_TITLE' | transloco }}</h1>
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">
+      {{ 'EXTRA_SERVICES.LIST_TITLE' | transloco }}
+    </h1>
 
-    <button mat-raised-button color="primary" (click)="openCreate()">
+    <button
+      mat-flat-button
+      color="primary"
+      class="px-6"
+      (click)="openCreate()">
+      <mat-icon class="mr-2">add</mat-icon>
       {{ 'EXTRA_SERVICES.ADD_BUTTON' | transloco }}
     </button>
   </div>
 
-  <div class="bg-white rounded-lg shadow-sm border w-full">
+  <!-- Card -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 w-full overflow-x-auto">
 
-    <table class="w-full">
-      <thead>
-        <tr class="text-left bg-gray-50 border-b">
-          <th class="p-4 font-medium">{{ 'COMMON.NAME' | transloco }}</th>
-          <th class="p-4 font-medium">{{ 'EXTRA_SERVICES.TABLE.PRICE_PER_DAY' | transloco }}</th>
-          <th class="p-4 text-right font-medium">{{ 'COMMON.ACTIONS' | transloco }}</th>
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th class="px-6 py-3">{{ 'COMMON.NAME' | transloco }}</th>
+          <th class="px-6 py-3">{{ 'EXTRA_SERVICES.TABLE.PRICE_PER_DAY' | transloco }}</th>
+          <th class="px-6 py-3 text-right">{{ 'COMMON.ACTIONS' | transloco }}</th>
         </tr>
       </thead>
 
-      <tbody *ngIf="services.length > 0; else emptyState">
+      <tbody>
+
         <tr *ngFor="let s of services" class="border-b hover:bg-gray-50">
-          <td class="p-4">{{ s.name }}</td>
-          <td class="p-4">{{ s.pricePerDay | currency }}</td>
+          <td class="px-6 py-4">{{ s.name }}</td>
+          <td class="px-6 py-4">{{ s.pricePerDay | number:'1.2-2' }} €</td>
 
-          <td class="p-4 text-right space-x-2">
-            <button mat-icon-button color="primary" (click)="openEdit(s)">
-              <mat-icon>edit</mat-icon>
-            </button>
-
-            <button mat-icon-button color="warn" (click)="delete(s.id)">
-              <mat-icon>delete</mat-icon>
+          <td class="px-6 py-4 text-right">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="extraMenu"
+              (click)="selectedService = s">
+              <mat-icon>more_vert</mat-icon>
             </button>
           </td>
         </tr>
+
+        <!-- Empty -->
+        <tr *ngIf="!loading && services.length === 0">
+          <td colspan="3" class="text-center py-6 text-gray-400">
+            {{ 'EXTRA_SERVICES.NO_DATA' | transloco }}
+          </td>
+        </tr>
+
       </tbody>
     </table>
 
-    <ng-template #emptyState>
-      <div class="p-6 text-center text-gray-500">
-        {{ 'EXTRA_SERVICES.NO_DATA' | transloco }}
-      </div>
-    </ng-template>
+    <!-- Menu -->
+    <mat-menu #extraMenu="matMenu">
+      <button mat-menu-item (click)="openEdit(selectedService)">
+        <mat-icon>edit</mat-icon>
+        <span>{{ 'COMMON.EDIT' | transloco }}</span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item class="text-red-600" (click)="delete(selectedService?.id)">
+        <mat-icon color="warn">delete</mat-icon>
+        <span>{{ 'COMMON.DELETE' | transloco }}</span>
+      </button>
+    </mat-menu>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="p-6 text-center text-gray-400">
+      {{ 'COMMON.LOADING' | transloco }}
+    </div>
 
   </div>
 </div>

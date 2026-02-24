@@ -4,7 +4,9 @@ import { CarService } from 'app/services/car.service';
 
 @Component({
   selector: 'app-car-details',
-  templateUrl: './car-details.component.html'
+  templateUrl: './car-details.component.html',
+  standalone: false,
+
 })
 export class CarDetailsComponent implements OnInit {
 

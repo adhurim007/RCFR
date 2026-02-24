@@ -6,21 +6,16 @@ import { UserService } from 'app/core/user/user.service';
 @Component({
   selector: 'app-car-list',
   templateUrl: './car-list.component.html',
-  styleUrls: ['./car-list.component.scss']
+  styleUrls: ['./car-list.component.scss'],
+  standalone: false,
 })
 export class CarListComponent implements OnInit {
 
-  displayedColumns: string[] = [
-    'brand',
-    'model',
-    'plate',
-    'price',
-    'availability',
-    'actions'
-  ];
-
   cars: any[] = [];
   loading = true;
+
+  // Needed for menu actions (same pattern as reservations)
+  selectedCar: any | null = null;
 
   constructor(
     private carService: CarService,
@@ -32,15 +27,12 @@ export class CarListComponent implements OnInit {
     this.loadCars();
   }
 
-  viewDetails(carId: number): void {
-    this.router.navigate(['/business/cars', carId, 'details']);
-  }
-
   loadCars(): void {
     this.loading = true;
 
     const currentUser = this.userService.getCurrent();
     if (!currentUser) {
+      this.cars = [];
       this.loading = false;
       return;
     }
@@ -48,6 +40,7 @@ export class CarListComponent implements OnInit {
     this.userService.getBusinessId(currentUser.id).subscribe({
       next: (res: any) => {
         const businessId = res?.businessId;
+
         if (!businessId) {
           this.cars = [];
           this.loading = false;
@@ -56,7 +49,7 @@ export class CarListComponent implements OnInit {
 
         this.carService.getByBusiness(businessId).subscribe({
           next: (cars) => {
-            this.cars = cars;
+            this.cars = cars ?? [];
             this.loading = false;
           },
           error: () => {
@@ -78,25 +71,37 @@ export class CarListComponent implements OnInit {
     this.router.navigate(['/business/cars/create']);
   }
 
-  editCar(id: number): void {
+  editCar(id?: number): void {
+    if (!id) return;
     this.router.navigate(['/business/cars/edit', id]);
   }
 
-  addDetails(id: number): void {
-    this.router.navigate(['/business/cars/details', id]);
+  viewDetails(carId?: number): void {
+    if (!carId) return;
+    this.router.navigate(['/business/cars', carId, 'details']);
   }
 
-  deleteCar(id: number): void {
+  deleteCar(id?: number): void {
+    if (!id) return;
     if (!confirm('A je i sigurt që dëshiron ta fshish këtë veturë?')) return;
 
-    this.carService.delete(id).subscribe(() => {
-      this.loadCars();
+    this.carService.delete(id).subscribe({
+      next: () => this.loadCars()
     });
   }
 
   toggleAvailability(car: any): void {
-    this.carService.setAvailability(car.id, !car.isAvailable).subscribe(() => {
-      car.isAvailable = !car.isAvailable;
+    if (!car?.id) return;
+
+    this.carService.setAvailability(car.id, !car.isAvailable).subscribe({
+      next: () => {
+        car.isAvailable = !car.isAvailable;
+
+        // keep selectedCar in sync in case menu is open
+        if (this.selectedCar?.id === car.id) {
+          this.selectedCar.isAvailable = car.isAvailable;
+        }
+      }
     });
   }
 }

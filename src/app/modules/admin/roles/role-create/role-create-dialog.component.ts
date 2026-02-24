@@ -5,7 +5,9 @@ import { RoleService } from 'app/core/roles/role.service';
 
 @Component({
   selector: 'app-role-create-dialog',
-  templateUrl: './role-create-dialog.component.html'
+  templateUrl: './role-create-dialog.component.html',
+  standalone: false,
+
 })
 export class RoleCreateDialogComponent {
   roleForm = this.fb.group({

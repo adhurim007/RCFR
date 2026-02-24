@@ -10,13 +10,18 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslocoModule } from '@ngneat/transloco';
+import { TranslocoModule } from '@ngneat/transloco'; 
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
+ 
 @NgModule({
     declarations: [
         ExtraServicesListComponent,
         ExtraServiceModalComponent
     ],
     imports: [
+        MatMenuModule,
+        MatDividerModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

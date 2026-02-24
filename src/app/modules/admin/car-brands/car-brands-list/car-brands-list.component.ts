@@ -5,59 +5,70 @@ import { CarBrandModalComponent } from '../car-brand-modal/car-brand-modal.compo
 import { CarBrand } from 'app/models/car-brand.model';
 
 @Component({
-    selector: 'app-car-brands-list',
-    templateUrl: './car-brands-list.component.html'
+  selector: 'app-car-brands-list',
+  templateUrl: './car-brands-list.component.html',
+  standalone: false,
 })
 export class CarBrandsListComponent implements OnInit {
-    brands: CarBrand[] = [];
-    displayedColumns = ['name', 'actions'];
 
-    constructor(
-        private service: CarBrandsService,
-        private dialog: MatDialog
-    ) {}
+  brands: CarBrand[] = [];
+  loading = true;
 
-    ngOnInit(): void {
-        this.load();
-    }
+  selectedBrand: CarBrand | null = null;
 
-    load(): void {
-        this.service.getAll().subscribe({
-            next: res => {
-                console.log("API response Brands:", res);
-                this.brands = res;
-            },
-            error: err => {
-                console.error("Error loading brands", err);
-            }
-        });
-    }
+  constructor(
+    private service: CarBrandsService,
+    private dialog: MatDialog
+  ) {}
 
-    openCreate(): void {
-        const dialogRef = this.dialog.open(CarBrandModalComponent, {
-            width: '400px',
-            data: { isEdit: false }
-        });
+  ngOnInit(): void {
+    this.load();
+  }
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) this.load();
-        });
-    }
+  load(): void {
+    this.loading = true;
 
-    openEdit(brand: CarBrand): void {
-        const dialogRef = this.dialog.open(CarBrandModalComponent, {
-            width: '400px',
-            data: { isEdit: true, brand }
-        });
+    this.service.getAll().subscribe({
+      next: res => {
+        this.brands = res ?? [];
+        this.loading = false;
+      },
+      error: err => {
+        console.error("Error loading brands", err);
+        this.brands = [];
+        this.loading = false;
+      }
+    });
+  }
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) this.load();
-        });
-    }
+  openCreate(): void {
+    const dialogRef = this.dialog.open(CarBrandModalComponent, {
+      width: '400px',
+      data: { isEdit: false }
+    });
 
-    delete(id: number): void {
-        if (!confirm('A jeni i sigurt?')) return;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.load();
+    });
+  }
 
-        this.service.delete(id).subscribe(() => this.load());
-    }
+  openEdit(brand?: CarBrand | null): void {
+    if (!brand) return;
+
+    const dialogRef = this.dialog.open(CarBrandModalComponent, {
+      width: '400px',
+      data: { isEdit: true, brand }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.load();
+    });
+  }
+
+  delete(id?: number): void {
+    if (!id) return;
+    if (!confirm('A jeni i sigurt?')) return;
+
+    this.service.delete(id).subscribe(() => this.load());
+  }
 }

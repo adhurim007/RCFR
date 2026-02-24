@@ -8,7 +8,8 @@ import { UserService } from 'app/core/user/user.service';
 @Component({
   selector: 'app-car-form',
   templateUrl: './car-form.component.html',
-  styleUrls: ['./car-form.component.scss']
+  styleUrls: ['./car-form.component.scss'],
+  standalone: false,
 })
 export class CarFormComponent implements OnInit {
 

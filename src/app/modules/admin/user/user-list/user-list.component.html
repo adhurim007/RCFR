@@ -1,97 +1,95 @@
 <div class="flex flex-col flex-auto w-full p-6">
 
-    <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-        <h2 class="text-2xl font-semibold text-gray-800">Users</h2>
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800">
+      Users
+    </h1>
 
-        <button 
-            mat-flat-button 
-            color="primary" 
-            class="mt-4 sm:mt-0"
-            routerLink="/admin/users/create">
-            + Create User
-        </button>
-    </div>
+    <button
+      mat-flat-button
+      color="primary"
+      class="px-6"
+      (click)="createUser()">
+      <mat-icon class="mr-2">add</mat-icon>
+      Create User
+    </button>
+  </div>
 
-    <!-- Responsive Table Wrapper -->
-    <div class="w-full overflow-x-auto rounded-2xl shadow border border-gray-200 bg-white">
+  <!-- Card -->
+  <div class="bg-white rounded-xl shadow border border-gray-200 w-full overflow-x-auto">
 
-        <table mat-table [dataSource]="users" class="w-full mat-elevation-z0">
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="bg-gray-100 text-xs uppercase text-gray-600">
+        <tr>
+          <th class="px-6 py-3">Name</th>
+          <th class="px-6 py-3">Email</th>
+          <th class="px-6 py-3">Phone</th>
+          <th class="px-6 py-3">Business</th>
+          <th class="px-6 py-3">Roles</th>
+          <th class="px-6 py-3 text-right">Actions</th>
+        </tr>
+      </thead>
 
-            <!-- Full Name -->
-            <ng-container matColumnDef="fullName">
-                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Name</th>
-                <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                    {{ user.fullName }}
-                </td>
-            </ng-container>
+      <tbody>
 
-            <!-- Email -->
-            <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Email</th>
-                <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                    {{ user.email }}
-                </td>
-            </ng-container>
+        <tr *ngFor="let user of users" class="border-b hover:bg-gray-50">
 
-            <!-- Phone Number -->
-            <ng-container matColumnDef="phoneNumber">
-                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Phone</th>
-                <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                    {{ user.phoneNumber }}
-                </td>
-            </ng-container>
+          <td class="px-6 py-4">{{ user.fullName }}</td>
+          <td class="px-6 py-4">{{ user.email }}</td>
+          <td class="px-6 py-4">{{ user.phoneNumber }}</td>
+          <td class="px-6 py-4">{{ user.businessName || '-' }}</td>
+          <td class="px-6 py-4">
+            {{ user.roles?.length ? user.roles.join(', ') : '-' }}
+          </td>
 
-            <!-- Business -->
-            <ng-container matColumnDef="businessName">
-                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Business</th>
-                <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                    {{ user.businessName || '-' }}
-                </td>
-            </ng-container>
+          <td class="px-6 py-4 text-right">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="userMenu"
+              (click)="selectedUser = user">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </td>
 
-            <!-- Roles -->
-            <ng-container matColumnDef="role">
-                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 font-medium">Roles</th>
-                <td mat-cell *matCellDef="let user" class="px-6 py-4">
-                    {{ user.roles?.length ? user.roles.join(', ') : '-' }}
-                </td>
-            </ng-container>
+        </tr>
 
-            <!-- Actions -->
-            <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-right font-medium">Actions</th>
-                <td mat-cell *matCellDef="let user" class="px-6 py-4 text-right space-x-2">
-
-                    <button mat-stroked-button color="primary"
-                        (click)="editUser(user.id)">
-                        Edit
-                    </button>
-
-                    <button mat-stroked-button color="warn"
-                        (click)="deleteUser(user.id)">
-                        Delete
-                    </button>
-
-                    <button mat-stroked-button color="accent"
-                        (click)="openResetPassword(user.id)">
-                        Reset Password
-                    </button>
-
-                </td>
-            </ng-container>
-
-            <!-- Header + Rows -->
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-
-        </table>
-
-        <!-- Empty State -->
-        <div *ngIf="users.length === 0" class="text-center py-6 text-gray-400">
+        <!-- Empty -->
+        <tr *ngIf="!loading && users.length === 0">
+          <td colspan="6" class="text-center py-6 text-gray-400">
             Nuk ka përdorues.
-        </div>
+          </td>
+        </tr>
 
+      </tbody>
+    </table>
+
+    <!-- Actions Menu -->
+    <mat-menu #userMenu="matMenu">
+
+      <button mat-menu-item (click)="editUser(selectedUser?.id)">
+        <mat-icon>edit</mat-icon>
+        <span>Edit</span>
+      </button>
+
+      <button mat-menu-item (click)="openResetPassword(selectedUser?.id)">
+        <mat-icon>lock_reset</mat-icon>
+        <span>Reset Password</span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item class="text-red-600" (click)="deleteUser(selectedUser?.id)">
+        <mat-icon color="warn">delete</mat-icon>
+        <span>Delete</span>
+      </button>
+
+    </mat-menu>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="p-6 text-center text-gray-400">
+      Loading...
     </div>
 
+  </div>
 </div>

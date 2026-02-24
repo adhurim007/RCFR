@@ -3,23 +3,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserService } from 'app/core/user/user.service';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
-import { ResetPasswordDialogComponent } from '../reset-password-dialog/reset-password-dialog.component'; // ✅ FIXED import
+import { ResetPasswordDialogComponent } from '../reset-password-dialog/reset-password-dialog.component';
 
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
-  styleUrls: ['./user-list.component.scss']
+  styleUrls: ['./user-list.component.scss'],
+  standalone: false,
 })
 export class UserListComponent implements OnInit {
+
   users: any[] = [];
-  displayedColumns: string[] = [
-    'fullName',
-    'email',
-    'phoneNumber',
-    'businessName',
-    'role',
-    'actions'
-  ];
+  loading = false;
+
+  selectedUser: any | null = null;
 
   constructor(
     private userService: UserService,
@@ -32,9 +29,18 @@ export class UserListComponent implements OnInit {
   }
 
   loadUsers(): void {
+    this.loading = true;
+
     this.userService.getUsers().subscribe({
-      next: (data) => (this.users = data),
-      error: (err) => console.error('Error loading users', err)
+      next: (data) => {
+        this.users = data ?? [];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error loading users', err);
+        this.users = [];
+        this.loading = false;
+      }
     });
   }
 
@@ -42,11 +48,14 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['/admin/users/create']);
   }
 
-  editUser(id: string): void {
+  editUser(id?: string): void {
+    if (!id) return;
     this.router.navigate(['/admin/users/edit', id]);
   }
 
-  deleteUser(id: string): void {
+  deleteUser(id?: string): void {
+    if (!id) return;
+
     const confirmRef = this.dialog.open(ConfirmDialogComponent, {
       data: { message: 'Are you sure you want to delete this user?' }
     });
@@ -61,7 +70,9 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  openResetPassword(userId: string): void {
+  openResetPassword(userId?: string): void {
+    if (!userId) return;
+
     const dialogRef = this.dialog.open(ResetPasswordDialogComponent, {
       width: '400px',
       data: { userId }

@@ -3,73 +3,81 @@ import { Router } from '@angular/router';
 import { CarRegistrationsService } from 'app/services/car-registrations.service';
 
 @Component({
-    selector: 'app-car-registrations-list',
-    templateUrl: './car-registrations-list.component.html'
+  selector: 'app-car-registrations-list',
+  templateUrl: './car-registrations-list.component.html',
+  standalone: false,
 })
 export class CarRegistrationsListComponent implements OnInit {
 
-    registrations: any[] = [];
-    loading = false;
+  registrations: any[] = [];
+  loading = false;
 
-    constructor(
-        private service: CarRegistrationsService,
-        private router: Router
-    ) {}
+  selectedRegistration: any | null = null;
 
-    ngOnInit(): void {
-        this.load();
+  loadingCarRegistrationsReportId: number | null = null;
+
+  constructor(
+    private service: CarRegistrationsService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.load();
+  }
+
+  load(): void {
+    this.loading = true;
+
+    this.service.getByBusiness().subscribe({
+      next: (data) => {
+        this.registrations = data ?? [];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load registrations', err);
+        this.registrations = [];
+        this.loading = false;
+      }
+    });
+  }
+
+  create(): void {
+    this.router.navigate(['/business/car-registrations/create']);
+  }
+
+  edit(id?: number): void {
+    if (!id) return;
+    this.router.navigate(['/business/car-registrations/edit', id]);
+  }
+
+  delete(id?: number): void {
+    if (!id) return;
+
+    if (!confirm('Are you sure you want to delete this registration?')) {
+      return;
     }
 
-    load(): void {
-        this.loading = true;
+    this.service.delete(id).subscribe(() => {
+      this.load();
+    });
+  }
 
-        this.service.getByBusiness().subscribe({
-            next: (data) => {
-                this.registrations = data ?? [];
-                this.loading = false;
-            },
-            error: (err) => {
-                console.error('Failed to load registrations', err);
-                this.registrations = [];
-                this.loading = false;
-            }
-        });
-    }
+  openCarRegistrationsReport(carId?: number): void {
+    if (!carId) return;
 
-    create(): void {
-        this.router.navigate(['/business/car-registrations/create']);
-    }
-
-    edit(id: number): void {
-        this.router.navigate(['/business/car-registrations/edit', id]);
-    }
-
-    delete(id: number): void {
-        if (!confirm('Are you sure you want to delete this registration?')) {
-            return;
-        }
-
-        this.service.delete(id).subscribe(() => {
-            this.load();
-        });
-    }
-    
-    loadingCarRegistrationsReportId: number | null = null;
-
-    openCarRegistrationsReport(carId: number): void {
     this.loadingCarRegistrationsReportId = carId;
 
     this.service.getCarRegistrationsReport(carId).subscribe({
-        next: (blob) => {
+      next: (blob) => {
         const url = window.URL.createObjectURL(blob);
         window.open(url, '_blank');
         setTimeout(() => URL.revokeObjectURL(url), 1000);
         this.loadingCarRegistrationsReportId = null;
-        },
-        error: (err) => {
+      },
+      error: (err) => {
         console.error('Failed to generate/open car registrations report', err);
         this.loadingCarRegistrationsReportId = null;
-        }
+      }
     });
-}
+  }
 }

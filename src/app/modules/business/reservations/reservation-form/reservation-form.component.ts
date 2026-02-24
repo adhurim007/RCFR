@@ -7,7 +7,9 @@ import { MatDialog } from '@angular/material/dialog';
 import {DateTimeDialogComponent} from '../date-time-dialog.component'
 @Component({
   selector: 'app-reservation-form',
-  templateUrl: './reservation-form.component.html'
+  templateUrl: './reservation-form.component.html',
+  standalone: false,
+
 })
 export class ReservationFormComponent implements OnInit {
 

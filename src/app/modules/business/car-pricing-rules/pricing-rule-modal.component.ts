@@ -7,7 +7,8 @@ import { CarPricingRuleService } from 'app/services/car-pricing-rule.service';
 @Component({
   selector: 'app-pricing-rule-modal',
   templateUrl: './pricing-rule-modal.component.html',
-  styleUrls: ['./pricing-rule-modal.component.scss']
+  styleUrls: ['./pricing-rule-modal.component.scss'],
+  standalone: false,
 })
 export class PricingRuleModalComponent implements OnInit {
 

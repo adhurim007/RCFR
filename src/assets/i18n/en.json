@@ -21,6 +21,23 @@
     "ADD_BUTTON": "Add Location",
     "NO_DATA": "No business locations found."
   },
+"MENU": {
+  "BRANDS": "Car Brands",
+  "CAR_MODELS": "Car Models",
+  "PRICING_RULES": "Pricing Rules",
+  "EXTRA_SERVICES": "Extra Services",
+  "BUSINESS_LOCATIONS": "Business Locations",
+  "ADMINISTRATION": "Administration",
+  "USERS": "Users",
+  "ROLES": "Roles",
+  "MENU_MANAGEMENT": "Menu Management",
+  "VEHICLE_INSPECTIONS": "Vehicle Inspections",
+  "CUSTOMERS": "Customers",
+  "RESERVATIONS": "Reservations",
+  "DAMAGE_INSPECTIONS": "Damage Inspections",
+  "CAR_SERVICES": "Car Services",
+  "CAR_REGISTRATIONS": "Car Registrations"
+},
   "PRICING": {
     "CREATE_RULE_TITLE": "Create pricing rule",
     "EDIT_RULE_TITLE": "Edit pricing rule",

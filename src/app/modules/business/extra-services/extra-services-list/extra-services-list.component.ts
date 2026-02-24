@@ -4,56 +4,70 @@ import { ExtraServicesService } from 'app/services/extra-services.service';
 import { ExtraServiceModalComponent } from '../extra-service-modal/extra-service-modal.component';
 
 @Component({
-    selector: 'app-extra-services-list',
-    templateUrl: './extra-services-list.component.html'
+  selector: 'app-extra-services-list',
+  templateUrl: './extra-services-list.component.html',
+  standalone: false,
 })
 export class ExtraServicesListComponent implements OnInit {
 
-    services: any[] = [];
+  services: any[] = [];
+  loading = true;
 
-    displayedColumns = ['name', 'pricePerDay', 'actions'];
+  selectedService: any | null = null;
 
-    constructor(
-        private service: ExtraServicesService,
-        private dialog: MatDialog
-    ) { }
+  constructor(
+    private service: ExtraServicesService,
+    private dialog: MatDialog
+  ) {}
 
-    ngOnInit(): void {
-        this.load();
-    }
+  ngOnInit(): void {
+    this.load();
+  }
 
-    load(): void {
-        this.service.getAll().subscribe({
-            next: (res) => this.services = res,
-            error: (err) => console.error("Error loading extra services", err)
-        });
-    }
+  load(): void {
+    this.loading = true;
 
-    openCreate(): void {
-        const dialogRef = this.dialog.open(ExtraServiceModalComponent, {
-            width: '400px',
-            data: { isEdit: false }
-        });
+    this.service.getAll().subscribe({
+      next: (res) => {
+        this.services = res ?? [];
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error("Error loading extra services", err);
+        this.services = [];
+        this.loading = false;
+      }
+    });
+  }
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) this.load();
-        });
-    }
+  openCreate(): void {
+    const dialogRef = this.dialog.open(ExtraServiceModalComponent, {
+      width: '400px',
+      data: { isEdit: false }
+    });
 
-    openEdit(item: any): void {
-        const dialogRef = this.dialog.open(ExtraServiceModalComponent, {
-            width: '400px',
-            data: { isEdit: true, service: item }
-        });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.load();
+    });
+  }
 
-        dialogRef.afterClosed().subscribe(result => {
-            if (result) this.load();
-        });
-    }
+  openEdit(item?: any): void {
+    if (!item) return;
 
-    delete(id: number): void {
-        if (!confirm("A jeni i sigurt?")) return;
+    const dialogRef = this.dialog.open(ExtraServiceModalComponent, {
+      width: '400px',
+      data: { isEdit: true, service: item }
+    });
 
-        this.service.delete(id).subscribe(() => this.load());
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.load();
+    });
+  }
+
+  delete(id?: number): void {
+    if (!id) return;
+    if (!confirm("A jeni i sigurt?")) return;
+
+    this.service.delete(id).subscribe(() => this.load());
+  }
 }

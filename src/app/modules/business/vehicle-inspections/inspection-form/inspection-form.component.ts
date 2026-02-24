@@ -6,7 +6,9 @@ import { ReservationService } from '../../../../services/reservations.service';
 
 @Component({
   selector: 'app-inspection-form',
-  templateUrl: './inspection-form.component.html'
+  templateUrl: './inspection-form.component.html',
+  standalone: false,
+
 })
 export class InspectionFormComponent implements OnInit {
 

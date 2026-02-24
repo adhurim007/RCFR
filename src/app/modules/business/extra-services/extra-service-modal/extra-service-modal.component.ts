@@ -5,7 +5,8 @@ import { ExtraServicesService } from 'app/services/extra-services.service';
 import { Observable } from 'rxjs';
 @Component({
     selector: 'app-extra-service-modal',
-    templateUrl: './extra-service-modal.component.html'
+    templateUrl: './extra-service-modal.component.html',
+    standalone: false,
 })
 export class ExtraServiceModalComponent {
 
